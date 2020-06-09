@@ -14,9 +14,9 @@ These algorithms won't be described further here. The reader is advised to take 
 
 Analyses conducted here are graphical. No need to calculate or estimate anything. Things are pretty clear.
 
-Data from the Yes/No and 2I-4AFC simulations are analysed separately. 
+Data from the Yes/No and 2I-4AFC simulations are analysed separately. The idea is to compare the three aforemementioned algorithms inside each condition. 
 
 ## How is data stored? / How to read data?
 
 To read files, this function is used:
-readDataFromFolder(N_DIMENSIONS, N_TRIALS, FOLDER, REGEX_FOR_FINDING_FILES)
+    readDataFromFolder(N_DIMENSIONS, N_TRIALS, FOLDER, REGEX_FOR_FINDING_FILES)
