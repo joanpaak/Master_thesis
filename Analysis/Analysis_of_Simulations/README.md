@@ -26,7 +26,7 @@ Each of these contains three more named lists: adaptive (3), random (2) and rand
 
 You will find all of the relevant data inside these lists:
 
-```
+```R
 > ls(dataObjects_YN$adaptive)
 [1] "genTheta" "muTheta"  "R"        "S"        "sdTheta" 
 ```
@@ -35,7 +35,7 @@ These are most conveniently accessed using the $ operator.
 
 genTheta houses all of the generating theta in a matrix form. In this case
 
-```
+```R
 > dim(dataObjects_YN[["adaptive"]]$genTheta)
 [1] 184   9
 ```
@@ -44,7 +44,7 @@ there are nine parameters and 184 simulated participants.
 
 muTheta and sdTheta house the marginal means and standard deviations. Use double boxes and numbers to get either for a given dimension:
 
-```
+```R
 > dim(dataObjects_YN[["adaptive"]]$muTheta[[1]])
 [1] 184 800
 ```
@@ -53,7 +53,7 @@ this gets the trial-by-trial (there are 800 trials) marginal means for all of th
 
 S and R contain stimuli and responses, respectively. Here, double boxes are used to find stimuli or responses for a given simulated participant:
 
-```
+```R
 > dim(dataObjects_YN[["adaptive"]]$S[[184]])
 [1] 800   2
 ```
