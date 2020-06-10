@@ -1,0 +1,158 @@
+\documentclass{article}
+
+\usepackage{setspace}
+\usepackage{booktabs}
+\linespread{1.25}
+
+%% Luk_pohja.tex-tiedostosta
+%% Oma sivukoko
+\setlength{\textheight}{9in}
+\setlength{\textwidth}{6in}
+\setlength{\topmargin}{0in}
+%% Tekstialueen keskitys sivulle (arvot löydetty kokeilemalla)
+\setlength{\oddsidemargin}{0.4cm}
+\setlength{\evensidemargin}{0.4cm}
+
+\usepackage{bm}
+\usepackage{url}
+\usepackage{amsmath}
+\usepackage{interval}
+\usepackage{setspace}
+\usepackage{multirow}
+\usepackage{graphicx}
+
+\graphicspath{ {./figures/} }
+
+\usepackage[T1]{fontenc}
+\usepackage[finnish, english]{babel}
+\usepackage[utf8]{inputenc}
+
+\onehalfspacing
+\usepackage[natbibapa, nodoi]{apacite}
+\usepackage{tcolorbox}
+
+\usepackage{algorithm}
+\usepackage[noend]{algpseudocode}
+
+<<setup, include=FALSE, cache=FALSE, echo=FALSE>>=
+opts_knit$set(self.contained=FALSE)
+encoding = 'UTF-8'
+setwd("C:/Users/Joni/Documents/GitHub/Master_thesis/PDF")
+@
+
+<<echo=F>>=
+lwd_global = 1
+# font_family_global = ""
+font_family_global = "Palatino"
+
+highlight_col = rgb(0.8, 0.3, 0.2, 0.7)
+
+
+drawBivarDistr = function(mu, sigma = 1, poly = F){
+  # For drawing circles.
+  # Mu: center of the circle
+  # Sigma: spread of the circle
+  # Poly: if true, a filled polygon is drawn
+  #       if false, a depressing black line is drawn
+  
+  diam = qnorm(0.975) * sigma 
+  theta = 0.01
+  cumtheta = theta
+  center = mu
+  xcoords = center[1]
+  ycoords = center[2] + diam
+  i = 1
+  
+  while(cumtheta <= (2*pi)){
+    xcoords[i+1] = xcoords[1] + diam * sin(cumtheta)
+    ycoords[i+1] = ycoords[1] - diam * (1 - cos(cumtheta))
+    cumtheta = cumtheta + theta
+    i = i + 1
+  }
+  
+  xcoords[i+1] = xcoords[1]
+  ycoords[i+1] = ycoords[1]
+  
+  if(poly){
+    polygon(xcoords, ycoords, col = highlight_col, border = NA)
+  } else{
+    points(xcoords, ycoords, type = "l")
+  }
+}
+
+@
+
+\begin{document}
+
+\thispagestyle{empty}
+
+\thispagestyle{empty}
+\begin{center}
+\null\vspace{3cm}
+\Large
+Bayesian Inference and Adaptive Estimation in General Recognition Theory\\[2cm]
+\large
+Joni Pääkkö\\[1cm]
+\vfill
+\normalsize
+\end{center}
+\begin{flushright}
+Maisterintutkielma\\
+Jyväskylän Yliopisto\\
+MUTKU\\ 
+Kevät 2020
+\end{flushright}
+
+\newpage
+
+\begin{abstract}
+
+BACKGROUND: Bayesian adaptive estimation has been applied to many problems with good results. However not in this context, no! General Recognition Theory is a multidimensional generaliztion of Signal Detection Theory.   
+
+Aims (which are all intertwined): 
+\begin{itemize}
+\item To develop General Recognition Theory by integrating it more with the theory of psychometric function.
+  \begin{itemize}
+  \item To argue for abandoning the ubiquitous categorization task, and to instead use a discrimination task (at least in audition)
+  \item To study YesNo and 2I-4AFC tasks. 
+  \end{itemize}
+\end{itemize}
+
+\begin{itemize}
+\item To evaluate the widely used Bayesian adaptive procedure in the context of General Recognition Theory.
+  \begin{itemize}
+  \item Does it work? Are there some additional difficulties, or something to take into account? 
+  \item How effective is it? How well are generating parameters recovered? How many trials are needed?
+  \end{itemize}
+\end{itemize}
+
+\begin{itemize}
+\item To facilitate the use of Bayesian inference in GRT. 
+  \begin{itemize}
+  \item Easy-to-use models are made publicly available
+  \item Theory is (somewhat) developed
+  \end{itemize}
+\end{itemize}
+
+METHOD: Simulation studies and psychophysical studies.
+
+RESULTS: TBA
+
+\end{abstract}
+
+\newpage
+
+\tableofcontents
+
+\newpage
+
+\setcounter{page}{1}
+\newpage
+<<simu1, child='Simulations/Simulations.Rnw'>>=
+@
+
+\clearpage
+\bibliography{references}
+\bibliographystyle{apacite}
+
+\end{document}

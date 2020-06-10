@@ -1,0 +1,157 @@
+%!Rnw root = ../Main.Rnw
+
+\section{Simulations}
+
+Simulations are often used in psychophysics to study the behavior of the algorithms or methods theoretically when analytical solutions are too difficult to obtain. This is the case here too. 
+
+There are two main questions: 
+
+\begin{enumerate}
+  \item How much more efficient the adaptive algorithm is in relation to sampling stimuli from a fixed grid? 
+  \item How quickly the estimates converge to generating values, and how wide the marginals of the posterior distribution are after $N$ trials?
+\end{enumerate}
+
+These questions are related, since  \textit{relative efficiency} of the algorithms (question 1) is defined here by the two other quantities: which one of the algorithms manages to more quickly gain ingormation, which is quantified by seeing how quickly the algorithms are able to minimize the marginal standard deviations of the posterior distribution. On the other hand, I'm interested in how quickly the algorithms are able to--or even if they \textit{are} able to--converge to the values of the generating parameters.
+
+The second question has more general value: even if a method would be asymptotically unbiased and consistent\footnote{That is, bias and standard deviation go to zero as $N$ goes towards $\infty$} usually reducing bias and variance gets exponentially more costly after some point. I'm interested in estimating when this point is reached. 
+
+\subsection{Methods}
+
+\paragraph{Prior distributions}
+
+Prior distributions and distributions from which generating parameters for the simulations were drawn from are shown in Figure \ref{fig:priors}. The same prior and generating distribution is used for both dimensions. Note that the scale for criterion is given in false alarm probabilities for easier interpretation. 
+
+Priors for the parameters were chosen based on prior information from \citet{silbert2009} and from pilot testing. 
+
+Prior for $\sigma$ was chosen to be fairly vague to reflect the possibility of widely differing thresholds.
+
+Generating parameters for the simulations were drawn from bimodal distributions. The idea was to draw values that are covered by the prior, but which do not necessarily correspond with the mode of the prior distribution. Another motivation was to have qualitatively different simulated observers: some that have high values for some of the parameters and others that have low values.
+
+\begin{figure}
+\centering
+<<echo=F>>=
+
+prior = read.table("../../Simulation_and_experiment/Priors.dat", header = T)
+
+p = sapply(as.matrix(prior), function(x) {eval(expr = parse(text = toString(x)))})
+p = matrix(as.vector(p), ncol = 5, nrow = 5)
+
+par(mfrow=c(3,2))
+par(family = font_family_global)
+
+# Prior for alpha
+
+x = seq(0, 6, length.out = 200) 
+y_prior = dlnorm(x, p[1,1], p[1,2])
+y_simu = dlnorm(x, p[1,3], p[1,5]) + dlnorm(x, p[1,4], p[1,5])
+
+y_prior = y_prior / max(y_prior)
+y_simu = y_simu / max(y_simu)
+
+plot(x, y_prior, type = "l", ylab = "Density", xlab = expression(sigma), 
+     lwd = 2, cex.lab = 1.25, cex.axis = 1.25)
+polygon(x, y_simu, col = highlight_col, border = rgb(0, 0, 0, 0))
+
+# points(x, y_simu, type = "l", lty = 2, lwd = 2)
+abline(h = seq(0, 1, 0.2), lty = 3, col = rgb(0, 0, 0, 0.4))
+
+# Prior for criterion
+
+x = seq(0.5, 2.5, length.out = 200) 
+x_p = pnorm(-x)
+
+y_prior = dnorm(x, p[2,1], p[2,2])
+y_simu = dnorm(x, p[2,3], p[2,5]) + dnorm(x, p[2,4], p[2,5])
+
+y_prior = y_prior / max(y_prior)
+y_simu = y_simu / max(y_simu)
+
+plot(x, y_prior, type = "l", ylab = "Density", xlab = "False alarm probability", 
+     lwd = 2, cex.lab = 1.25, cex.axis = 1.25, xaxt = "n")
+polygon(x, y_simu, col = highlight_col, border = rgb(0, 0, 0, 0))
+
+#points(x, y_simu, type = "l", lty = 2, lwd = 2)
+axis(1, at = x[seq(1, length(x), length.out= 5)], 
+     labels = round(x_p[seq(1, length(x), length.out= 5)], 2), cex.axis = 1.25)
+abline(h = seq(0, 1, 0.2), lty = 3, col = rgb(0, 0, 0, 0.4))
+
+
+# Prior for beta
+
+x = seq(0, 2, length.out = 200) 
+y_prior = dlnorm(x, p[3,1], p[3,2])
+y_simu = dlnorm(x, p[3,3], p[3,5]) + dlnorm(x, p[3,4], p[3,5])
+
+y_prior = y_prior / max(y_prior)
+y_simu = y_simu / max(y_simu)
+
+plot(x, y_prior, type = "l", ylab = "Density", xlab = expression(beta), 
+     lwd = 2, cex.lab = 1.25, cex.axis = 1.25)
+polygon(x, y_simu, col = highlight_col, border = rgb(0, 0, 0, 0))
+
+# points(x, y_simu, type = "l", lty = 2, lwd = 2)
+abline(h = seq(0, 1, 0.2), lty = 3, col = rgb(0, 0, 0, 0.4))
+
+# Kappa mu
+
+x = seq(-0.85, 0.85, length.out = 200) 
+y_prior = dnorm(x, p[4,1],p[4,2])
+y_simu = dnorm(x, p[4,3],p[4,5]) + dnorm(x, p[4,4], p[4,5])
+
+y_prior = y_prior / max(y_prior)
+y_simu = y_simu / max(y_simu)
+
+plot(x, y_prior, type = "l", ylab = "Density", xlab = expression(kappa), 
+     lwd = 2, cex.lab = 1.25, cex.axis = 1.25)
+polygon(x, y_simu, col = highlight_col, border = rgb(0, 0, 0, 0))
+
+#points(x, y_simu, type = "l", lty = 3, lwd = 2)
+abline(h = seq(0, 1, 0.2), lty = 3, col = rgb(0, 0, 0, 0.4))
+
+# Rho
+
+x = seq(-1, 1, length.out = 200) 
+x_rho = atanh(x)
+y_prior = dnorm(x_rho, p[5,1], p[5,2])
+y_simu = dnorm(x_rho, p[5,3], p[5,5]) + dnorm(x_rho, p[5,4], p[5,5])
+
+y_prior = y_prior / max(y_prior)
+y_simu = y_simu / max(y_simu)
+
+plot(x, y_prior, type = "l", ylab = "Density", xlab = expression(rho), 
+     lwd = 2, cex.lab = 1.25, cex.axis = 1.25, xaxt = "n")
+axis(1, at = x[seq(1, length(x), length.out = 5)], 
+     labels = round(x[seq(1, length(x), length.out = 5)], 2), cex.axis = 1.25)
+polygon(x, y_simu, col = highlight_col, border = rgb(0, 0, 0, 0))
+
+#points(x, y_simu, type = "l", lty = 3, lwd = 2)
+abline(h = seq(0, 1, 0.2), lty = 3, col = rgb(0, 0, 0, 0.4))
+@
+
+\caption{Prior distributions for the parameters of the model (solid black lines) and distributions for generating parameters for the simulations (regions shaded with red). Note that all of the densities are normalized to have maximum value of 1.0.}
+\label{fig:priors}
+\end{figure}
+
+Parameters in tabular form:
+
+\begin{table}[]
+\centering
+\caption{Parameters used for prior distributions and distributions of generating parameters. $M^l$ and $M^u$, respectively, are for the lower and upper peaks of bimodal distributions.}
+\begin{tabular}{cccccc}
+\toprule
+
+          & \multicolumn{2}{c}{Prior} & \multicolumn{3}{c}{Generating}   \\
+          \cmidrule(lr){2-3}\cmidrule(lr){4-6}
+          & $M$       & $SD$    & $M^l$         & $M^u$         & $SD$   \\
+\midrule
+$\sigma$  & $log(\Sexpr{exp(p[1,1])})$  & $\Sexpr{p[1,2]}$   & $log(\Sexpr{exp(p[1,3])})$    & $log(\Sexpr{exp(p[1,4])})$    & $\Sexpr{p[1,5]}$ \\
+$C$       & $\Sexpr{p[2,1]}$            & $\Sexpr{p[2,2]}$   & $\Sexpr{p[2,3]}$         & $\Sexpr{p[2,4]}$         & $\Sexpr{p[2,5]}$  \\
+$\beta$   & $log(\Sexpr{exp(p[3,1])})$  & $\Sexpr{p[3,2]}$   & $log(\Sexpr{exp(p[3,3])})$    & $log(\Sexpr{exp(p[3,4])})$    & $\Sexpr{p[3,5]}$ \\
+$\kappa$  & $\Sexpr{p[4,1]}$            & $\Sexpr{p[4,2]}$   & $\Sexpr{p[4,3]}$        & $\Sexpr{p[4,4]}$         & $\Sexpr{p[4,5]}$ \\
+$\rho$    & $\Sexpr{p[5,1]}$            & $\Sexpr{p[5,2]}$  & $atanh(\Sexpr{tanh(p[5,3])})$ & $atanh(\Sexpr{tanh(p[5,4])})$  & $\Sexpr{p[5,5]}$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\section{Results}
+
