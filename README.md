@@ -1,13 +1,20 @@
-# Bayesian Adaptive Estimation and Inference in Multidimensional Signal Detection Theory Models
+# Bayesian Adaptive Estimation and Inference in General Recognition Theory Models With Pschometric Functions
 
 That's the current title of my thesis. It's subject to a lot of change in the coming days. 
 
 ## Abstract
 
-Combine General Recognition Theory with psychometric functions.
-Apply Bayesian adaptive estimation. 
-Do simulations to study theoretical performance.
-Do psychophysical studies to get some real data. 
+General Recognition Theory (GRT) is a multidimensional generalization of Signal Detection Theory. It is used to model the detection of signals with multiple dimensions, e.g. auditory signals which can vary not only in their pitch but also in their timbre independently. 
+
+Bayesian adaptive estimation has been succesfully applied to many different tasks and models in psychophysics. The main goal of this thesis is to study the application of it to GRT models. 
+
+To achieve this, I will introduce a GRT models for a Yes/No and 2I-4AFC procedure that include psychometric functions to model the relationship between physical signal strengths and $d'$ explicitly. Also, methods for Bayesian estimation of these models are introduced.
+
+The performance of the models are evaluated in simulations and in a small psychophysical experiment (N = 2).
+
+Simulations indicate that the adaptive algorithm offers little improvement over random sampling in this context. 
+
+Data from the psychophysical experiments indicate that non-sensory factors play a big part, indicating that more work should be put into developing models/procedures that can identify between these factors.
 
 # PDF
 
