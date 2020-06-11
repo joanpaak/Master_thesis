@@ -61,13 +61,13 @@ plotSds = function(dimsToPlot,
     highq[i,]   = apply(sdtheta, 2, function(x){ quantile(x, 0.75)})
   }
    
-  # Plot the plot:
+  # Plot the plot:, log = "x"
   
-  plot(NULL, xlim = c(1, 800), ylim = range(c(highq, lowq)), 
-       axes = F, ylab = expression(paste("Marg.", sigma)), xlab = "Trial", log = "x", 
+  plot(NULL, xlim = c(1, 800), ylim = c(0, max(c(highq, lowq))), 
+       axes = F, ylab = expression(paste("Marg.", sigma)), xlab = "Trial", 
        main = mainTitle)
   
-  abline(h = pretty(range(c(highq, lowq))), lty = 2, col = c(1, 1, 1))
+  abline(h = pretty(c(0, max(c(highq, lowq)))), lty = 2, col = c(1, 1, 1))
   
   polygon(c(1:800, 800:1), c(lowq[1,], rev(highq[1,])), col = colPalette_transparency[1], border = NA)
   polygon(c(1:800, 800:1), c(lowq[2,], rev(highq[2,])), col = colPalette_transparency[2], border = NA)
@@ -101,13 +101,13 @@ plotSqError = function(dimsToPlot,
     highq[i,]   = apply(mutheta, 2, function(x){ quantile(x, 0.75)})
   }
 
-  # Plot the plot:
+  # Plot the plot:log = "x",
   
-  plot(NULL, xlim = c(1, 800), ylim = range(c(highq, lowq)), 
-       axes = F, ylab = expression("Error"^"2"), xlab = "Trial", log = "x", 
+  plot(NULL, xlim = c(1, 800), ylim = c(0, max(c(highq, lowq))), 
+       axes = F, ylab = expression("Error"^"2"), xlab = "Trial",  
        main = mainTitle)
   
-  abline(h = pretty(range(c(highq, lowq))), lty = 2, col = c(1, 1, 1))
+  abline(h = pretty(c(0, max(c(highq, lowq)))), lty = 2, col = c(1, 1, 1))
   
   polygon(c(1:800, 800:1), c(lowq[1,], rev(highq[1,])), col = colPalette_transparency[1], border = NA)
   polygon(c(1:800, 800:1), c(lowq[2,], rev(highq[2,])), col = colPalette_transparency[2], border = NA)
