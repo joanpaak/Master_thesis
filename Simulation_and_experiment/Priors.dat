@@ -1,0 +1,7 @@
+Prior_mu Prior_sd genTheta_mu_l genTheta_mu_h genTheta_sd
+log(2.5)  0.75    log(1)        log(5)        0.08
+1.5       0.30    1.2           1.7           0.05
+log(1)    0.30    log(0.8)      log(1.2)      0.05
+0.0       0.30    -0.25         0.25          0.075
+0.0       0.70    atanh(0.75)   atanh(-0.25)  0.10
+
