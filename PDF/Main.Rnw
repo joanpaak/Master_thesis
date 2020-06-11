@@ -20,6 +20,7 @@
 \usepackage{setspace}
 \usepackage{multirow}
 \usepackage{graphicx}
+\usepackage{float}
 
 \graphicspath{ {./figures/} }
 
@@ -42,8 +43,8 @@ setwd("C:/Users/Joni/Documents/GitHub/Master_thesis/PDF")
 
 <<echo=F>>=
 lwd_global = 1
-# font_family_global = ""
-font_family_global = "Palatino"
+font_family_global = ""
+# font_family_global = "Palatino"
 
 highlight_col = rgb(0.8, 0.3, 0.2, 0.7)
 
