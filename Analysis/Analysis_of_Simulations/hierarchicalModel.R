@@ -102,7 +102,7 @@ qs_YN_sq_error = matrix(NaN, ncol = 4, nrow = 9)
 qs_AFC_SD = matrix(NaN, ncol = 4, nrow = 7)
 qs_AFC_sq_error = matrix(NaN, ncol = 4, nrow = 7)
 
-for(i in 1:N_param){
+for(i in 1:9){
   qs_YN_SD[i,] =  quantile(extract(fit_YN_SD, pars = "slope")[[1]][,i], 
                            c(0.025, 0.25, 0.75, 0.975))
   qs_YN_sq_error[i,] =  quantile(extract(fit_YN_sq_error, pars = "slope")[[1]][,i], 
@@ -120,7 +120,7 @@ for(i in 1:7){
 
 plotQuantiles = function(qs, parnames, N_param, mainTitle){
   
-  plot(NULL, ylim = c(0, N_param), xlim = range(qs), axes = F,
+  plot(NULL, ylim = c(1, N_param), xlim = range(qs), axes = F,
        xlab = expression(paste(beta, "'")), ylab = "Parameter",
        main = mainTitle)
   
@@ -159,21 +159,21 @@ parnames_AFC = c(expression(sigma),
 # Save plots
 
 png(filename = paste(figureFolder, "qs_YN_SD.png", sep = ""), 
-    width = 5, height = 5, units = "in", res = 700)
+    width = 5, height = 4, units = "in", res = 700)
 plotQuantiles(qs_YN_SD, parnames_YN, 9, expression(paste("Y/N, marg.", sigma)))
 dev.off()
 
 png(filename = paste(figureFolder, "qs_YN_sq_error.png", sep = ""), 
-    width = 5, height = 5, units = "in", res = 700)
+    width = 5, height = 4, units = "in", res = 700)
 plotQuantiles(qs_YN_sq_error, parnames_YN, 9, "Y/N, sq. error")
 dev.off()
 
 png(filename = paste(figureFolder, "qs_AFC_SD.png", sep = ""), 
-    width = 5, height = 4, units = "in", res = 700)
+    width = 5, height = 3.5, units = "in", res = 700)
 plotQuantiles(qs_AFC_SD, parnames_AFC, 7, expression(paste("AFC, marg.", sigma)))
 dev.off()
 
 png(filename = paste(figureFolder, "qs_AFC_sq_error.png", sep = ""), 
-    width = 5, height = 4, units = "in", res = 700)
+    width = 5, height = 3.5, units = "in", res = 700)
 plotQuantiles(qs_AFC_sq_error, parnames_AFC, 7, "AFC, sq. error")
 dev.off()
