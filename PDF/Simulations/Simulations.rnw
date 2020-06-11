@@ -2,24 +2,28 @@
 
 \section{Simulations}
 
-Simulations are often used in psychophysics to study the behavior of the algorithms or methods theoretically when analytical solutions are too difficult to obtain. This is the case here too. 
-
-There are two main questions: 
+I will be considering two main questions: 
 
 \begin{enumerate}
-  \item How much more efficient the adaptive algorithm is in relation to sampling stimuli from a fixed grid? 
-  \item How quickly the estimates converge to generating values, and how wide the marginals of the posterior distribution are after $N$ trials?
+  \item How much more efficient the adaptive algorithm is in relation to sampling stimuli from a fixed grid--if at all? 
+  \item How well can generating parameters be recovered?
 \end{enumerate}
 
-These questions are related, since  \textit{relative efficiency} of the algorithms (question 1) is defined here by the two other quantities: which one of the algorithms manages to more quickly gain ingormation, which is quantified by seeing how quickly the algorithms are able to minimize the marginal standard deviations of the posterior distribution. On the other hand, I'm interested in how quickly the algorithms are able to--or even if they \textit{are} able to--converge to the values of the generating parameters.
+These questions are closely related, since relative efficiency of the algorithms (Question 1) is defined here by the quantities that are also used to evaluate Question 2. 
 
-The second question has more general value: even if a method would be asymptotically unbiased and consistent\footnote{That is, bias and standard deviation go to zero as $N$ goes towards $\infty$} usually reducing bias and variance gets exponentially more costly after some point. I'm interested in estimating when this point is reached. 
+There are two quantities of interest. First is defined by taking the means of the marginal posterior distributions as point estimates and calculating the squared differences to the generating parameters. This quantifies squared bias and variance of these estimators. The second quantity is the standard deviations of the marginal posterior distributions. This is used as a measure of how much uncertainty about the parameters is left after the data collection process. The goal, as already stated, is to minimize uncertainty about the parameters.
+
+Question 1 is evaluated by inspecting if there are differences between the algorithms in how quickly the aforementioned quantities approach zero. Question 2 is answered by looking at the same  quantities, but the focus is on the overall performance, not differences. The first question is more closely related to the topic of this thesis, but the second question has more general value regarding the estimation of GRT models for which reason it can't be ignored. 
 
 \subsection{Methods}
 
+The general method was the following: first a set of generating parameters for the simulated observer were drawn randomly, and then either of the algorithms (adaptive/non-adaptive) described earlier were run. This was done for both the Yes/No and 21-4AFC procedure, resulting in four different conditions\footnote{There was a third algorithm, that consisted of sampling stimuli randomly from an adaptive grid, but results from this condition are not reported here, since it doesn't directly answer the main question posed in this thesis. The interested reader can find the data and R code to plot the results from: \url{https://github.com/joanpaak/Master_thesis}}. 
+
+I have chosen the number 800 fairly arbitrarily; it represents a number of trials that, I think, could still be administered relatively continuously to a participant, without taking into account non-stationarities induced by a multi-session design. I have tried to pick a number that would b large enough; if one thinks that the number is lower, one can still get that information from the graphs. 
+
 \paragraph{Prior distributions}
 
-Prior distributions and distributions from which generating parameters for the simulations were drawn from are shown in Figure \ref{fig:priors}. The same prior and generating distribution is used for both dimensions. Note that the scale for criterion is given in false alarm probabilities for easier interpretation. 
+Prior distributions and distributions from which generating parameters for the simulations were drawn from are shown in Figure \ref{fig:priors} and in tabular form in Table \ref{tab:priors}. The same prior and generating distribution is used for both dimensions. Note that the scale for criterion is given in false alarm probabilities for easier interpretation. 
 
 Priors for the parameters were chosen based on prior information from \citet{silbert2009} and from pilot testing. 
 
@@ -27,7 +31,7 @@ Prior for $\sigma$ was chosen to be fairly vague to reflect the possibility of w
 
 Generating parameters for the simulations were drawn from bimodal distributions. The idea was to draw values that are covered by the prior, but which do not necessarily correspond with the mode of the prior distribution. Another motivation was to have qualitatively different simulated observers: some that have high values for some of the parameters and others that have low values.
 
-\begin{figure}
+\begin{figure}[!htb]
 \centering
 <<echo=F>>=
 
@@ -132,9 +136,7 @@ abline(h = seq(0, 1, 0.2), lty = 3, col = rgb(0, 0, 0, 0.4))
 \label{fig:priors}
 \end{figure}
 
-Parameters in tabular form:
-
-\begin{table}[]
+\begin{table}[H]
 \centering
 \caption{Parameters used for prior distributions and distributions of generating parameters. $M^l$ and $M^u$, respectively, are for the lower and upper peaks of bimodal distributions.}
 \begin{tabular}{cccccc}
@@ -151,7 +153,123 @@ $\kappa$  & $\Sexpr{p[4,1]}$            & $\Sexpr{p[4,2]}$   & $\Sexpr{p[4,3]}$ 
 $\rho$    & $\Sexpr{p[5,1]}$            & $\Sexpr{p[5,2]}$  & $atanh(\Sexpr{tanh(p[5,3])})$ & $atanh(\Sexpr{tanh(p[5,4])})$  & $\Sexpr{p[5,5]}$ \\
 \bottomrule
 \end{tabular}
+\label{tab:priors}
 \end{table}
 
-\section{Results}
+\subsection{Results}
 
+I will present trial-by-trial estimates and a more detailed analysis of the last trial.
+
+\paragraph{Trial-by-trial estimates}
+Trial-by-trial results from the simulations are summarized in Figures \ref{fig:simulation_YN_sensory_sq_error} to \ref{fig:simulation_AFC_interaction_SD}. The figures show squared errors in relation to generating parameters and marginal standard deviations after $N$ trials. In all plots black color is used for the randomly sampled stimuli while red is used for adaptively sampled stimuli. The shaded regions indicate 50\%-quantiles (from 25\% to 75\%); solid lines indicate medians. 
+
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.75, angle = 0]{simulation_YN_sensory_sq_error}
+\caption{Yes/No, sensory parameters, squared error.}
+\label{fig:simulation_YN_sensory_sq_error}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.75, angle = 0]{simulation_YN_interaction_sq_error}
+\caption{Yes/No, interaction parameters, squared error.}
+\label{fig:simulation_YN_interaction_sq_error}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.75, angle = 0]{simulation_YN_sensory_SD}
+\caption{Yes/No, sensory parameters, standard deviation.}
+\label{fig:simulation_YN_sensory_SD}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.75, angle = 0]{simulation_YN_interaction_SD}
+\caption{Yes/No, interaction parameters, standard deviation.}
+\label{fig:simulation_YN_interaction_SD}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.75, angle = 0]{simulation_AFC_sensory_sq_error}
+\caption{AFC, sensory parameters, squared error.}
+\label{fig:simulation_AFC_sensory_sq_error}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.75, angle = 0]{simulation_AFC_interaction_sq_error}
+\caption{AFC, interaction parameters, squared error.}
+\label{fig:simulation_AFC_interaction_sq_error}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.75, angle = 0]{simulation_AFC_sensory_SD}
+\caption{AFC, sensory parameters, standard deviation.}
+\label{fig:simulation_AFC_sensory_SD}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.75, angle = 0]{simulation_AFC_interaction_SD}
+\caption{AFC, interaction parameters, marginal standard deviations.}
+\label{fig:simulation_AFC_interaction_SD}
+\end{figure}
+
+\paragraph{Hierarchical model}
+
+A hierarchical model was fit to both the marginal standard deviations and squared errors at the last trial to get a more quantitative understanding of the differences at that point. A common dummy coded linear model with Gaussian errors was used. The slopes, intercepts and standard deviations were pooled inside each condition, which means that e.g. all of the marginal standard deviations in the Yes/No condition with adaptively selected stimuli were given a common hyperprior. The models were fit using Stan, the model code can be found online from \url{https://github.com/joanpaak} ERROR.
+
+Data was standardized before fitting. Individual $\beta$ coefficients of the linear model are shown in Figures from \ref{fig:qs_YN_SD} to \ref{fig:qs_AFC_sq_error}. In all plots the thicker parts show 50\% and narrower lines 95\% confidence intervals. Positive values indicate better performance by the adaptive algorithm.
+
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.75]{qs_YN_SD}
+\caption{YN SD}
+\label{fig:qs_YN_SD}
+\end{figure} 
+
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.75]{qs_YN_sq_error}
+\caption{YN SQ Error}
+\label{fig:qs_YN_sq_error}
+\end{figure} 
+
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.75]{qs_AFC_SD}
+\caption{AFC SD}
+\label{fig:qs_AFC_SD}
+\end{figure} 
+
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.75]{qs_AFC_sq_error}
+\caption{AFC SQ Error}
+\label{fig:qs_AFC_sq_error}
+\end{figure} 
+
+\subsection{Discussion}
+
+\paragraph{Question 1: is the adaptive algorithm more efficient?}
+
+When it comes to squared error (figures \ref{fig:simulation_YN_sensory_sq_error}, \ref{fig:simulation_YN_interaction_sq_error}, \ref{fig:simulation_AFC_sensory_sq_error} and \ref{fig:simulation_AFC_interaction_sq_error}), there doesn't seem to be drastic differences. In the Yes/No procedure median squared error seems to be slighty lower for the interaction parameters (Figure \ref{fig:simulation_YN_interaction_sq_error}) when there are less than 50 trials but even this effect is swamped by variability. 
+
+What is interesting to note is that variance of error in estimating the $\beta$ parameter increses somewhat during the first 100 trials (figures \ref{fig:simulation_YN_sensory_sq_error} and \ref{fig:simulation_AFC_sensory_sq_error}), implying that for some simulations the posterior means drift further from the generating parameters. 
+
+The adaptive algorithm is able to achieve lower marginal standard deviations (figures \ref{fig:simulation_YN_sensory_SD}, \ref{fig:simulation_YN_interaction_SD}, \ref{fig:simulation_AFC_sensory_SD} and \ref{fig:simulation_AFC_interaction_SD}) for almost all of the parameters, which is what would be expected. However, the effect is rather modest, and often dwarfed by variability. Interestingly for criterion, the situation is flipped, but again, the difference is small. 
+
+Main conclusion is that in terms of squared error and marginal standard deviations, adaptive estimation doesn't seem to offer drastic enhancements over random sampling. 
+
+\paragraph{Question 2: how well are generating parameters recovered?}
+
+It seems that the majority of of improvement happens before 400 trials. After that, information gain seems to slow down considerably.
+It would seem that there would still be room for improvement in the estimates even after 800 trials, however analysis of such multi-session designs is beyond the scope of this work, since  one would have to be more serious about non-stationarities induced by breaking the observation periods into multiple sessions. 
+
+The most problematic parameters would seem to be the $\beta$ parameters. This contrasts results in for example \cite{kontsevichtyler1999}, and could indicate that when one attemps to do inference on interactions, inferences about the non-linearity of the $d'$ function become more uncertain. 
+
+With regard to the interaction terms, squared errors and marginal standard deviations for the $\kappa_{\mu}$ parameters seem to approach fairly quickly,  most of the improvements seems to have happened well before 100 trials, but the $\rho$ parameters seem more problematic. Marginal standard deviations for the $\rho$s don't get, on average, much smaller than $.2$ which still implies a lot of uncertainty--remembering that correlation coefficients are bound between $-1$ and $1$.
