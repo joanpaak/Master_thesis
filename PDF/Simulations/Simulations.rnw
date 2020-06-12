@@ -139,6 +139,7 @@ abline(h = seq(0, 1, 0.2), lty = 3, col = rgb(0, 0, 0, 0.4))
 \begin{table}[H]
 \centering
 \caption{Parameters used for prior distributions and distributions of generating parameters. $M^l$ and $M^u$, respectively, are for the lower and upper peaks of bimodal distributions.}
+\vspace{0.5cm}
 \begin{tabular}{cccccc}
 \toprule
 
@@ -158,98 +159,121 @@ $\rho$    & $\Sexpr{p[5,1]}$            & $\Sexpr{p[5,2]}$  & $atanh(\Sexpr{tanh
 
 \subsection{Results}
 
-I will present trial-by-trial estimates and a more detailed analysis of differences during the last trial.
+Total number of simulations per condition are shown in Table \ref{tab:conditions}. Squared errors and marginal standard deviations are presented in two ways: 1) on trial-by-trial basis and 2) by estimating the average differences on the last trial.
+
+\begin{table}[H]
+\centering
+\caption{Conditions and number of simulations in each.}
+\vspace{0.5cm}
+\begin{tabular}{ccc}
+
+\toprule
+Procedure & Algorithm & N \\
+\midrule
+Yes/No & Adaptive & 184 \\
+Yes/No & Random & 284 \\
+2I-4AFC & Adaptive & 174 \\
+2I-4AFC & Random & 130 \\
+
+\bottomrule
+
+\end{tabular}
+
+\label{tab:conditions}
+\end{table}
 
 \paragraph{Trial-by-trial estimates}
-Trial-by-trial results from the simulations are summarized in Figures \ref{fig:simulation_YN_sensory_sq_error} to \ref{fig:simulation_AFC_interaction_SD}. The figures show squared errors in relation to generating parameters and marginal standard deviations after $N$ trials, all the way to trial number 800. In all plots black color is used for the randomly sampled stimuli while red is used for adaptively sampled stimuli. The shaded regions indicate 50\%-quantiles (from 25\% to 75\%); solid lines indicate medians. 
+Trial-by-trial results from the simulations are summarized in Figures \ref{fig:simulation_YN_sensory_sq_error} to \ref{fig:simulation_AFC_interaction_SD}. The figures show squared errors in relation to generating parameters and marginal standard deviations after $N$ trials, all the way to trial number 800. In all plots black color is used for the randomly sampled stimuli while red is used for adaptively sampled stimuli. The shaded regions indicate 50\%-quantiles (from 25\% to 75\%); solid lines indicate medians. Sensory ($\sigma$, $\beta$, crit) and interaction ($\kappa_{\mu}$, $\rho$) are shown in their own figures.
 
 \begin{figure}[H]
 \centering
 \includegraphics[scale=0.75, angle = 0]{simulation_YN_sensory_sq_error}
-\caption{Yes/No, sensory parameters, squared error.}
+\caption{Procedure: Yes/No; sensory parameters. Trial-by-trial squared error between marginal means of the posterior distribution and generating parameters. Red: adaptive algorithm; black: random stimuli.}
 \label{fig:simulation_YN_sensory_sq_error}
 \end{figure}
 
 \begin{figure}[H]
 \centering
 \includegraphics[scale=0.75, angle = 0]{simulation_YN_interaction_sq_error}
-\caption{Yes/No, interaction parameters, squared error.}
+\caption{Procedure: Yes/No; interaction parameters. Trial-by-trial squared error between marginal means of the posterior distribution and generating parameters. Red: adaptive algorithm; black: random stimuli.}
 \label{fig:simulation_YN_interaction_sq_error}
 \end{figure}
 
 \begin{figure}[H]
 \centering
 \includegraphics[scale=0.75, angle = 0]{simulation_YN_sensory_SD}
-\caption{Yes/No, sensory parameters, standard deviation.}
+\caption{Procedure: Yes/No; sensory parameters. Trial-by-trial marginal standard deviations. Red: adaptive algorithm; black: random stimuli.}
 \label{fig:simulation_YN_sensory_SD}
 \end{figure}
 
 \begin{figure}[H]
 \centering
 \includegraphics[scale=0.75, angle = 0]{simulation_YN_interaction_SD}
-\caption{Yes/No, interaction parameters, standard deviation.}
+\caption{Procedure: Yes/No; interaction parameters. Trial-by-trial marginal standard deviations. Red: adaptive algorithm; black: random stimuli.}
 \label{fig:simulation_YN_interaction_SD}
 \end{figure}
 
 \begin{figure}[H]
 \centering
 \includegraphics[scale=0.75, angle = 0]{simulation_AFC_sensory_sq_error}
-\caption{AFC, sensory parameters, squared error.}
+\caption{Procedure: 2I-4AFC; sensory parameters. Trial-by-trial squared error between marginal means of the posterior distribution and generating parameters. Red: adaptive algorithm; black: random stimuli.}
 \label{fig:simulation_AFC_sensory_sq_error}
 \end{figure}
 
 \begin{figure}[H]
 \centering
 \includegraphics[scale=0.75, angle = 0]{simulation_AFC_interaction_sq_error}
-\caption{AFC, interaction parameters, squared error.}
+\caption{Procedure: 2I-4AFC; interaction parameters. Trial-by-trial squared error between marginal means of the posterior distribution and generating parameters. Red: adaptive algorithm; black: random stimuli.}
 \label{fig:simulation_AFC_interaction_sq_error}
 \end{figure}
 
 \begin{figure}[H]
 \centering
 \includegraphics[scale=0.75, angle = 0]{simulation_AFC_sensory_SD}
-\caption{AFC, sensory parameters, standard deviation.}
+\caption{Procedure: 2I-4AFC; sensory parameters. Trial-by-trial marginal standard deviations. Red: adaptive algorithm; black: random stimuli.}
 \label{fig:simulation_AFC_sensory_SD}
 \end{figure}
 
 \begin{figure}[H]
 \centering
 \includegraphics[scale=0.75, angle = 0]{simulation_AFC_interaction_SD}
-\caption{AFC, interaction parameters, marginal standard deviations.}
+\caption{Procedure: 2I-4AFC; interaction parameters. Trial-by-trial marginal standard deviations. Red: adaptive algorithm; black: random stimuli.}
 \label{fig:simulation_AFC_interaction_SD}
 \end{figure}
 
 \paragraph{Hierarchical model}
 
-A hierarchical model was fit to both the marginal standard deviations and squared errors at the last trial to get a more quantitative understanding of the differences at that point. A common dummy coded linear model with Gaussian errors was used. The slopes, intercepts and standard deviations were pooled inside each condition, which means that e.g. all of the marginal standard deviations in the Yes/No condition with adaptively selected stimuli were given a common hyperprior. The models were fit using Stan, the model code can be found online from \url{https://github.com/joanpaak} ERROR.
+A hierarchical model was fit to both the marginal standard deviations and squared errors at the last trial to get a more quantitative understanding of the differences at that point. This should be considered as a first-order approximation of a more complete model of performance. Idea behind this approximation is that differences between the algorithms would become more apparent as more trials are completed, and the posterior distribution becomes more dominated by the likelihood; thus the algorithms were compared at the last trial.
 
-Data was standardized before fitting. Individual $\beta$ coefficients of the linear model are shown in Figures from \ref{fig:qs_YN_SD} to \ref{fig:qs_AFC_sq_error}. In all plots the thicker parts show 50\% and narrower lines 95\% confidence intervals. Positive values indicate better performance by the adaptive algorithm.
+A common dummy coded linear model with Gaussian errors was used. The slopes, intercepts and standard deviations were pooled inside each condition, which means that e.g. all of the marginal standard deviations in the Yes/No condition with adaptively selected stimuli were given a common hyperprior. The models were fit using Stan, model code can be found online from \url{https://github.com/joanpaak/ERROR}.
+
+Data was standardized before fitting ($y' = (y - \overline{y}) / \text{SD}(y) $). Parameter-specific $\beta'$ coefficients (slopes fit to standardized data) of the linear model are shown in Figures from \ref{fig:qs_YN_SD} to \ref{fig:qs_AFC_sq_error}. In all plots the thicker parts indicate 50\% and narrower lines 95\% equal-tailed intervals\footnote{\textit{Equal-tailed interval} (ETI) means the interval between some percentiles of the posterior distribution \citep[p. 342]{kruschke2015}, here for example the interval between 2.5\% and 97.5\% for the 95\% ETI.}. Positive values indicate better performance by the adaptive algorithm.
 
 \begin{figure}[H]
 \centering
 \includegraphics[scale=0.75]{qs_YN_SD}
-\caption{YN SD}
+\caption{Procedure: Yes/No. $\beta'$ coefficients for the difference between adaptive and random algorithms in marginal standard deviations.}
 \label{fig:qs_YN_SD}
 \end{figure} 
 
 \begin{figure}[H]
 \centering
 \includegraphics[scale=0.75]{qs_YN_sq_error}
-\caption{YN SQ Error}
+\caption{Procedure: Yes/No. $\beta'$ coefficients for the difference between adaptive and random algorithms in squared errors between marginal means and generating parameters.}
 \label{fig:qs_YN_sq_error}
 \end{figure} 
 
 \begin{figure}[H]
 \centering
 \includegraphics[scale=0.75]{qs_AFC_SD}
-\caption{AFC SD}
+\caption{Procedure: 2I-4AFC. $\beta'$ coefficients for the difference between adaptive and random algorithms in marginal standard deviations.}
 \label{fig:qs_AFC_SD}
 \end{figure} 
 
 \begin{figure}[H]
 \centering
 \includegraphics[scale=0.75]{qs_AFC_sq_error}
-\caption{AFC SQ Error}
+\caption{Procedure: 2I-4AFC. $\beta'$ coefficients for the difference between adaptive and random algorithms in squared errors between marginal means and generating parameters.}
 \label{fig:qs_AFC_sq_error}
 \end{figure} 
 
@@ -257,24 +281,18 @@ Data was standardized before fitting. Individual $\beta$ coefficients of the lin
 
 \paragraph{Question 1: is the adaptive algorithm more efficient?}
 
-Judging from Figures \ref{fig:qs_YN_SD} and \ref{fig:qs_AFC_SD} by the time of 800 completed trials the adaptive algorithm has managed to reduce marginal standard deviations more for parameters $\sigma$, $\beta$ and $\rho$ in both conditions. Effect sizes range from around $0.4$ to almost $1.0$. However, as can be seen from Figures \ref{fig:simulation_YN_sensory_SD}, \ref{fig:simulation_YN_interaction_SD}, \ref{fig:simulation_AFC_sensory_SD} and \ref{fig:simulation_AFC_interaction_SD}, differences in raw scores are fairly modest, around 0.05 to 0.20.
+Judging from Figures \ref{fig:qs_YN_SD} and \ref{fig:qs_AFC_SD}, by the time of 800 completed trials the adaptive algorithm has managed to reduce marginal standard deviations more for parameters $\sigma$, $\beta$ and $\rho$ in both conditions. Effect sizes range from around $0.4$ to almost $1.0$. However, as can be seen from Figures \ref{fig:simulation_YN_sensory_SD}, \ref{fig:simulation_YN_interaction_SD}, \ref{fig:simulation_AFC_sensory_SD} and \ref{fig:simulation_AFC_interaction_SD}, differences in raw scores are fairly modest, around 0.05 to 0.20.
 
 There doesn't seem to be that much difference in $\kappa_{\mu}$ parameters, which is probably explained by the fact that, as can be seen from Figures \ref{fig:simulation_AFC_interaction_SD} and \ref{fig:simulation_YN_interaction_SD} the marginal standard deviations for these parameters reduce fairly quickly.
 
 The most surprising result is that random sampling seems to be more effective in reducing uncertainty about the criteria (Figure \ref{fig:qs_YN_SD}). 
 
-Similar pattern can be observed for the squared errors (Figures \ref{fig:qs_YN_sq_error} and \ref{fig:qs_AFC_sq_error})  but the differences are swamped by lot more variability. 
-
-Main conclusion is that in terms of squared error and marginal standard deviations, adaptive estimation doesn't seem to offer drastic enhancements over random sampling. 
+Similar pattern can be observed for the squared errors (Figures \ref{fig:qs_YN_sq_error} and \ref{fig:qs_AFC_sq_error}) but the differences are swamped by a lot more variability. 
 
 \paragraph{Question 2: how well are generating parameters recovered?}
 
-It seems that the majority of of improvement happens before 400 trials. After that, information gain seems to slow down considerably.
-It would seem that there would still be room for improvement in the estimates even after 800 trials, however analysis of such multi-session designs is beyond the scope of this work, since  one would have to be more serious about non-stationarities induced by breaking the observation periods into multiple sessions. 
+It seems that the majority of of improvement for most parameters happens before 400 trials. After that, information gain seems to slow down considerably.
 
-The most problematic parameters would seem to be the $\beta$ parameters. This contrasts results in for example \cite{kontsevichtyler1999}, and could indicate that when one attemps to do inference on interactions, inferences about the non-linearity of the $d'$ function become more uncertain. 
+The most problematic parameters would seem to be the $\beta$ parameters. This contrasts results in for example \cite{kontsevichtyler1999}, and could indicate that when in this more complex model inferences about the non-linearity of the $d'$ function become more uncertain. Note also that the variance of squared error in estimating the $\beta$ parameter increses somewhat during the first 100 trials (Figures \ref{fig:simulation_YN_sensory_sq_error} and \ref{fig:simulation_AFC_sensory_sq_error}, but the effect is more pronounced in the Yes/No condition), implying that for some simulations the posterior means drift further from the generating parameters. 
 
-What is interesting to note is that variance of error in estimating the $\beta$ parameter increses somewhat during the first 100 trials (figures \ref{fig:simulation_YN_sensory_sq_error} and \ref{fig:simulation_AFC_sensory_sq_error}), implying that for some simulations the posterior means drift further from the generating parameters. 
-
-
-With regard to the interaction terms, squared errors and marginal standard deviations for the $\kappa_{\mu}$ parameters seem to approach fairly quickly,  most of the improvements seems to have happened well before 100 trials, but the $\rho$ parameters seem more problematic. Marginal standard deviations for the $\rho$s don't get, on average, much smaller than $.2$ which still implies a lot of uncertainty--remembering that correlation coefficients are bound between $-1$ and $1$.
+With regard to the interaction terms, squared errors and marginal standard deviations for the $\kappa_{\mu}$ parameters seem to approach zero fairly quickly, most of the improvements seems to have happened well before 100 trials, but the $\rho$ parameters seem more problematic. Marginal standard deviations for the $\rho$s don't get, on average, much smaller than $.2$ which still implies a lot of uncertainty--keeping in mind that correlation coefficients are bound between $-1$ and $1$.
