@@ -1,6 +1,7 @@
 %!Rnw root = ../Main.Rnw
 
 \section{Simulations}
+\label{sec:simulations}
 
 I will be considering two main questions: 
 
@@ -243,7 +244,7 @@ Trial-by-trial results from the simulations are summarized in Figures \ref{fig:s
 
 \paragraph{Hierarchical model}
 
-A hierarchical model was fit to both the marginal standard deviations and squared errors at the last trial to get a more quantitative understanding of the differences at that point. This should be considered as a first-order approximation of a more complete model of performance. Idea behind this approximation is that differences between the algorithms would become more apparent as more trials are completed, and the posterior distribution becomes more dominated by the likelihood; thus the algorithms were compared at the last trial.
+A hierarchical model was fit to both the marginal standard deviations and squared errors at the last trial to get a more quantitative understanding of the differences at that point. This should be considered as a first-order approximation of a more complete model of performance. Why only the estimates at the last trial are presented is because for any simple model which breaks the performance down in two factors, namely the final values and the speed at which they were arrived at, only one of the factors needs to be known. This is because all of the algorithms start from the same values (the prior distribution) and are run for the same amount of time (800 trials). Of course some more sophisticated model, that would perform more complex decomposition of performance could be used, but the development of such algorithm is beyond the scope of this thesis. 
 
 A common dummy coded linear model with Gaussian errors was used. The slopes, intercepts and standard deviations were pooled inside each condition, which means that e.g. all of the marginal standard deviations in the Yes/No condition with adaptively selected stimuli were given a common hyperprior. The models were fit using Stan, model code can be found online from \url{https://github.com/joanpaak/ERROR}.
 
