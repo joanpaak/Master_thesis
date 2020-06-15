@@ -6,7 +6,6 @@ That's the current title of my thesis. It's subject to a lot of change in the co
 
 The thesis is not done yet; it shall be very soon, though! Currently I am writing the first version:
 
-First versions done for these sections:
 - [x] Abstract
 - [x] Introduction
 - [x] Theoretical Background: SDT
