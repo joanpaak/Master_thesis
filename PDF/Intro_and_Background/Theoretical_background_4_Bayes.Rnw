@@ -1,0 +1,140 @@
+%Rnw root = "../Main.Rnw"
+
+\section{Bayesian statistics}
+\label{sec:bayes}
+
+Bayesian statistics is at the core of this thesis: the adaptive algorithm to be used is based on the idea of representing uncertainty about parameters as probability distributions over them. Bayesian statistics will also be used for making inferences about data. In this section I will provide a short introduction to the central concepts that are needed for understanding the adaptive algorithm and, later, inferences made about the data. 
+
+\subsection{Basics of Bayesian statistics}
+
+The core idea of Bayesian statistics is the updating of prior information with observed data to arrive at a synthesis of them. This synthesis is called the posterior distribution. Both the prior information and the posterior distribution are represented as probability functions over the parameters, $\theta$. Equation \ref{eq:bayesprop} represents this process mathematically. \citep{kruschke2015}.
+
+\begin{equation}
+P(\theta | Data) \propto P(\theta) P(Data | \theta)
+\label{eq:bayesprop}
+\end{equation} 
+
+$P(\theta | Data)$ is the posterior distribution, $P(\theta)$ is the prior distribution and $P(Data | \theta)$ is the likelihood function, i.e. the probability of observing the data given the parameter values.\footnote{In the full Bayes' theorem the posterior distribution is normalized with the integral over the possible observed values, $P(Data)$, assuring that it always integrates to one and is a proper probability distribution: $P(\theta | Data) = (P(\theta) P(Data | \theta)) / P(Data)$ \citep{kruschke2015}, but I think the equation without the normalizing constant captures the main idea more clearly. This is why the symbol $\propto$ ("proportional to") is used in Equation \ref{eq:bayesprop}.}
+
+Updating is demonstrated for a single parameter in Figure \ref{fig:priorpost}. The shaded region represents the prior distribution $P(\theta)$, which in this case, is a log-normal distribution.  After some data has been observed the prior distribution is updated with evidence, $P(Data | \theta)$, represented by the dashed line, which then results in the posterior distribution $P(\theta | Data)$, represented by the solid line. Observing data, in this particular case, has reduced our uncertainty about likely values for the parameter $\sigma$, the probability density has become more concentrated.
+
+\begin{figure}
+\centering
+<<fig=T,echo=F,fig.height = 3.5>>=
+plot(NULL, xlim = c(0, 10), ylim = c(0, 1.0),
+     ylab = "Density", xlab = expression(sigma), axes = F)
+
+axis(side = 1); axis(side = 2)
+
+xcoords = seq(0, 10, 0.01)
+ycoords_1 = dlnorm(xcoords, log(2.5), 0.75)
+ycoords_2 = dlnorm(xcoords, log(6.0), 0.25)
+ycoords_3 = ycoords_1 * ycoords_2
+
+ycoords_1 = ycoords_1 / max(ycoords_1)
+ycoords_2 = ycoords_2 / max(ycoords_2)
+ycoords_3 = ycoords_3 / max(ycoords_3)
+
+polygon(c(xcoords, 10), c(ycoords_1, 0), col = highlight_col, border = NA)
+points(xcoords, ycoords_2, type = "l", lty = 2)
+points(xcoords, ycoords_3, type = "l", lty = 1)
+@
+\caption{A simplified example of the basic concepts of Bayesian inference. The shaded area represents prior knowledge about the parameter $\sigma$. Dashed line is $P(Data | \theta)$ and the solid line is the posterior probability density, $P(\theta | Data)$}
+\label{fig:priorpost}
+\end{figure}
+
+Of course, in models of any complexity prior and posterior probability densities are defined over a multidimensional space. In this thesis the dimensionalities range from 7 to 27. 
+
+The term $P(Data | \theta)$ defines how the model learns from data, and is usually called \textit{likelihood} \citep{kruschke2015}. Also, for numerical stability, likelihood is usually defined using logarithms of probabilities. Here, the likelihood for a particular $\theta$ is simply the sum of the logarithms of the probabilities of the observed  responses and signals: (for a similar approach see \citet[p. 218]{wickens1992}):
+
+\begin{equation}
+\sum_{t=1}^n ln P(\bm{R}^t, \bm{S}^t; \theta)
+\end{equation}
+
+This is the generic expression for  all models in this essay. The probabilities are always calculated by using the specific formulae defined earlier for a given model. 
+
+\subsection{Hierarchical models}
+\label{sec:hierarchical_models}
+
+The term \textit{hierarchical model} can refer to many different kinds of models\footnote{Andrew Gelman has collected a bunch of different names for hierarchical models in to a blog post: https://statmodeling.stat.columbia.edu/2019/09/18/all-the-names-for-hierarchical-and-multilevel-modeling/}. I will be using two kinds of hierarchical models: 1) Model in which the parameters are assigned distributions 2) Models embedded in a higher level mixture model. Both kinds of models will be discussed separately.
+
+\subsubsection*{Models in which parameters have distributions}
+
+Often these kinds of models are described as being models in which priors have (hyper)priors (e.g. \citet[p. 225]{kruschke2015} talks about \textit{". . . hierarchical chain of dependencies among parameters."}). However, I think it's clearer to think this as an extension of fitting e.g. multiple linear models to different data sets. Instead it is possible to group models together on a higher level, and assign the groups of parameters (e.g. all intercepts from all of the models) probability distributions. This is sometimes known has \textit{random effects modelling} in the frequentist setting.
+
+The general idea is demonstrated in Figure \ref{fig:hierarchical_model_for_groups}. The index $i$ is an index for the \textit{group} to which the observation $y_{ij}$ belongs to, $j$ indexing observations inside that group. Each group then gets a unique set of parameters of the linear function. These parameters are each assigned a distribution (prior), which in this case is the normal distribution, whose parameters are unknown and are inferred from the data. Note that for the $\sigma$ parameters the normal distributions are truncated at zero. At the highest level each parameter of these distributions gets a hyperprior, which in this case for each parameter is the standard normal distribution--taking into account again that $\sigma$ is truncated at zero.
+
+\begin{figure}[!htb]
+\includegraphics{Hierarchical_model_for_groups}
+\caption{A schematic illustration of a hierarchical linear model in which each of the parameters is given a distribution for which the parameters are inferred from the data. This creates a distinct multilevel structure to the model.}
+\label{fig:hierarchical_model_for_groups}
+\end{figure}
+
+Since the parameters are related on a higher level, some information is shared between them. One feature is that all of the means are adjusted towards the common mean, which functions analogously to multiple comparisons adjustments in frequentist statistics \citep{gelman2012}. 
+
+\subsubsection*{Models embedded in a mixture model} 
+
+Often the same data set can be fit by multiple models. These are sometimes also called \textit{mixture} models, since the idea is to model psychophysical data as a mixture of different models. I will begin by describing a simple two-level model. This corresponds with how lapsing behaviour is often modelled in the psychophysical literature. I will then introduce a three-level model which is used here to combine the models with different types of interference ($\kappa_{\mu}$/$\kappa_{\sigma}$) in one model.  
+
+\paragraph{Two-level model}
+
+A simple two-level model is presented in figure \ref{fig:Basic_hierarchical_model}. At the lowest level, the figure shows two models, one labelled \textit{lapses} and the other \textit{cognitive}, embedded in a higher level model. Both of the lower level models aim to explain the same set of observations, $y_1, y_2 \dots y_i$, the $y$ terms, in this case, consisting of pairs of stimuli ($\bm{S} = [S_x, S_y]$) and responses ($\bm{R} = [R_x, R_y]$). 
+
+\begin{figure}[!htb]
+\begin{center}
+\includegraphics[scale=0.75]{Basic_hierarchical_mixture_model}
+\end{center}
+\caption{A simple hierarchical model, which shows how the two models, one modelling lapses and the other the cognitive processes of interest, are related on a higher level through the coefficient $\lambda$.}
+\label{fig:Basic_hierarchical_model}
+\end{figure}
+
+The cognitive model can be any of the models defined in section ERROR. The lapsing model, which was described in more detail in section ERROR, is defined by the single parameter $\gamma$, which is a multinomial distribution containing the response probabilities for the individual response categories. These probabilities do not depend on the signal levels, or in fact, on anything else outside them (see Section \ref{sec:modelling_responses} \textit{\nameref{sec:modelling_responses}} for how the responses are coded):
+
+\begin{equation}
+P(y_i)=
+\begin{cases}
+  \gamma_1, & \text{if } \bm{R} = [-1, -1]\\
+  \gamma_2, & \text{if } \bm{R} = [\phantom{-}1, -1]\\
+  \gamma_3, & \text{if } \bm{R} = [-1, \phantom{-}1]\\
+  \gamma_4, & \text{if } \bm{R} = [\phantom{-}1, \phantom{-}1]
+\end{cases}
+\end{equation}
+
+This simply says that if, for example, on a certain trial the response $[1,-1]$ is observed, the likelihood is incremented by $\gamma_2$. I will be assuming that all responses are as likely, i.e. $\gamma = [0.25, 0.25, 0.25, 0.25]$. This implies that the parameters of the lapsing model are not inferred from the data, partially due to the aforementioned (see Section \ref{sec:lapses_general} \textit{\nameref{sec:lapses_general}}) difficulty of inferring details of lapsing behaviour from psychophysical data. This is a very common way of including model of lapses, see e.g. ERROR ERROR ERROR.
+
+The contributions of these two models are defined by the coefficient $\lambda$, which defines the weight of each model to the total likelihood:
+
+\begin{multline}
+\label{eq:lower_level_hiera}
+P(y_i |\Theta_{\text{cognitive + lapses}}, \text{Model}_{\text{cognitive + lapses}}) = \lambda P(y_i | \theta_{\text{lapsing}}, \text{Model}_{\text{lapsing}}) + \\ (1 - \lambda) P(y_i | \theta_{\text{cognitive}}, \text{Model}_{\text{cognitive}})
+\end{multline}
+
+The vector $\Theta_{\text{cognitive + lapses}}$ contains all of the parameters for the lower level models and $\lambda$: $\Theta_{\text{cognitive + lapses}} = [\lambda, \theta_{\text{lapsing}}, \theta_{\text{cognitive}}]$.
+
+\paragraph{Three-level model}
+
+The three level model used here combines a pair of the two-level models at a higher level. Figure \ref{fig:Structure_of_hierarchical_model} show this schematically. The lower level models (in the two horizontally aligned boxes at the bottom) correspond to the structure shown in Figure \ref{fig:Basic_hierarchical_model}. However, here the individual models are labelled according to the specific cognitive model they are using. 
+
+\begin{figure}[!htb]
+\begin{center}
+\includegraphics[width=\textwidth]{Structure_of_hierarchical_mixture_model}
+\end{center}
+\caption{Structure of the hierarchical model used in this work. On the highest level the $\alpha$ coefficient combines the models with different models for interactions.}
+\label{fig:Structure_of_hierarchical_model}
+\end{figure}
+
+Similar to the parameter $\lambda$ in the two-level case, here the contributions of the two lower level hierarchical models are modelled by the parameter $\alpha$. The likelihood is
+
+\begin{multline}
+P(y_i |\Theta_{\kappa \mu + \text{lapses} / \kappa \sigma  + \text{lapses}}, \text{Model}_{\kappa \mu + \text{lapses} / \kappa \sigma  + \text{lapses}}) = \alpha P(y_i |\theta_{\kappa \mu + \text{lapses}} \text{Model}_{\kappa \mu + \text{lapses}}) + \\ (1 - \alpha) P(y_i |\theta_{\kappa \sigma  + \text{lapses}}, \text{Model}_{\kappa \sigma  + \text{lapses}})
+\end{multline}
+
+in which the likelihoods for the lower level models are defined in equation \ref{eq:lower_level_hiera}.
+
+\subsection{Bayesian inference in the General Recognition Theory}
+
+In this work Bayesian approach is also used during the analysis of the data. Classic GRT studies have been dominated by frequentist methods, and e.g. definitions of interactions have relied on testing for the statistical significance of the parameter values associated with them (e.g. \cite{ashby2015, wickens1992}), to my knowledge, \cite{silbert2010} is the only GRT related work using Bayesian analysis framework. Contrary to the majority of studies, I won't be doing any explicit significance tests, nor am I using the usual \textit{Type I/II} error framework \citep[pp. 470 - 471]{christensen1997}, since there are many problems associated with this.
+
+For example if interactions are selected based on their statistical significance, effect sizes are likely to be exaggerated \citep{gelman2018}; but the more damning criticism is that the $p$-value doesn't differentiate between \textit{effect} or \textit{no effect} (\cite{greenland2016}), i.e. between \textit{interaction} or \textit{no interaction}, and in general, there has been a substantial amounts of criticism targeted towards focusing on binary decisions based on \textit{p}-values and instead a push to instead focus on the effect sizes and uncertainties associated with them (see e.g. \citet{kline2004, greenland2016, steiger1997}). 
+
+This shift should not be seen only as a trivial data analytical decision: it should be seen as reflecting a wider push in the behavioural sciences to move away from binary decisions (see e.g. \citet{amrhein2017}), and--in the light of the topic--relating to the interpretation of interactions as being graded properties of the stimuli (as discussed in \citet{kemler1993}), instead of something that either is or isn't.

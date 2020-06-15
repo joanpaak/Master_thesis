@@ -1,0 +1,300 @@
+%!Rnw root = ../Main.Rnw
+
+\subsection{Signal Detection Theory in two dimensions}
+
+So far I have covered the case in which the participant has to make a single decision, e.g. if the pitch of the stimulus changed. In the two-dimensional case the participant has to observe two things at once. For example did the pitch change \textit{and} did the timbre change. The question of primary interest is if there are any \textit{interactions} between the dimensions: does changing timbre also change response probabilities to pitch changes.
+
+A widely used theoretical framework for generalizing SDT into multiple dimensions is the General Recognition Theory. As in SDT, also in GRT randomness in the responses is thought to arise from the evidence having a probabilistic nature \citep{ashby1986, ashby2015, kadlec1992}. 
+
+In the two-dimensional case also the evidence distribution is two dimensional. Following the assumption made earlier that evidence is distributed normally, it is possible to represent evidence in two dimensions by a bivariate normal distribution. This is demonstrated in Figure \ref{fig:2dimnorm}. Left panel shows a projection of the 3-dimensional shape of the bivariate density; right panel shows the same distribution from above, as a contour.  
+
+\begin{figure}
+\centering
+<<echo=F,fig=T,fig.height = 3.5>>=
+library(mvtnorm)
+y = seq(-2, 4, length.out = 50)
+x = seq(-2, 4, length.out = 50)
+expected = matrix(NaN, nrow = length(x), ncol = length(y))
+
+for(i in 1:length(x)) {
+  for(j in 1:length(y)) {
+    expected[i, j] = dmvnorm(c(x[i], y[j]), mean = c(1, 2), 
+                             sigma = matrix(c(1, 0.6, 0.6, 1), 2, 2))
+  }
+}
+
+par(family = font_family_global)
+par(mfrow = c(1, 2))
+par(mar = c(2, 1, 2, 1))
+# c(0, 1, 0, 1)
+persp(expected, xlab = "Evidence (x)", ylab = "Evidence (y)", 
+      zlab ="", theta = 0, phi = 40, r = 3, box = T, axes = F,
+      main = "")
+
+par(mar = c(5.1, 4.1, 4.1, 2.1))
+ 
+contour(x, y, expected, lty = 1, levels = c(0.05), main = "", 
+        xlab = "Evidence (x)", ylab = "Evidence (y)", drawlabels = F,
+        axes = F, lwd = lwd_global)
+axis(side = 1); axis(side = 2)
+
+points(1, 2, pch = 19)
+lines(c(1, 1), c(-2, 2), lty = 2, lwd = lwd_global)
+lines(c(-2, 1), c(2, 2), lty = 2, lwd = lwd_global)
+
+@
+\caption{Two projections of a two-dimensional normal distribution with the parameters $\mu = [1.0, 2.0]^T$, $\rho = 0.6$}. 
+\label{fig:2dimnorm}
+\end{figure}
+
+\subsubsection{Calculation of $d'$ in two dimensions}
+
+In the one dimensional case $d'$ value tells the location, i.e. $\mu$, of the evidence distribution on the evidence axis. Situation in two dimensions is similar to this, however, now $\mu$ becomes a vector with two possible values corresponding to the location of the evidence distribution on the two dimensions: $\bm{\mu} = [\mu_x, \mu_y]^T$. Here $\mu_x$ could correspond to evidence about pitch change and $\mu_y$ to evidence about timbre change. In Figure \ref{fig:2dimnorm} $\mu_x$ is represented by the vertical dashed line, while $\mu_y$ is represented by the horizontal dashed line.\footnote{Note that the vector $\bm{mu}$--and all vectors after his--is transposed (the $T$ in the superscript) since it is customary to define these as column vectors.}
+
+Since there are two $d'$ and $\mu$ parameters, also the parameters of the psychometric function (cf. chapter on unidimensional SDT), signals and responses become vectors: $\bm{\sigma} = [\sigma_x, \sigma_y]^T$, $\bm{\beta} = [\beta_x, \beta_y]^T$, $\bm{S} = [S_x, S_y]^T$ and $\bm{R} = [R_x, R_y]^T$. In addition to this, since interactions between the dimensions are of interest, the parameter $\kappa$ (for \textit{coupling}) is added to the equation: $\bm{\kappa} = [\kappa_x, \kappa_y]^T$. In practice, it is useful to think about this as two coupled $d'$ functions, which will be defined in the next section.
+
+\subsubsection{Coupling between the functions}
+
+I will be considering two different types of coupling between the $d'$ functions. The first type is coupling between the means of the evidence distributions, the other kind is coupling between the variances of the evidence distributions. 
+
+\begin{align}
+\label{eq:twodimdprime}
+\begin{split}
+d'_x &= (\frac{S_x}{\sigma_x})^{\beta_x} + \kappa_x^{\mu} S_y \\
+d'_y &= (\frac{S_y}{\sigma_y})^{\beta_y} + \kappa_y^{\mu} S_x
+\end{split}
+\end{align}
+
+Through the parameter $\kappa_i^{mu}$ any non-zero signal on the other dimension is able to influence the $d'$ value of the other dimension, as demonstrated in the left panel of Figure \ref{fig:GRTinteractions}. This is usually referred to as mean-shift integrality; other term for this is \textit{sensory interference} ERROR SOURCE. The term integrality refers to classification of dimensions into that of \textit{separable} and \textit{integral} (ERROR SOURCES); this sort of binary classification will be contested later.
+
+The other possibility is that the $\sigma$ terms are coupled:
+
+\begin{align}
+\label{eq:varshift}
+\begin{split}
+\sigma_x &= exp(log\sigma_x + \kappa_x^{\sigma} S_y) \\
+\sigma_y &= exp(log\sigma_y + \kappa_y^{\sigma} S_x)
+\end{split}
+\end{align}
+
+Note that in the \textit{Yes/No} model also the criteria have to be divided by $\sigma$--this will be discussed at the end of the section on the \textit{Yes/No} model.
+
+\paragraph{Within stimuli interference}
+
+It is also possible that the evidence is correlated between the dimensions: see the right panel of Figure \ref{fig:GRTinteractions}. This is sometimes also referred to as \textit{perceptual interference} or \textit{correlated noise}. Correlated evidence is not included in the $d'$ functions; it affects only the response probabilities and will be discussed in conjunction with the psychometric functions. 
+
+\begin{figure}
+\begin{center}
+<<echo=F, fig=T, fig.height = 3.5>>=
+library(mvtnorm)
+y = seq(-2, 4, length.out = 50)
+x = seq(-2, 4, length.out = 50)
+expected = matrix(NaN, nrow = length(x), ncol = length(y))
+meanshift = matrix(NaN, nrow = length(x), ncol = length(y))
+correlated = matrix(NaN, nrow = length(x), ncol = length(y))
+
+for(i in 1:length(x)) {
+  for(j in 1:length(y)) {
+    expected[i, j] = dmvnorm(c(x[i], y[j]), mean = c(1, 0), sigma = matrix(c(1, 0, 0, 1), 2, 2))
+    meanshift[i, j] = dmvnorm(c(x[i], y[j]), mean = c(1, 1), sigma = matrix(c(1, 0, 0, 1), 2, 2))
+    correlated[i, j] = dmvnorm(c(x[i], y[j]), mean = c(1, 0), sigma = matrix(c(1, 0.8, 0.8, 1), 2, 2))
+  }
+}
+
+par(family = font_family_global)
+par(mfrow = c(1, 2))
+
+contour(x, y, expected, lty = 2, levels = c(0.05), main = expression(kappa),
+        xlab = "Evidence (x)", ylab = "Evidence (y)", drawlabels = F, axes = F, lwd = lwd_global)
+axis(side = 1); axis(side = 2)
+contour(x, y, meanshift, add =T, levels = c(0.05), drawlabels = F, lwd = lwd_global)
+points(1, 0, pch = 4)
+points(1, 1, pch = 3)
+
+contour(x, y, expected, lty = 2, levels = c(0.05), main = expression(rho), 
+        xlab = "Evidence (x)", ylab = "Evidence (y)", drawlabels = F, axes = F, lwd = lwd_global)
+axis(side = 1); axis(side = 2)
+contour(x, y, correlated, add=T, levels = c(0.05), drawlabels = F, lwd = lwd_global)
+points(1, 0, pch = 4)
+points(1, 0, pch = 3)
+@
+\end{center}
+\caption{The two kinds of interactions in the model. The contours depict bivariate normal distributions. Dashed lines indicate the shape and location of the distribution in the absence of interaction; the solid lines depict them in the case that interaction is present. Left panel demonstrates a shift in the mean of the latent distribution. Right panel demonstrates correlated noise between the dimensions.}
+\label{fig:GRTinteractions}
+\end{figure}
+
+\subsubsection{Modelling responses in two dimensions}
+\label{sec:modelling_responses}
+
+Whereas in SDT the participant is usually required to make a single decision on a single axis, in GRT the participant is required to make one decision per axis; in the two-dimensional case two decisions: did the signal level change on $x$ axis and did the signal level change on $y$ axis (a similar approach has been used also by \cite{wickens1992}). 
+
+\paragraph{Yes/No task in two dimensions}
+
+Figure \ref{fig:GRTsimple} shows discrimination in two dimensions analogously to how it was shown from SDT Figure \ref{fig:SDT}. The contours represent the bivariate normal distributions, as seen from above. Because the signal is two-dimensional, the participant has to hold two decisional boundaries, here represented by the dashed lines that divide the internal scale into four response regions. Numbers in each corner correspond to the different response categories: 0 indicating a negative response on that dimension and 1 a positive response. In this case the most probable response is $[1,1]$, a positive response on both dimensions.
+
+\begin{figure}
+\begin{center}
+<<echo=F, fig = T, fig.height = 3.5, fig.width = 3.5>>=
+
+y = seq(-2, 3, length.out = 50)
+x = seq(-2, 3, length.out = 50)
+
+s00 = matrix(NaN, nrow = length(x), ncol = length(y))
+
+for(i in 1:length(x)) {
+  for(j in 1:length(y)) {
+    s00[i, j] = dmvnorm(c(x[i], y[j]), mean = c(0.25, 0.5), sigma = matrix(c(1, 0.2, 0.2, 1), 2, 2))
+  }
+}
+
+par(family = font_family_global)
+par(mfrow = c(1, 1))
+
+contour(x, y, s00, xlab = "Evidence (x)", ylab = "Evidence (y)",
+        main = "", levels = c(0.05), drawlabels = F)
+abline(h = -0.7, lty = 2); abline(v = -0.7, lty = 2)
+text(-1.8, -1.8, "(0, 0)"); text(2.8, -1.8, "(1, 0)"); text(-1.8, 2.8, "(0, 1)"); text(2.8, 2.8, "(1, 1)")
+
+@
+\end{center}
+\caption{Discrimination in two dimensions.}
+\label{fig:GRTsimple}
+\end{figure}
+
+Again, similar to unidimensional SDT, the response probabilities are found by integrating over the evidence distribution, split into response regions by the decisional boundaries (c.f. Figure \ref{fig:GRTsimple}). For example the probability of observing a positive response on both dimensions is found by  integrating the two-dimensional normal distribution from the response criteria to positive infinity. Whereas in the unidimensional case two psychometric functions were needed to model the binary responses, here four are needed, for each of the response possibilities:
+
+\begin{align}
+\begin{split}
+\label{eq:probs}
+\psi(\bm{S}; \theta)_{(0, 0)}  = \int_{-\infty}^{C_x} \int_{-\infty}^{C_y} N(\bm{\mu}, \bm{\Sigma})
+\\
+\psi(\bm{S}; \theta)_{(1, 0)}  = \int_{C_x}^{\infty} \int_{-\infty}^{C_y} N(\bm{\mu}, \bm{\Sigma})
+\\
+\psi(\bm{S}; \theta)_{(0, 1)}  = \int_{-\infty}^{C_x} \int_{C_y}^{\infty} N(\bm{\mu}, \bm{\Sigma})
+\\
+\psi(\bm{S}; \theta)_{(1, 1)}  = \int_{C_x}^{\infty} \int_{C_y}^{\infty} N(\bm{\mu}, \bm{\Sigma})
+\end{split}
+\end{align}
+
+Here $\bm{S}$ is a vector containing the physical signal levels on the individual dimensions, $\bm{\mu}$ corresponds to the vector of $d'$-values. $\bm{\Sigma}$ is the correlation matrix, in which correlated evidence--see right panel of Figure \ref{fig:GRTinteractions}--is modelled by treating the correlation coefficient as a free parameter:
+
+$$
+\begin{bmatrix}
+1 & \rho \\
+\rho & 1
+\end{bmatrix}
+$$
+
+Again, the psychometric functions are most practically thought about in terms of the bivariate standard normal cumulative distribution function, $\phi_2(u_x, u_y, \rho)$ (\cite{boys1989, pan2017}). First one has to find $u_x$ and $u_y$ (the first two inputs to $\phi_2$) which stand for the upper integration limits:
+
+\begin{align*}
+\begin{split}
+u_x &= -c_x + d'_x \\
+u_y &= -c_y + d'_y
+\end{split}
+\end{align*}
+
+Then, if responses are coded with $-1$ and $1$, inputs for the $\phi_2$ function are:
+
+\begin{align*}
+\begin{split}
+\psi_2(\bm{S}; \theta)_{\text{(-1, -1)}} &= \phi_2(-1 u_x, -1 u_y, \rho [-1 * -1]) \\
+\psi_2(\bm{S}; \theta)_{\text{(1, -1)}}  &= \phi_2(\phantom{-}1 u_x, -1 u_y, \rho [\phantom{-}1 * -1]) \\
+\psi_2(\bm{S}; \theta)_{\text{(-1, 1)}}  &= \phi_2(-1 u_x, \phantom{-}1 u_y, \rho [-1 * \phantom{-}1]) \\
+\psi_2(\bm{S}; \theta)_{\text{(1, 1)}}   &= \phi_2(\phantom{-}1 u_x, \phantom{-}1 u_y, \rho [\phantom{-}1 * \phantom{-}1]) 
+\end{split}
+\end{align*}
+
+This process can be defined generally with the equation:
+
+\begin{equation}
+\psi_2(\bm{S}; \theta)_{\bm{R}} = \phi_2([-c_x + d'_x]r_x, [-c_y + d'_y] r_y, \rho [r_x r_y])
+\label{eq:generalPfun}
+\end{equation}
+
+in which the $\bm{R} = [r_x r_y]$. All of the Stan \citep{stan2019} programs in appendix A assume that responses are coded in this way.
+
+In the case of variance shift also the criterion has to be also divided by the standard deviation. This is intuitively clear from the observation that as the variance of the evidence distribution becomes larger, the parts of the evidence distribution falling into the response regions become increasingly equal. In other words response probabilities get closer to 0.25, and a larger denominator for the term $c$ will achieve just this:
+
+\begin{equation}
+\psi_2(\bm{S}; \theta)_{\bm{R}} = \phi_2([-\frac{c_x}{\sigma_x} + d'_x]r_x, [-\frac{c_y}{\sigma_y} + d'_y] r_y, \rho [r_x r_y])
+\label{eq:generalPfun}
+\end{equation}  
+
+The term $\sigma$ is also affected  and is defined in equation \ref{eq:varshift}.
+
+\paragraph{2I-4AFC}
+
+In the SDT section 2I-2AFC task was discussed. Here it is expanded to a 2I-4AFC task. There are still two temporal intervals, as was shown in the schematic in Figure \ref{fig:YesNoAfc}, but now the participant has four response alternatives, since either signal could be in either interval. What has to be taken into account is that there can be interactions, which means that the mean of the noise distribution on either dimension can be non-zero. 
+
+Similar to Figure \ref{fig:2AFC}, Figure \ref{fig:2I4AFC} shows the distributions of evidence from the two intervals. Note that each of the signals could be in either of the intervals, so there are four possible arrangements for the signals, but similar to the case in 2I-2AFC it is not important in which intervals the signals are concretely, what is important is the difference between the signal and noise distributions. 
+
+It is assumed in Figure \ref{fig:2I4AFC} that $\kappa_x$ parameter is non-zero, which means that signal on $y$-dimension is able to increase the $d'$-value on the $x$-dimension. This can be seen from the fact that in the left panel the mean of the noise distribution on the $x$-axis is slightly greater than zero. This shrinks the difference between the signal and noise distributions on that dimension.
+
+As before, the participant is thought to base their decision on a decision variable that represents the difference of evidence in the intervals. As a consequence the $d'$ values on both dimensions have to be divided by $\sqrt{2}$ (cf. section on 2I-2AFC). The distribution of the decisional variable can be seen in the right panel of Figure \ref{fig:2I4AFC}. The thick black lines mark boundaries between \textit{hits} and \textit{false alarms}. The participant, in this particular scenario, is very likely to score a \textit{hit} on the $y$-axis, but on $x$-axis they are almost as likely to pick the wrong interval as the correct; the most likely response pairs being (FA, Hit) and (Hit, Hit).
+
+\begin{figure}
+\centering
+<<fig=T,echo=F,fig.height=4>>=
+
+par(family = font_family_global)
+par(mfrow = c(1, 2))
+
+# Left panel
+
+plot(NULL, xlim = c(-3, 5), ylim = c(-3, 5), axes = F, xlab = "Evidence (x)", ylab = "Evidence (y)",
+     main = "Evidence contained in the intervals")
+axis(side = 1); axis(side = 2)
+abline(h = seq(-3, 5, 1), lty = 3, col = rgb(0, 0, 0, 0.5))
+abline(v = seq(-3, 5, 1), lty = 3, col = rgb(0, 0, 0, 0.5))
+drawBivarDistr(c(0.75, 0), 1, F)
+drawBivarDistr(c(1, 2), 1, T)
+
+text(0.75, -2.2, "Noise interval")
+text(1.00, 4.2, "Signal interval")
+
+# Right panel
+
+plot(NULL, xlim = c(-3, 5), ylim = c(-3, 5), axes = F, xlab = "x", ylab = "y",
+     main = "Decisional variable")
+axis(side = 1, at = c(-3, -1, 2, 4), labels = c("", "FA", "Hit", ""))
+axis(side = 2, at = c(-3, -1, 2, 4), labels = c("", "FA", "Hit", ""))
+abline(h = seq(-3, 5, 1), lty = 3, col = rgb(0, 0, 0, 0.5))
+abline(v = seq(-3, 5, 1), lty = 3, col = rgb(0, 0, 0, 0.5))
+
+drawBivarDistr(c(0.25, 2), sqrt(2), F)
+abline(h = 0, lwd = 2)
+abline(v = 0, lwd = 2)
+
+@
+\caption{}
+\label{fig:2I4AFC}
+\end{figure}
+
+As in the Yes/No task, responses can be coded with -1 and 1. Here, \textit{false alarms} are coded with -1 and \textit{hits} with 1.  The psychometric functions is then simply
+
+\begin{equation}
+\psi_2(\bm{S}; \theta)_{\bm{R}} = \phi_2(\frac{d'_x}{\sqrt{2}}r_x, \frac{d'_y}{\sqrt{2}} r_y, \rho [r_x r_y])
+\label{eq:generalPfun2}
+\end{equation}
+
+\paragraph{Comparison of the Yes/No and 2I-4AFC tasks}
+
+The main difference between the Yes/No and 2I-4AFC tasks is what the participant bases their decision on. In the Yes/No task the decision is based directly on the appearance of the stimulus. As was already discussed, this means that the performance of the observer cannot be decoupled from their decisional criterion. This adds one more parameter to be estimated from the data. 
+
+In the 2I-4AFC task the decision is removed one step from the signal compared to the Yes/No task. This means that it is not necessary for the participant to adopt a criterion relating the strength of evidence to a response. Also, since the participants are choosing an interval, it is usually thought that this kind of task is less susceptible to bias.
+
+Since on each trial two stimuli have to be presented in the 2I-4AFC task, it is somewhat slower to administer. However, if, in the Yes/No task, the observer knows that some non-zero signal is present on each trial, nothing prevents them from answering \textit{yes} on each trial--they will always be correct, and seemingly able to detect the faintest of signals. To counter this, some amount of \textit{catch} trials are usually included. These are trials during which the signal level is zero. During these trials no information about the sensory processing--the parameters $\alpha$ and $\beta$--is accumulated. So even though individual trials are faster to complete, there has to be more of them. 
+
+The issue of catch trials is exacerbated in the multidimensional case. This is because in the one-dimensional the issue is simple solved by including some noise stimuli as catch trials in the experimental run, resulting in two kinds of stimuli being presented: noise and signal stimuli. In the two-dimensional case there has to be three kinds of catch trials: noise only stimulus on either of the dimensions or both. Otherwise if the participant became aware of e.g. that the adaptive procedure only rarely selects a stimulus in which there's a noise stimulus on either dimension--i.e. [0,S] or [S,0] --, they might become biased towards choosing the responses [0, 0] and [1,1]. The linear decision bounds used in this work are not able to model this kind of response bias; an issue which will be discussed later. 
+
+Then, on theoretical grounds, the only difference to be expected is the omission of the criterion parameters from the 2I-4AFC model--reduction in sensitivity is taken into account by incorporating the term $\sqrt{2}$. 
+
+\subsection{Lapsing behaviour}
+\label{sec:lapses_general}
+
+It is possible that during a psychophysical task, people sometimes \textit{lapse}. That is, for some reason the response they give doesn't reflect the cognitive process of interest. This might be due to e.g. lapse in attention, a coding error in the program, or a slip of a finger. In the classic GRT models, lapsing behaviour has not been taken into account, even though in the unidimensional case lapses have been shown to be able to exert considerable bias on the parameter estimates of the psychometric function \citep{wichmannhill2001}. 
+
+Estimating lapsing rate from data can be problematic (\cite{wichmannhill2001, treutwein1999}), and this problem can be worse for adaptive procedures \citep{prins2012}. Since the values of the psychometric function that are closer to zero are affected both the lapses and the decision criterion (in the Yes/No task), most of the information gained about lapsing behaviour comes from lapses happening at high intensities. What makes matters worse is that the lapsing response doesn't necessarily differ from what the participant would've answered otherwise, so the distinction between lapses and genuine response is ambiguous (for further discussion on these problems, see \cite{prins2012}). For these reasons I fixed the values of $\lambda$ and $\gamma$ during the adaptive estimation phase. However, during the analysis of the psychophysical data I estimated the parameter $\lambda$ from the data, a decision, which will be discussed in more detail in the analysis section.
+
+Here, lapsing behaviour is modelled by using a hierarchical model. The mathematical details of how lapses were included are thus discussed in the chapter discussing hierarchical models. 

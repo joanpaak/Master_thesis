@@ -22,6 +22,16 @@
 \usepackage{graphicx}
 \usepackage{float}
 
+\usepackage{hyperref}
+
+\hypersetup{
+    colorlinks=true,
+    linkcolor=black,
+    citecolor=black,
+    filecolor=black,
+    urlcolor=black
+}
+
 \graphicspath{ {./figures/} }
 
 \usepackage[T1]{fontenc}
@@ -127,6 +137,26 @@ Data from the psychophysical experiments indicate that non-sensory factors play 
 \newpage
 
 \setcounter{page}{1}
+
+\newpage
+<<intro, child='Intro_and_Background/Introduction.Rnw'>>=
+@
+
+\newpage
+<<background_SDT_1, child='Intro_and_Background/Theoretical_background_1_SDT.Rnw'>>=
+@
+
+<<background_GRT_2, child='Intro_and_Background/Theoretical_background_2_GRT.Rnw'>>=
+@
+
+<<background_GRT_3, child='Intro_and_Background/Theoretical_background_3_GRT_discussion.Rnw'>>=
+@
+
+
+\newpage
+<<background_Bayes, child='Intro_and_Background/Theoretical_background_4_Bayes.Rnw'>>=
+@
+
 \newpage
 <<simu1, child='Simulations/Simulations.Rnw'>>=
 @

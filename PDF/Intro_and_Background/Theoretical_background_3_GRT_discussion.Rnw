@@ -1,0 +1,126 @@
+%!Rnw root = ../Main.Rnw
+
+\subsection{Critical discussion}
+
+\subsubsection{Relationship to other models}
+
+\paragraph{Classic GRT}
+
+I will begin by discussing what I would call a \textit{classic} GRT model, and argue for the two main modifications implemented in this work: first abandoning the ubiquitous categorization task and second incorporating some functional for between the physical signal levels and the internal quantities. 
+
+In the classic model the signals of interest are two-dimensional, the participant is required to hold one decisional criterion per dimension, and the method of constant stimuli (MOCS) is employed. Method of constant stimuli means that the levels of stimuli are fixed prior to the experiment. When two levels are used per dimensions, the experiment is called a 2x2 identification experiment;  a possible stimulus set is demonstrated in Table \ref{table:classicGRT}. I call this the classic model since it is the most widely--and in some cases the only--discussed type of model in GRT related literature. (See e.g. \cite{ashby2015, ashby1986, cohen2003, kadlec1992, silbert2010, silbert2013}). 
+
+\begin{table}[!htb]
+ \centering
+  \caption{An exemplar set of stimuli that could be used in a 2X2 identification experiment. High and low pitches could correspond to e.g. 150Hz and 152Hz, respectively and high and low timbres to spectral prominences at 850Hz and 1050Hz as in \cite{silbert2009}}
+  \vspace{0.5cm}
+  \label{table:classicGRT}
+   \begin{tabular}{rccc}
+    \hline
+     &       &         \multicolumn{2}{c}{Pitch} \\
+                       \cline{3-4}
+             &         & Low             & High   \\
+     \hline
+    \multirow{2}{*}{Timbre} 
+            & Bright & \parbox[t]{5cm}{Low pitch + Bright timbre\\}& \parbox[t]{5cm}{High pitch + Bright timbre\\}\\
+            & Dark    & \parbox[t]{5cm}{Low pitch + Dark timbre \\}  & \parbox[t]{5cm}{High pithc + Dark timbre \\ }\\
+     \hline
+    \end{tabular}
+\end{table}
+
+The logic in this kind of task differs from that of discrimination task. Instead of responding to differences in the stimuli, the participant's task is to categorize the stimuli as if categorizing apples and oranges into their respective piles. The image of categorizing something into piles is surprisingly apt, since in the classic speeded classification experiments \citep{garner1974} the participants would categorize visual stimuli printed on cards. It is from these classic experiments where the idea of categorization to study dimensional interactions finds its way also to GRT. 
+
+Categorization is sensible in the case of clear differences, e.g. categorizing extremely different pitches such as 100 Hz and 5000 Hz. However, in the case of minute differences that are close to the detection threshold, it is more likely that the subject bases their decisions on perceived \textit{differences} between consecutive stimuli. One of the assumptions of the model is that single responses are statistically independent (see e.g. \citet[p. 218]{wickens1992}), but if indeed the responses are based on perceived differences between consecutive stimuli, this assumption is gravely violated--and consequently the model does not sufficiently describe the data generating process. 
+
+Another difficulty is that the participant would have to hold accurate representations of the stimuli in their memory. Again this is simple when categorizing apples and oranges, but much more difficult in a psychophysical experiment in which the levels are to begin with selected in such a way that they are easily confusable. 
+
+It is for these reasons that I've opted to base the model presented here explicitly on discrimination instead of categorization or identification.
+
+As per the second modification, the addition of functional relationships, in the classic GRT model each stimulus is represented by its own bivariate  normal distribution (see e.g. \cite{ashby2015}). For example, in the aforementioned 2X2 categorization task parameters for four bivariate normal distributions would be estimated. If more stimuli are used also more decision boundaries are needed in the categorization task: a separate set of decision boundaries between each category is required. 
+
+This can lead to difficulties when trying to interpret the model. Consider for example the hypothetical case in Figure \ref{fig:classicGRT}: it is very difficult to come up with a simple summary of how the dimensions $x$ and $y$ are related.
+
+\begin{figure}[!htb]
+\centering
+<<echo=F,fig=T,fig.height=4, fig.width=4>>=
+
+par(family = font_family_global)
+plot(NULL, axes = F, ylim = c(-2, 3), xlim = c(-1, 4), xlab = "Pitch", ylab = "Timbre")
+axis(side = 1, at = c(-1, 0, 2, 4), labels = c("", "Low", "High", ""))
+axis(side = 2, at = c(-2, -1, 2, 3), labels = c("", "Low", "High", ""))
+
+drawBivarDistr(c(0, 0), sigma = 0.4)
+drawBivarDistr(c(3, -1), sigma = 0.4)
+
+drawBivarDistr(c(0.5, 1), sigma = 0.4)
+drawBivarDistr(c(2.5, 1.5), sigma = 0.4)
+abline(h = -2:3, lty = 3)
+abline(v = -1:4, lty = 3)
+abline(h = 0.5, lwd = 2)
+abline(v = 1.5, lwd = 2)
+
+@
+\caption{An example of a classic GRT model fitted to a 2X2 categorization data. Each of the stimuli are fitted with their own bivariate normal distribution.}
+\label{fig:classicGRT}
+\end{figure} 
+
+Related difficulty is that it is hard to know, e.g. in the case depicted in Figure \ref{fig:classicGRT} which of the features of the data are purely coincidental and which of them accurately represent real dimensional interactions. Statistically speaking one could be \textit{overfitting}; a problem that is also recognized in the context of classic GRT models by \cite{soto2017}. Often the fit of the model is assessed by comparing the predicted response probabilities with the observed proportions (see for example \citet[Figure 4]{silbert2009}), but since separate distribution is used for each stimulus, the model is overly flexible, and it is unlikely that \textit{any} data set wouldn't be fit fairly well by it--using the criterion just discussed.
+
+The current model rectifies these problems. Interactions are summarized by the $\kappa$ coefficients, so it's easy to make inferences. Since the model is constrained by the explicit functional relationship between signal levels and $d'$, it's less prone to the type of overfitting described. 
+
+\paragraph{Process model}
+
+The interactions in the model can be conceptualized by hypothesizing a process structure to the model, as in \cite{ashby1989}, \cite{ashby2000} or \cite{cohen2003}. This is demonstrated in Figure \ref{fig:GRTprocess}. On each channel the physical signal, $S$, is transduced to the internal representation of the signal, $s$, after which it is judged against the decisional criterion, $c$, and the participant gives their response, $R$. The straight lines from a stage to the next--for example from $S_x$ to $s_y$ denote an influence to the average level of the variable while curved lines inside a stage--for example from $s_y$ and $s_x$--denote correlated noise. 
+
+The effect of the signal level on the average level of the internal signal on the other channel is usually referred to as stage 1 interaction, the correlation of noise between the internal representations is referred to as stage 2 interaction, and the the dependence of the criteria on the internal level of the signal or correlation between their noise is referred to as stage 3 interaction. Stage 1 and 2 interactions are referred to as \textit{perceptual} interactions, and stage 3 interaction is referred to as \textit{cognitive} interaction. \citep{ashby1989, ashby2000, cohen2003}. 
+
+\begin{figure}[!htb]
+\centering
+\includegraphics[scale = 0.8]{Process_model}
+\caption{A process interpretation of the model. Variables inside rectangles are observed, whereas variables inside squares are latent. }
+\label{fig:GRTprocess}
+\end{figure}
+
+In the current model, stage 1 interactions are modelled by the $\kappa$ terms while the stage 2 interaction is modelled by the correlation parameter $\rho$. Stage 3 interactions are not modelled, since, as the model currently stands, they are not identifiable. This issue will be discussed in greater detail later. 
+
+\paragraph{Relationship to Generalized Linear Models}
+
+Generalized Linear Models (GLM's) are widely implemented in statistical analysis (see e.g. \citet{kruschke2015, skrondahl2004}). The theoretical links to well-known models in statistics mean that the model should be easily generalizable to different situations, and that there exists a wide range of theoretical and empirical literature. 
+ 
+\cite{decarlo1998} describes the unidimensional SDT model as a generalized linear model. In the case of normally distributed noise, a \textit{probit model}, which is how already Gustav Fechner--who is sometimes regarded as the founder of psychophysics--modelled categorical judgments in the 19th century (discussed in \citealt[Chapter 7]{stigler2003}). The relationship between the physical signal strength and the mean of the internal value being non-linear--see Equation \ref{eq:dprimefunc}--the model considered here is more accurately described instead as a \textit{non-linear} \citep[p. 379]{box2005} probit model. 
+
+The model presented here can be thought of as a non-linear \textit{multinomial} probit model; in a binary choice probit model the responses are assumed to follow the binomial distribution, but in the multidimensional model, since there are more than two choices, the responses are assumed to follow the multinomial distribution \cite[p. ERROR]{skrondahl2004}. 
+
+Due to this link to generalized linear models, the current approach is close to that used by \cite{cohen2003}. The most relevant difference is that \citeauthor{cohen2003} doesn't aim to model the functional relationships between the $d'$ values and the signal strengths, rather, he uses contrast coding, categorical stimuli and an identification task much like described earlier.
+
+In the context of GLM's, the modelling of lapses is can be called \textit{robust regression} \citep[p. 635]{kruschke2015} since it relaxes the distributional assumptions somewhat, and isn't so prone to estimation errors due to outliers. However it should be noted that this requires the lapsing parameters to be fixed \citep[p. ERROR]{skrondahl2004}. This is not true for all of the models used in this thesis.
+
+\subsubsection{Nonidentifiabilities and other limitations of the model}
+
+\paragraph{What do the latent distributions really represent?}
+
+The main assumption of SDT, and consequently GRT, is that the participant bases their decisions on noisy latent quantities. Therefore, it is important to discuss what those latent quantities actually represent.  
+
+In SDT literature writers are generally careful to call the latent quantities evidence \citep{wickens2002, verde2006} or judgments (\citealp[p. 247]{stigler2003}). In GRT related literature, however, the latent quantities are thought to be more closely related perceptions. \cite{ashby2015} call them \textit{perceived values}; in \cite{ashby1986},  \cite{kadlec1992} and \cite{silbert2009} they are \textit{perceptual effects} and the space (in which the distributions are defined in) is defined as \textit{perceptual space}; \cite{soto2017} uses the term \textit{perceptual representation}.
+
+As is clear from the preceding discussion on SDT and GRT, I've taken the more traditional way of calling the latent variables evidence, but even in this case one has to be careful in considering \textit{what} the evidence is about. Concretely the latent quantities are a sum of \textit{everything} that creates variability in responses: noise in encoding the signals, internal noise due to e.g. blood pressure or breathing, transient noises from sneezing or swallowing etc., lapses of attention, criterial changes, non-stationarity of threshold, effects of learning and so on. 
+
+It is clear that for example in a pitch discrimination task many of the aforementioned factors don't necessarily directly effect the perceived amount of pitch difference, but can and will affect the judgments or amount of evidence in other ways, for example by masking the signal and limiting information that way.
+
+Often there seems to be two strong implicit assumptions. First, that either the first factor alone or the two first would be significantly greater than any of the others, and second that any effect is sufficiently free from other influences. While these assumption might not be that dangerous in SDT models, the problem is exacerbated in GRT: there is virtually no information about how the aforementioned factors influence e.g. inferences about interactions between the dimensions, a problem recognized already by \citet{silbert2009}. It is my impression, based on my own unpublished simulation studies, that the factors just mentioned can in some situations lead to significantly incorrect inferences. 
+
+Validity of the process model described earlier relies heavily on these strong assumptions and our ability to differentiate between different sources of variation. It is my belief that in the current formulation, using straightforward perceptual experiments, one can not properly identify these, and indeed has to rely on strong prior assumptions. For this reason I would, at this point, see the process model more as a helpful conceptualization than anything else.
+
+Conceptualization of the latent variables affects the way interactions are understood theoretically. Based on the preceding discussion I hope it is clear that it is different to say that e.g. timbre influences the distribution of \textit{evidence} about pitch than it is to say that timbre influences the distribution of \textit{perceptual effects} of pitch.
+
+\paragraph{Criterial noise}
+
+Criterial noise can be defined as random variation in the criteria around some central value, in the present context the central value would most naturally be thought of as the parameter $c$ in the model. If this variation is assumed to be Gaussian, it is not identifiable from other sources. This issue has been discussed in SDT literature already by \cite{wickelgren1968}\footnote{\cite{wickelgren1968} talks about \textit{unidimensional strength theory}, but the discussion is directly applicable to the present situation.}; in the context of GRT \citet{ashby2000} has discussed the role of criterial noise. In the context of SDT there have been proposals for identifying the magnitude of criterial noise using experimental manipulations (see e.g. \citealt{kellen2012, benjamin2009, cabrera2015}), but the application of these methodologies to GRT will not be considered further here. 
+
+In practice, any criterial noise will be included in the $\sigma$ estimates, since, as already discussed, these represent to sum total of all variation. With regard to GRT the problem is if the criterial noise between the dimensions is correlated: this will be included in the $\rho$ estimates. Another possibility is that criterial changes--e.g. between sessions or during a long session--would also affect the $\kappa$ estimates. To my knowledge, no systematic exploration of this possibility exists; in my own non-systematic simulations I have noticed that indeed in some cases such criterial shifts can affect the the parameter estimates and lead to false positives. 
+
+\paragraph{Non-orthogonality of decisional boundaries}
+
+Another topic tying into the modelling of decisional processing is the (possible) non-orthogonality of the decisional boundaries. In the GRT literature non-orthogonal decisional boundaries are seen as failure of \textit{decisional separability} \citep{ashby2015}, since the non-orthogonality implies that the decision is contingent on the level of the signal. 
+
+In the present paper the focus is on orthogonal decisional boundaries. Non-orthogonal boundaries could be incorporated in the model, \cite{ennis2003} have shown a simple method for calculating the non-orthogonal integrals to evaluate the response probabilities. However, what could prove to be problematic is that the method, in my experience, is rather slow.  Another problem is the identifiability of non-orthogonal decisional boundaries: \cite{soto2015} claim that their model makes decisional separability identifiable--contrary to the classic model \citep{silbert2013}--but their result has been refuted on mathematical grounds by \cite{silbert2016}: any non-orthogonal boundaries can be thought of as a transformation of the space to one in which the boundaries are orthogonal and correlation between the dimensions changes. For this reason another way to look at the problem is to realize that any non-orthogonality will affect the $\rho$ parameter, and indeed if there is strong reason to believe such non-orthogonality exists, that should be taken into account when interpreting that particular parameter.  
