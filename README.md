@@ -16,7 +16,7 @@ First versions done for these sections:
 - [x] Simulations
 - [ ] Psychophysical Experiments
 - [ ] Discussion
-- [] Appendices
+- [ ] Appendices
 
 Download the latest PDF via this link (right click on it and save it, opening it in GitHub is slow): [the latest pdf](PDF/Main.pdf).
 
