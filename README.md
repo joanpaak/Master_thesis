@@ -26,11 +26,9 @@ Some things to consider when looking at the code and stuff:
 
 1) The algorithm for calculating bivariate CDF is crappy. Don't copy it from here. It runs into trouble if the integration limits are too big (in absolute units). 
 
-2) The algorithms for approximating posterior predictive distributions are **slow**. These could--and *will*, I promise--be made faster. It's not even that hard. I think.
+2) Documentation is lacking, everything is too spaghetty.
 
-3) Documentation is lacking, everything is too spaghetty.
-
-4) Related to previous point, things should be more abstract, more modular. 
+3) Related to previous point, things should be more abstract, more modular. 
 
 Each one of these points will be rectified. I will be creating own repositories for these models, that is, repositories that are not about my Master's thesis and those will contain more advanced/better/faster versions all around.  
 
