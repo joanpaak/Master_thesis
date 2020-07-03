@@ -6,7 +6,7 @@ That's the current title of my thesis. It's subject to a lot of change in the co
 
 The first version is complete soon; there's now text in every section, but I'm afraid there's lot of problems. 
 
-Download the latest PDF via this link (right click on it and save it, opening it in GitHub is slow): [the latest pdf](PDF/Joni_Paakko_-_Thesis.pdf).
+Download the latest PDF via this link (right click on it and save it, opening it in GitHub is slow): [the latest pdf](https://github.com/joanpaak/Master_thesis/raw/master/PDF/Joni_Paakko_-_Thesis.pdf).
 
 ## Abstract
 
