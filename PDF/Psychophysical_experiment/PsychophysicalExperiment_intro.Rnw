@@ -1,0 +1,75 @@
+%!Rnw root = ../Joni_Paakko_-_Thesis.Rnw
+
+\section{Psychophysical experiments}
+\label{sec:pp_exp}
+
+Psychophysical experiment with two participants was conducted to test the theoretical predictions of the models.  The most important prediction is that estimates from both tasks should be similar, since the only difference should be that the sensitivity is reduced in the 2I-4AFC task is reduced by $\sqrt{2}$. This prediction has been often used to test Signal Detection Theory models, see for example \citet{wickens2002}.
+
+The model with $\kappa_{\mu}$ was chosen as the model that was used during the experiments for two reasons. First, it's the most widely used model in the GRT related literature (or, the classic model that is analogous to it, see Section \ref{sec:grt_criticism} \textit{\nameref{sec:grt_criticism}}. The models used e.g. in the 2x2 categorization experiments commonly model interactions as changes between means of the distributions. Second, there's some results suggesting timbre can affect the pitch of signal \citep{allen2014, platt1985}, a phenomenon that would most naturally be modelled as shift in the mean of the evidence distribution, or that the main source of interaction is in correlated noise \cite{silbert2009} which, again, is included in the model. 
+
+There were three main questions: 
+
+\begin{enumerate}
+  \item Is the model used sufficient? 
+  \item Are there differences in parameter estimates from the two tasks (Yes/No and 2I-4AFC)?
+  \item What inferences can be made about the processing of pitch and timbre?
+\end{enumerate}
+ 
+\subsection{Methods}
+
+\paragraph{Procedure}
+
+The experiments were programmed in R \citep{r_language}. Both participants completed 400 trials for both tasks. Both participants completed both tasks during the same session.   Before each trial participants were prompted to press enter to hear the stimulus, and feedback was provided after each trial.
+
+In both tasks the first input always corresponded with pitch and the second with timbre. In the YesNo task the participant would type 0 for \textit{no} and 1 for \textit{yes}. For example, if they thought that pitch didn't change but timbre changed, they typed the string "01". In the 2I-4AFC task the participant would type the intervals in which they thought the dimensions changed. For example, if they thought pitch changed in the second interval and timbre in the first interval, they typed the string "21". 
+
+\paragraph{Stimuli}
+
+A single stimulus consisted of a reference tone and a test tone, as shown schematically in Figure \ref{fig:discrtask}. 
+
+The structure of stimuli was modelled after the stimuli used by \citet{silbert2009}: the stimuli consisted of 13 evenly spaced harmonics. Timbre was created by filtering the harmonics with a Gaussian filter ($\sigma = 150Hz$).
+
+Reference level for pitch was 150Hz; reference level for spectral prominence was 850Hz ($\mu$ of the Gaussian filter).
+
+Reference and test tones were 300ms in length, with a 100ms gap in between. In the 2I-4AFC task the intervals were divided by a 300ms gap.
+
+\begin{figure}
+\centering
+<<echo=F,fig=T, fig.height=5>>=
+#
+# The script in /figures/ should be first run to produce the
+# PSD estimates of the stimuli
+
+load("psdsOfStimuli.rData")
+
+psd_S1 = psds$psd_S1
+psd_S2 = psds$psd_S2
+
+maxInd = max(which(psd_S1$freq < (14 * 150)))
+
+par(mfrow = c(2, 1))
+par(family = font_family_global)
+
+par(mar = c(1.1, 4.1, 4.1, 2.1))
+plot(psd_S1$freq[10:maxInd], 
+     10 * log10(psd_S1$spec[10:maxInd]), type = "l",
+     ylab = "", xlab = "",
+     axes = F, main = "")
+abline(h = seq(-100, -40, 20), lty = 3)
+axis(side = 1, at = seq(1, 14, 2) * 150); axis(side = 2)
+
+par(mar = c(5.1, 4.1, 1.1, 2.1))
+plot(psd_S2$freq[10:maxInd], 
+     10 * log10(psd_S2$spec[10:maxInd]), type = "l",
+     ylab = "", xlab = "Frequency (Hz)",
+     axes = F, main = "")
+abline(h = seq(-100, -40, 20), lty = 3)
+axis(side = 1, at = seq(1, 14, 2) * 150); axis(side = 2)
+
+mtext("Magnitude (dB)", 2, outer = T, line = -1)
+par(mar = c(5.1, 4.1, 4.1, 2.1))
+@
+
+\caption{Examples of stimuli used in the psychophysical experiment. In both panels $F_1 = 150\text{Hz}$. Spectral prominence in upper panel is 850Hz and in lower panel 1300Hz, making the stimulus in the lower panel brighter in timbre.}
+\label{fig:stimuli}
+\end{figure}

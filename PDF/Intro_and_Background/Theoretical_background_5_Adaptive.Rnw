@@ -1,0 +1,110 @@
+%Rnw root = "../Joni_Paakko_-_Thesis.Rnw"
+
+\section{Adaptive estimation}
+
+The motivation behind adaptive psychophysical testing can be traced to intuitive enough starting point. Suppose that the researcher is interested in finding out what is the faintest possible sound that the subject is able to detect with some reliability. Now, it wouldn't make sense to waste time presenting them with stimuli that they can always detect, rather, if the subject has very low threshold for detection, it would make sense to reduce the level of the stimuli until the subject starts making errors. This indeed is how adaptive \textit{staircase methods work}. (c.f. \citet[Chapter 5]{kingdomprins2010}).
+
+A rather popular subclass of adaptive methods are based on Bayesian statistics, and use minimization of the entropy of the posterior distribution as a heuristic for selecting the stimuli with the largest utility (see \citet{kontsevichtyler1999}). In the following sections I will briefly review the basics of Bayesian statistics to familiarize the reader with the necessary background to understand the basic concepts of such adaptive testing, after which I will discuss the adaptive algorithm and the mathematics behind it.
+
+The approach here differs from previous work on adaptive methods with multidimensional signals. In the approaches by \citet{dimattina2015}, \citet{lesmes2006}, \citet{shen2013, shen2014} and \citet{kujalalukka2006} Bernoulli distributed responses are modelled. In the QUEST+ procedure introduced by \citet{watson2017} it is possible to use multinomial distribution as a model of the responses, but the approach is quite different, e.g. the correlation is not modelled and the approach is not based on GRT.
+
+\subsection{Entropy minimization}
+
+The adaptive method used here aims to minimize the entropy of the posterior distribution (e.g. \citet{kontsevichtyler1999, kujalalukka2006, lesmes2015}). In simple terms, entropy refers to the evenness of a probability distribution \citep[p. 365]{kruschke2015}. This is demonstrated in Figure \ref{fig:entropy}. The figure depicts two multinomial distributions, in which the categories refer to the possible responses of the model introduced earlier--see Equation \ref{eq:probs}. The distribution on the left side is maximally even, while the distribution on the right side has more probability assigned to the responses (0,0) and (1,1). Consequently, the distribution on the right has less entropy.
+
+\begin{figure}
+\begin{center}
+<<echo=F, fig=T, fig.height=4>>=
+cats = c("(0,0)", "(1,0)", "(0,1)", "(1,1)")
+dist_1 = c(0.25, 0.25, 0.25, 0.25)
+dist_2 = c(0.65, 0.05, 0.05, 0.25)
+
+par(family = "Palatino")
+par(mfrow = c(1, 2))
+barplot(dist_1, names.arg = cats, ylim = c(0, 1), col = rgb(0.8, 0.3, 0.2, 0.7), border = NA)
+mtext("Response", side = 1, line = 2)
+mtext("Probability", side = 2, line = 2)
+
+legend("topright", legend = 
+         paste("Entropy = ", round(-sum(dist_1 * log(dist_1)),2)),
+         bty = "n")
+barplot(dist_2, names.arg = cats, ylim = c(0, 1), col = rgb(0.8, 0.3, 0.2, 0.7), border = NA)
+mtext("Response", side = 1, line = 2)
+mtext("Probability", side = 2, line = 2)
+
+legend("topright", legend = 
+         paste("Entropy = ", round(-sum(dist_2 * log(dist_2)),2)),
+       bty = "n")
+
+@
+\end{center}
+\caption{Two multinomial distributions that represent the probabilities for the possible response categories in the model. The distribution on the right is less even, and as a consequence has less entropy.}
+\label{fig:entropy}
+\end{figure}
+
+The reason for using the distribution of responses as an example of how to calculate entropy is that \citet{kujalalukka2006} and \citet{kujala2011} show that minimizing the entropy of the response distribution is equivalent to minimizing the entropy of the posterior distribution of the parameters--which is the ultimate goal. This is, in my opinion, simpler than minimizing the entropy of the posterior distribution directly as done by \citet{kontsevichtyler1999}. Intuitively this can be understood by realizing that if there's lots of uncertainty about the parameters, this uncertainty carries over to predictions about responses (c.f. Figure \ref{fig:entropy}): all of the responses seem almost as likely. Conversely, if only very specific parameter values are, so are specific response categories too. 
+
+\citet{kujalalukka2006} and \citet{kujala2011} give equations for calculating information gain using a set of IID particles--that is, particles with uniform weights. Since a weighted set is used here, the equations are modified to accommodate for this:
+
+\begin{equation}
+h(\sum_{i=1}^N w_i \psi_2(\bm{S};\theta_i)) - \sum_{i=1}^N h(w_i \psi_2(\bm{S};\theta_i)) 
+\end{equation}
+
+in which $h$ is the entropy of a discrete distribution, in this case, a distribution all of the possible $\psi_2$ functions, as in Figure \ref{fig:entropy}. Each $\theta_i$ is a "slice" of the matrix of particles (a single  row of Table \ref{table:particleSet}), defining a single set of parameter values. $h$ is \citep{kontsevichtyler1999}:
+
+\begin{equation}
+h(p) = -\sum_{i = 1}^{N} p_i ln p_i
+\end{equation}
+
+\paragraph{Unconstrained parameterization}
+
+By their very nature, $\sigma$ parameters are bound to be positive, since they represent standard deviations. The $\beta$ terms don't have to be positive, but since the psychometric functions are assumed to be monotonically increasing, I restricted the $\beta$ parameters to be positive too. The correlation parameter, $\rho$, is bound between -1 and 1. 
+
+These bounds have to be taken into account when deciding what distributions to use as prior distributions for the parameters. One solution is to choose distributions with matching supports, i.e. for example gamma distributions for the parameters bound to positive real numbers. Another possibility is to \textit{reparametrise} the model in such a way that some convenient distributions can be used. The latter approach is taken here. 
+
+Priors for $\sigma$ and $\beta$--and as a consequence the parameters themselves--are defined on the logarithmic scale. Prior for $\rho$ is defined on the inverse hyperbolic tangent scale. Both of these are widely used transformations in statistics for these kinds of situations (see \citet[Chapter 22]{stan_manual}). In practice this means  that the \textit{inverse} transformations have to be implemented in the likelihood calculations.
+
+For the $d'$ calculations this implies that Equation \ref{eq:twodimdprime} becomes
+
+\begin{align}
+\begin{split}
+d'_x &= (\frac{S_x}{exp(\sigma_x)})^{exp(\beta_x)} + \kappa_x S_y \\
+d'_y &= (\frac{S_y}{exp(\sigma_y)})^{exp(\beta_y)} + \kappa_y S_x
+\end{split}
+\end{align}
+
+and for the psychometric function (compare this with Equation \ref{eq:generalPfun}):
+
+\begin{equation}
+\psi_2(\bm{S}; \theta)_{(R_x, R_y)} = \phi_2([-c_x + d'_x]r_x, [-c_y + d'_y] r_y, \text{tanh}(\rho) [r_x r_y])
+\end{equation}
+
+A similar transformation would be applied also to Equation \ref{eq:generalPfun2}.
+
+An important aspect of this process to note is that since the priors are normal on the \textit{transformed scale}--i.e. $log\sigma \sim N(\mu, \sigma)$--, they are not normal on the \textit{original scale} (see \citealt[pp. 729 - 732]{kruschke2015}). Indeed, the current parameterization implies that for  example the prior for $\sigma$ is a log-normal distribution.
+
+Another consequence of reparametrisation is that it makes the rejuvenation step of the particle filter slightly simpler. During the rejuvenation step new proposal particles have to be generated from some distribution. It is possible to choose an asymmetric distribution, such as the log-normal distribution, but this leads to two additional complexities: the acceptance probability is now dependent also on the proposal distribution (see ERROR) and the moments calculated from the particle set (mean and standard deviations of the particles) have to be transformed to the parameters of the non-symmetric distribution. 
+
+On the other hand using an unbounded proposal distribution on the bounded space can lead to many proposals  being  outside the support of the distribution, reducing the efficiency of the rejuvenation step.
+
+\paragraph{Some practical considerations}
+\label{sec:practical_considerations}
+
+In the preceding discussion I described the adaptive algorithm theoretically. In implementing the algorithm in R \citep{r_language}, some practical issues came up. 
+
+First, a look-up table of the bivariate integrals was pre-computed to speed up the calculations. 
+
+Second, maximizing the information gain function using optimization algorithms proved prohibitively slow and unreliable. For this reason the possible stimuli were chosen from a grid of 15 stimuli. This allowed me to pre-compute response probabilities for all of the stimuli, which sped up the algorithm considerably. 
+
+Third, during the adaptive run, whenever the particle set was rejuvenated, the ranges for the grid, from which the stimuli were chosen were re-computed. The lower and upper limits for stimuli were found from inverting the $d'$ function, and then finding stimulus levels that would correspond to $d' = 0.1$ for the lower limit and $d' = 2$ for the upper limit (Equation \ref{eq:limits}). Posterior means for the $\sigma$ and $\beta$ parameters were used, in addition, to take into account posterior uncertainty, these were shifted by 1.96 standard deviations to produce psychometric functions with either steep slope (high $\beta$) and low threshold (low $\sigma$) or shallow slope and high threshold. These corresponded to the most extreme scenarios: if the observer's psychometric function has a shallow slope and high threshold, response probabilities change relatively slowly and the range of stimuli has to be larger; the inverse is true if the threshold is slow and the slope steep. 
+
+\begin{align}
+\begin{split}
+\label{eq:limits}
+S_{\text{lower}} &= 0.1^{(1.0 / exp(E[\beta] + 1.96 * SD[\beta])) exp(E[\sigma] - 1.96 * SD[\sigma])}
+\\ 
+S_{\text{higher}} &= 2.0^ {(1.0 / exp(E[\beta] - 1.96 * SD[\beta])) exp(E[\sigma] + 1.96 * SD[\sigma])}
+\end{split}
+\end{align}
+
+Fourth, to ensure that the particle approximation is accurate, three parallel particle algorithms were run. If the algorithms diverged--here defined as the marginal means differing more that $.2$ on the prior scale--Laplace approximation was used to start the particle sets again.

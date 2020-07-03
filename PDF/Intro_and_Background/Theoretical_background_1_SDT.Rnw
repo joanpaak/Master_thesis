@@ -1,6 +1,6 @@
-%!Rnw root = ../Main.Rnw
+%!Rnw root = ../Joni_Paakko_-_Thesis.Rnw
 
-\section{General Recognition Theory}
+\section{Theories of Detection}
 \label{sec:GRT}
 
 The central theoretical concept in this work is General Recognition Theory (GRT), which is essentially a generalization of Signal Detection Theory (SDT) to multiple dimensions, with a focus on modelling interactions between them. Due to this hierarchy, I will first introduce the reader to SDT, before discussing GRT.

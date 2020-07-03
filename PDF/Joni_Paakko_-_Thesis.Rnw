@@ -22,6 +22,11 @@
 \usepackage{graphicx}
 \usepackage{float}
 
+\usepackage{amsthm}
+\usepackage{adjustbox}
+
+\newtheorem{remark}{Remark}
+
 \usepackage{hyperref}
 
 \hypersetup{
@@ -36,7 +41,7 @@
 
 \usepackage[T1]{fontenc}
 \usepackage[finnish, english]{babel}
-\usepackage[utf8]{inputenc}
+
 
 \onehalfspacing
 \usepackage[natbibapa, nodoi]{apacite}
@@ -152,14 +157,29 @@ Data from the psychophysical experiments indicate that non-sensory factors play 
 <<background_GRT_3, child='Intro_and_Background/Theoretical_background_3_GRT_discussion.Rnw'>>=
 @
 
-
 \newpage
 <<background_Bayes, child='Intro_and_Background/Theoretical_background_4_Bayes.Rnw'>>=
 @
 
 \newpage
+<<background_adaptive, child='Intro_and_Background/Theoretical_background_5_Adaptive.Rnw'>>=
+@
+
+\newpage
 <<simu1, child='Simulations/Simulations.Rnw'>>=
 @
+
+\newpage
+<<pscyhophysical_intro, child='Psychophysical_experiment/PsychophysicalExperiment_intro.Rnw'>>=
+@
+
+<<pscyhophysical_anal, child='Psychophysical_experiment/PsychophysicalExperiment_analysis.Rnw'>>=
+@
+
+\newpage
+<<conclusion, child='Conclusions/Conclusions.Rnw'>>=
+@
+
 
 \clearpage
 \bibliography{references}

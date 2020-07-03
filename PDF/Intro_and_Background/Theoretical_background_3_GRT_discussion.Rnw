@@ -1,6 +1,7 @@
-%!Rnw root = ../Main.Rnw
+%!Rnw root = ../Joni_Paakko_-_Thesis.Rnw
 
 \subsection{Critical discussion}
+\label{sec:grt_criticism}
 
 \subsubsection{Relationship to other models}
 

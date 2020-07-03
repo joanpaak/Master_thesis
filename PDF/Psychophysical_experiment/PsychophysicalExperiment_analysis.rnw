@@ -1,0 +1,284 @@
+%!Rnw root = ../Joni_Paakko_-_Thesis.Rnw
+
+\subsection{Results} 
+
+Some model development was inevitable in order to fit the psychophysical data. All of the models are presented  in Table \ref{tab:models}. Note that the models for the Yes/No and 2I-4AFC tasks are identical save for the AFC models lacking the criterion parameters. 
+
+Model fits for both participants are presented separately. Analysis for both participants is divided into two stages, the first describing models 1 to 3 and the second a model in which both kinds of interactions are present. I've also included short discussions of the models alongside the results, to act as a roadmap through the model fitting/development process; general discussion about the main questions is reserved for later. 
+
+I will also present the reader with some introspective remarks, to act as qualitative model criticism.  
+
+\begin{table}
+\caption{All of the models fitted to the psychophysical data. If other information is not present, an X indicates that the parameter(s) are free in the model. }
+\vspace{0.5cm}
+\begin{adjustbox}{center}
+\begin{tabular}{rrccccccc}
+
+\toprule
+
+  &       & \multicolumn{7}{c}{Parameters} \\
+\cmidrule(lr){3-9}  
+ Task & Model & $\sigma$ & C & $\beta$ & $\kappa_{\mu}$ & $\kappa_{\sigma}$ & $\rho$ & $\lambda$ \\
+\midrule
+\multirow{5}{*}{\rotatebox[origin=c]{90}{Yes/No}} & Model 1 & X & X & X & X &   & X & Fixed ($\lambda = 0.02$) \\
+& Model 2 & X & Wider prior & X & X &   & X & X \\
+& Model 3 & X & Wider prior & X &   & X  & X & X \\
+& Both    & X & Wider prior & X & X & X  & $-0.8 < \rho < 0.8$ & X \\
+& Both (Truncated) & X & Wider prior & X & X & $\kappa_{\sigma} > 0$  & $-0.8 < \rho < 0.8$ & X \\
+
+\hline
+
+\multirow{5}{*}{\rotatebox[origin=c]{90}{2I-4AFC}} & Model 1 & X &   & X & X &   & X & Fixed ($\lambda = 0.02$) \\
+& Model 2 & X &   & X & X &   & X & X \\
+& Model 3 & X &   & X &   & X  & X & X \\
+& Both    & X &   & X & X & X  & $-0.8 < \rho < 0.8$ & X \\
+& Both (Truncated) & X &  & X & X & $\kappa_{\sigma} > 0$  & $-0.8 < \rho < 0.8$ & X \\
+
+\bottomrule
+
+\end{tabular}
+\end{adjustbox}
+
+\label{tab:models}
+\end{table}
+
+Models one to three present the initial stage of model development: Model 1 is the same as the one used in simulations. For models 2 and 3 the parameter $\lambda$ was estimated from the data, to accomodate the (presumably) higher proportion of lapsing trials than assumed a prior; also the prior for the criterion was widened, again, to better accomodate smaller false alarm probabilities. Model 3 uses the $\kappa_{sigma}$ style model of interference. 
+
+The model labelled \textit{Both} has, as the name implies, both kinds of interferences in it. The last model, \textit{Both (Truncated)} is otherwise identical to the previous model, but the $\kappa{sigma}$ is bound to positive values. For these models also the parameter $\rho$ was bound between -0.8 and 0.8 to improve computational stability: for the model with normal prior on tanh transformed scale the chains\footnote{It is not possible to present an introduction to Markov Chain Monte Carlo methods here, see for example  ERROR or ERROR for that. The point is that posterior distributions are approximated via random sampling, but since random deviates can't be directly drawn from the posterior distribution,  } sometimes can get stuck to extreme values of correlation.
+
+\subsubsection{Posterior predictive plots}
+
+I did model checking by dividing the two dimensional space of stimuli into three bins per dimension, resulting into 9 total bins, and calculating the proportion of positive responses in each bin for both dimensions. In the data from the Yes/No task the first bin always included stimuli with strength 0.
+
+This method resulted in unequal bin sizes and I would recommend that future works use more sophisticated methods for finding boundaries for the bins. 
+
+In all of the posterior predictive plots (Figures ERROR) The black dots joined by the dashed lines indicate observed data. For example in the top left of figure ERROR the first three black dots indicate responses to increasingly large pitch changes pitch when timbre category is 1 (no change in timbre), the next three dots indicate response to pitch when timbre category is 2 (some change in timbre) and so on. 
+
+In this exemplar figure one can can see that in each timbre category the probability of a positive response to a pitch change increases when the pitch differences get larger. However, the magnitude changes with the timbre category, indicating interference between pitch and timbre.
+
+The data, in each case, is also divided by the category of the irrelevant dimension. For example on the upper row probability of a positive response to pitch dimension (relevant dimension) is plotted. These are broken down with regards to timbre (irrelevant dimension). Inside each timbre category, pitch category goes up from left to right. 
+
+Since completely straight and orthogonal boundaries were used for binning the data, the number of observations per bin varied somewhat; for the participant JP, there didn't seem to be bounds that would result in better distribution. Another factor leading to uneven bin sizes was my decision to bin stimuli with strength 0 in the YN task separately. Number of observations per bin are reported in Table \ref{tab:binsizes}.
+
+\begin{table}
+\caption{Number of observations per bin in the posterior predictive distribution.}
+\vspace{0.5cm}
+\centering
+\begin{tabular}{rrrccccccccc}
+
+\toprule
+
+\multirow{2}{*}{\rotatebox[origin=c]{90}{Bin}} & \multicolumn{2}{r}{Pitch} & 1 & 1 & 1 & 2 & 2 & 2 & 3 & 3 & 3 \\
+& \multicolumn{2}{r}{Timbre} & 1 & 2 & 3 & 1 & 2 & 3 & 1 & 2 & 3 \\
+
+\midrule
+
+\multirow{4}{*}{\rotatebox[origin=c]{90}{N}} & \multirow{2}{*}{JP} & YN & 108 & 58 & 49 & 53 & 38 & 6 & 50 & 6 & 32 \\
+& & AFC & 48 & 81 & 21 & 68 & 38 & 24 & 26 & 34 & 60 \\
+
+\cmidrule(lr){2-12}
+
+& \multirow{2}{*}{OK} & YN & 111 & 39 & 50 & 49 & 38 & 14 & 50 & 18 & 31 \\
+& & AFC & 105 & 27 & 20 & 45 & 80 & 16 & 12 & 16 & 79 \\
+
+\end{tabular}
+\label{tab:binsizes}
+\end{table}
+
+\subsubsection{Participant OK, Models 1 to 3}
+
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.75, angle = 0]{Analysis_of_Human_Data/OK_YN_Basic_models}
+\caption{Task: Yes/No; Participant: OK. Marginal posterior distributions for parameters of Models 1 to 3.}
+\label{fig:OK_YN_Basic_models}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.75, angle = 0]{Analysis_of_Human_Data/OK_AFC_Basic_models}
+\caption{Task: 2I-4AFC; Participant: OK. Marginal posterior distributions for parameters of Models 1 to 3.}
+\label{fig:OK_AFC_Basic_models}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.75, angle = 270]{Analysis_of_Human_Data/OK_YN_post_pred}
+\caption{Task: Yes/No; Participant: OK. Posterior predictive distributions for parameters of Models 1 to 3.}
+\label{fig:OK_YN_post_pred}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.75, angle = 270]{Analysis_of_Human_Data/OK_AFC_post_pred}
+\caption{Task: 2I-4AFC; Participant: OK. Posterior predictive distributions for parameters of Models 1 to 3.}
+\label{fig:OK_AFC_post_pred}
+\end{figure}
+
+\paragraph{Participant OK, Models 1 to 3: Discussion}
+
+In the Yes/No task, it is apparent from the bimodality of the posterior distribution for the $\kappa_{mu}$ parameter (Figure \ref{fig:OK_YN_Basic_models}, top panel) that there are problems with Model 1. Freeing the $\lambda$ parameter (Model 2) manages to fix the bimodality for that parameter (centre panel in the same figure), but this affects the posterior predictive performance negatively (Figure \ref{fig:OK_YN_post_pred}, centre panel). 
+
+From looking at the observed responses (Figure \ref{fig:OK_YN_post_pred}) it is clear that as the irrelevant signal level increases, the probability of a \textit{Yes} response goes towards $0.50$ which is more consistent with a shift in \textit{standard deviation}. 
+
+Due to this, model with coupled standard deviations (Model 3) was fit to the data. It is clear from the posterior predictive plots (Figure \ref{fig:OK_YN_post_pred}, right panel) that this has the closest match to the observed data.
+
+The observed false alarm rates were lower than what I had anticipated \textit{a prior}. To alleviate this problem I widened the prior for the criterion for all of the models besides Model 1, which is the original model.
+
+The same set of models was fit to the data from the 2I-4AFC task. However there is much less to be said; none of the models seem to do significantly worse than the others (Figures \ref{fig:OK_AFC_Basic_models} and \ref{fig:OK_AFC_post_pred}).
+
+\subsubsection{Participant OK, Model with both interactions}
+
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.75, angle = 0]{Analysis_of_Human_Data/OK_YN_AFC_Both}
+\caption{Both tasks; Participant: OK. Marginal posterior distributions for parameters of model with both interactions}
+\label{fig:OK_YN_AFC_Both}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.50, angle = 270]{Analysis_of_Human_Data/OK_post_pred_both}
+\caption{Both tasks; Participant: OK. Marginal posterior distributions for parameters of model with both interactions}
+\label{fig:OK_post_pred_both}
+\end{figure}
+
+\paragraph{Participant OK, Model with both interactions: Discussion}
+
+Both kinds of interactions were combined to a single model, in order to compare the relative contributions of both interactions to the observed patterns of inference. Also, one other modification was made: the prior for $\rho$ was changed to a uniform distribution ($\rho \sim \text{Uniform}(-0.8, 0.8)$) since when running the Stan programs, a chain, if it wandered too close to extreme values, would get stuck to those extreme values; the motivation in this  modification, then, was to improve computational stability of the model. 
+
+\subsubsection{Participant JP, Models 1 to 3}
+
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.75, angle = 0]{Analysis_of_Human_Data/JP_YN_Basic_models}
+\caption{Task: Yes/No; Participant: JP. Marginal posterior distributions for parameters of Models 1 to 3.}
+\label{fig:JP_YN_Basic_models}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.75, angle = 0]{Analysis_of_Human_Data/JP_AFC_Basic_models}
+\caption{Task: 2I-4AFC; Participant: JP. Marginal posterior distributions for parameters of Models 1 to 3.}
+\label{fig:JP_AFC_Basic_models}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.75, angle = 270]{Analysis_of_Human_Data/JP_YN_post_pred}
+\caption{Task: Yes/No; Participant: JP. Posterior predictive distributions for parameters of Models 1 to 3.}
+\label{fig:JP_YN_post_pred}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.75, angle = 270]{Analysis_of_Human_Data/JP_AFC_post_pred}
+\caption{Task: 2I-4AFC; Participant: JP. Posterior predictive distributions for parameters of Models 1 to 3.}
+\label{fig:JP_AFC_post_pred}
+\end{figure}
+
+\paragraph{Participant JP, Models 1 to 3: Discussion}
+
+Yes/No: In contrast to participant OK, here Model 3 (Figure \ref{fig:JP_YN_Basic_models}) seems to suffer from non-identifiabilities: sign for the $\kappa_{\sigma}$ parameter for \textit{timbre} dimension seems to not be identifiable from the data. The bimodality from the $\kappa_{\sigma}$ parameters seems to have bled to the criterion parameter on the \textit{timbre} dimension.
+
+\subsubsection{Participant JP, Model with both interactions}
+
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.75, angle = 0]{Analysis_of_Human_Data/JP_YN_AFC_Both}
+\caption{Both tasks; Participant: JP. Marginal posterior distributions for parameters of model with both interactions}
+\label{fig:JP_YN_AFC_Both}
+\end{figure}
+
+\paragraph{Participant JP, Model with both interactions: Discussion}
+
+As can be seen from the parameter estimates (Figure \ref{fig:JP_YN_AFC_Both}) the $\kappa_{\sigma}$ in the Yes/No task is not identifiable here either. To alleviate this problem, I constrained $\kappa_{sigma}$ to positive values. This seemed reasonable, since the parameter was identified as positive in the 2I-4AFC model, and on the grounds that pitch and timbre are usually thought to interfere negatively. 
+
+\subsubsection{Participant JP, Model with both interactions, $\kappa_{\sigma} > 0$}
+
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.75, angle = 0]{Analysis_of_Human_Data/JP_YN_AFC_Both_T}
+\caption{Both tasks; Participant: JP. Marginal posterior distributions for parameters of model with both interactions, and $\kappa_{\sigma} > 0$}
+\label{fig:JP_YN_AFC_Both_T}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.50, angle = 270]{Analysis_of_Human_Data/JP_post_pred_both_truncated}
+\caption{Both tasks; Participant: JP. Marginal posterior distributions for parameters of model with both interactions, $\kappa_{\sigma} > 0$.}
+\label{fig:JP_post_pred_both_truncated}
+\end{figure}
+
+\paragraph{Participant JP, Model with both interactions, $\kappa_{\sigma} > 0$: Discussion}
+
+The posterior distributions don't exhibit obvious problems with the model (Figure \ref{fig:JP_YN_AFC_Both_T}) and the posterior predictive distribution (Figure \ref{fig:JP_post_pred_both_truncated}) indicates acceptable fit with the observed data.
+
+\subsection{Some introspective remarks}
+\label{sec:introspec}
+
+While posterior predictive checking acts as a quantitative way to check (some) aspects of the models, I will be also incorporating more qualitative model critique in the form of introspective remarks. I've compiled and edited ones that I feel are most important regarding violations of the assumptions of the model in this section. 
+
+I've chosen not to include the information about from which participant each remark is for three reasons: first, these are highly subjective and contingent on how each participant verbalizes their internal processes; second, some of the remarks can be conflicting, reflecting dynamic changes strategies or attention; and third, since there were only two participants, no inferences about the generalizability can be made anyway. However, these provide important information about the limitations of the models and tasks as implemented here; which ones are important and how they are to be remedied are questions left for future work. 
+
+\begin{remark}
+The response input style used for the 2I-AFC task here was difficult, and potentially lead to increased amount of lapses; at least it meant that the cognitive burden was greater in that task.
+\end{remark}
+
+\begin{remark}
+In the 2I-4AFC task the overall sounds of the intervals were compared against each other more so than stimuli inside the intervals.
+\end{remark}
+
+\begin{remark}
+Attention and decisional criteria were calibrated by immediately preceding stimuli. For example the internal idea of how stimulus in which there's change on both dimension sounds like was affected by preceding stimuli and responses to them. 
+\end{remark}
+
+\begin{remark}
+Stimuli were attended sequentially: one of the dimensions was primary, and the decision whether it changed/in which interval it changed was made first. 
+\end{remark}
+
+\begin{remark}
+In the 2I-4AFC task easily discriminable stimuli terminated attention to that dimension. E.g. if there was a clear change in timbre in the first interval, there was no need to listen to it on the second interval; instead, all attention could be diverted to listening for changes in pitch. 
+\end{remark}
+
+\begin{remark}
+In the 2I-4AFC task if one of the dimensions was not discriminable and the other was, often the default choice was to pick the interval in which the more discriminable stimulus was, thinking that maybe the large stimulus masked the fainter.
+\end{remark}
+
+\begin{remark}
+There was a lot of variability in how the response categories were used during the experiment.
+\end{remark}
+
+\subsection{General discussion}
+
+\paragraph{Question 1: Was the original model (Model 1) sufficient?}
+
+For participant OK Model 1 resulted in posterior distribution with two modes (Figure \ref{fig:OK_YN_Basic_models}), which is a clear sign of problems with the model. The marginal posterior distributions for participant JP are less problematic, but it is clear from the posterior predictive plots for both participants (Figures \ref{fig:OK_YN_post_pred} and \ref{fig:fig:JP_YN_post_pred}) that Model 1 fails to capture the fact that for both participants changes in the other dimension increase false alarm probability while decreasing the probability of a  hit. A pattern that is only explained by including the term $\kappa_{\sigma}$ to the model. 
+
+For the 2I-4AFC models there aren't as great differences. 
+
+The pattern of results in which the Yes/No model has more problems probably is due to that model being more diagnostic.    
+
+\paragraph{Question 2: Did coefficients in the Yes/No and 2I-4AFC tasks correspond with each other?}
+
+Due to problems with Models 1 to 3, I used models with both kinds of interactions (and with $\kappa_{\sigma} > 0$ for participant JP) to test the prediction that the coefficients from both tasks should be identical (when taking into account the reduced sensitivity in the 2I-4AFC task).
+
+Results are summarized in Figures \ref{fig:OK_YN_AFC_Both} and \ref{fig:JP_YN_AFC_Both_T}. For both participants it seems that the sensory parameters ($\sigma$ and $\beta$) are fairly close to each other in both tasks. However, the interactions are more varied. 
+
+Parameter $\kappa_{\mu}$ seems to be the most well-behaved  in this sense. For participant OK the $\kappa_{\mu}$ parameters suggest--strongly for the \textit{timbre} dimension--different signs for the coefficient; for participant JP these coefficients for the AFC model seem to lean towards zero, while for the YN model positive values are suggested. 
+
+For both participants the $\rho$ parameters are drawn towards zero in the AFC model while strongly suggesting negative values in the YN model. 
+
+\paragraph{Question 3: What inferences can we make about the processing of pitch and timbre?}
+
+As already discussed, the interaction coefficients varied significantly across the two models, which suggest that the coefficients are strongly influenced by e.g. attention and decisional processes. This makes it hard to draw strong inferences.
+
+Discussion will again be based on Figures \ref{fig:OK_YN_AFC_Both} and \ref{fig:JP_YN_AFC_Both_T}. For both participants the $\kappa_{\sigma}$ coefficients are positive for both \textit{pitch} and \textit{timbre}. This suggest that  changes on the other dimension increase the variability in the evidence distributions. 
+
+For participant JP both $\kappa{\mu}$ coefficients are negative, suggesting that changes on the other dimension decrease the mean of the evidence on the other dimension, that is for example large timbral changes make pitch changes seem smaller (assuming that the evidence distribution reflects mainly perceptual processing).
+
+In the AFC task $\kappa^{\mu}_\text{timbre}$ is mostly on the positive side, which would suggest that changes in pitch would make timbral changes seem larger; or that the participant becomes more prone to answering positively to \textit{timbre} dimension. 
+
+\paragraph{Conclusions from introspection}
+
+It is clear from the introspective remarks that many of the (implicit) assumptions of the models were violated. The remarks indicate for example non-stationarity, serial processing of the dimensions and autocorrelation between subsequent stimuli. Especially the 2I-4AFC task proved to be problematic due to the more complicated response scheme and complex stimuli.  To better diagnose these--and other--problems, more methods for posterior predictive checking should be developed, to increase the coverage of model criticism. 

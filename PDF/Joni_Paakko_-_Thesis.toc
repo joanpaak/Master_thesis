@@ -1,0 +1,70 @@
+\select@language {english}
+\contentsline {section}{\numberline {1}Introduction}{1}{section.1}
+\contentsline {section}{\numberline {2}Theories of Detection}{3}{section.2}
+\contentsline {subsection}{\numberline {2.1}Signal Detection Theory}{3}{subsection.2.1}
+\contentsline {subsubsection}{\numberline {2.1.1}Relationship between stimulus and $d'$}{4}{subsubsection.2.1.1}
+\contentsline {subsubsection}{\numberline {2.1.2}Modelling responses: relationship between $d'$ and response}{6}{subsubsection.2.1.2}
+\contentsline {paragraph}{Responses in the Yes/No task}{6}{section*.2}
+\contentsline {paragraph}{Responses in the 2I-2AFC task}{8}{section*.3}
+\contentsline {subsection}{\numberline {2.2}General Recognition Theory}{9}{subsection.2.2}
+\contentsline {subsubsection}{\numberline {2.2.1}Calculation of $d'$ in two dimensions}{11}{subsubsection.2.2.1}
+\contentsline {subsubsection}{\numberline {2.2.2}Coupling between the functions}{11}{subsubsection.2.2.2}
+\contentsline {paragraph}{Within stimuli interference}{12}{section*.4}
+\contentsline {subsubsection}{\numberline {2.2.3}Modelling responses in two dimensions}{12}{subsubsection.2.2.3}
+\contentsline {paragraph}{Yes/No task in two dimensions}{12}{section*.5}
+\contentsline {paragraph}{2I-4AFC}{15}{section*.6}
+\contentsline {paragraph}{Comparison of the Yes/No and 2I-4AFC tasks}{16}{section*.7}
+\contentsline {subsection}{\numberline {2.3}Lapsing behaviour}{16}{subsection.2.3}
+\contentsline {subsection}{\numberline {2.4}Critical discussion}{17}{subsection.2.4}
+\contentsline {subsubsection}{\numberline {2.4.1}Relationship to other models}{17}{subsubsection.2.4.1}
+\contentsline {paragraph}{Classic GRT}{17}{section*.8}
+\contentsline {paragraph}{Process model}{19}{section*.9}
+\contentsline {paragraph}{Relationship to Generalized Linear Models}{19}{section*.10}
+\contentsline {subsubsection}{\numberline {2.4.2}Nonidentifiabilities and other limitations of the model}{20}{subsubsection.2.4.2}
+\contentsline {paragraph}{What do the latent distributions really represent?}{20}{section*.11}
+\contentsline {paragraph}{Criterial noise}{21}{section*.12}
+\contentsline {paragraph}{Non-orthogonality of decisional boundaries}{21}{section*.13}
+\contentsline {section}{\numberline {3}Bayesian statistics}{23}{section.3}
+\contentsline {subsection}{\numberline {3.1}Basics of Bayesian statistics}{23}{subsection.3.1}
+\contentsline {subsection}{\numberline {3.2}Hierarchical models}{25}{subsection.3.2}
+\contentsline {subsection}{\numberline {3.3}Approximating the Posterior Probability Densities}{27}{subsection.3.3}
+\contentsline {subsubsection}{\numberline {3.3.1}Resample-Move algorithm}{27}{subsubsection.3.3.1}
+\contentsline {subsubsection}{\numberline {3.3.2}Laplace Approximation}{29}{subsubsection.3.3.2}
+\contentsline {subsection}{\numberline {3.4}Bayesian inference in the General Recognition Theory}{30}{subsection.3.4}
+\contentsline {paragraph}{Posterior predictive checks}{30}{section*.16}
+\contentsline {section}{\numberline {4}Adaptive estimation}{32}{section.4}
+\contentsline {subsection}{\numberline {4.1}Entropy minimization}{32}{subsection.4.1}
+\contentsline {paragraph}{Unconstrained parameterization}{33}{section*.17}
+\contentsline {paragraph}{Some practical considerations}{34}{section*.18}
+\contentsline {section}{\numberline {5}Simulations}{36}{section.5}
+\contentsline {subsection}{\numberline {5.1}Methods}{36}{subsection.5.1}
+\contentsline {paragraph}{Prior distributions}{36}{section*.19}
+\contentsline {subsection}{\numberline {5.2}Results}{38}{subsection.5.2}
+\contentsline {paragraph}{Trial-by-trial estimates}{38}{section*.20}
+\contentsline {paragraph}{Hierarchical model}{42}{section*.21}
+\contentsline {subsection}{\numberline {5.3}Discussion}{44}{subsection.5.3}
+\contentsline {paragraph}{Question 1: is the adaptive algorithm more efficient?}{44}{section*.22}
+\contentsline {paragraph}{Question 2: how well are generating parameters recovered?}{45}{section*.23}
+\contentsline {section}{\numberline {6}Psychophysical experiments}{46}{section.6}
+\contentsline {subsection}{\numberline {6.1}Methods}{46}{subsection.6.1}
+\contentsline {paragraph}{Procedure}{46}{section*.24}
+\contentsline {paragraph}{Stimuli}{46}{section*.25}
+\contentsline {subsection}{\numberline {6.2}Results}{48}{subsection.6.2}
+\contentsline {subsubsection}{\numberline {6.2.1}Posterior predictive plots}{48}{subsubsection.6.2.1}
+\contentsline {subsubsection}{\numberline {6.2.2}Participant OK, Models 1 to 3}{50}{subsubsection.6.2.2}
+\contentsline {paragraph}{Participant OK, Models 1 to 3: Discussion}{53}{section*.26}
+\contentsline {subsubsection}{\numberline {6.2.3}Participant OK, Model with both interactions}{55}{subsubsection.6.2.3}
+\contentsline {paragraph}{Participant OK, Model with both interactions: Discussion}{56}{section*.27}
+\contentsline {subsubsection}{\numberline {6.2.4}Participant JP, Models 1 to 3}{57}{subsubsection.6.2.4}
+\contentsline {paragraph}{Participant JP, Models 1 to 3: Discussion}{60}{section*.28}
+\contentsline {subsubsection}{\numberline {6.2.5}Participant JP, Model with both interactions}{61}{subsubsection.6.2.5}
+\contentsline {paragraph}{Participant JP, Model with both interactions: Discussion}{62}{section*.29}
+\contentsline {subsubsection}{\numberline {6.2.6}Participant JP, Model with both interactions, $\kappa _{\sigma } > 0$}{63}{subsubsection.6.2.6}
+\contentsline {paragraph}{Participant JP, Model with both interactions, $\kappa _{\sigma } > 0$: Discussion}{64}{section*.30}
+\contentsline {subsection}{\numberline {6.3}Some introspective remarks}{64}{subsection.6.3}
+\contentsline {subsection}{\numberline {6.4}General discussion}{65}{subsection.6.4}
+\contentsline {paragraph}{Question 1: Was the original model (Model 1) sufficient?}{65}{section*.31}
+\contentsline {paragraph}{Question 2: Did coefficients in the Yes/No and 2I-4AFC tasks correspond with each other?}{65}{section*.32}
+\contentsline {paragraph}{Question 3: What inferences can we make about the processing of pitch and timbre?}{66}{section*.33}
+\contentsline {paragraph}{Conclusions from introspection}{66}{section*.34}
+\contentsline {section}{\numberline {7}Conclusions}{67}{section.7}

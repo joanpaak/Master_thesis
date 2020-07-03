@@ -7,16 +7,16 @@
 # Set up the simulation:
 
 library(rstan)
-#setwd('/home/joni/Desktop/Thesis/Simulation_final/')
-setwd('C:/Users/Joni/Desktop/Thesis/Simulation_final/')
+setwd('C:/Users/Joni/Documents/GitHub/Master_thesis/Simulation_and_experiment')
 
 # When running for the first time on your system, you should
 # compile the stan model and save it to a file. C.f. the 
 # commented out portion after this line
-load("mdlYesNoBivarProbit.rData")
+load("../compiled_models/mdlYN.rData")
+
 # 
-# mdlYesNoBivarProbit = stan_model("YesNoBivarProbit.stan")
-# save(mdlYesNoBivarProbit, file = "mdlYesNoBivarProbit.rData")
+# mdlYesNoBivarProbit = stan_model("../Stan/mdlYN.stan")
+# save(mdlYesNoBivarProbit, file = "../compiled_models/mdlYN.rData")
 
 source("AuxiliaryFunctions/auxiliaryFunctions.R")
 source("YesNoSimulation.R")
@@ -30,11 +30,11 @@ experimentAttributes = list(
   nTrials = 800,
   samplingScheme = "random",
   pResp = pRespYN,
-  mdlFile = mdlYesNoBivarProbit,
+  mdlFile = mdlYN,
   recomputeStimRange = F
 )
 
-runSimulations(25, experimentAttributes, "random_fix_stim", T)
+runSimulations(1, experimentAttributes, "random_fix_stim", T)
 
 
 ### RANDOM SAMPLING; RECOMPUTE STIM RANGE
@@ -44,11 +44,11 @@ experimentAttributes = list(
   nTrials = 800,
   samplingScheme = "random",
   pResp = pRespYN,
-  mdlFile = mdlYesNoBivarProbit,
+  mdlFile = mdlYN,
   recomputeStimRange = T
 )
 
-runSimulations(25, experimentAttributes, "random", T)
+runSimulations(1, experimentAttributes, "random", T)
 
 
 ### ADAPTIVE SAMPLING; RECOMPUTE STIM RANGE
@@ -58,9 +58,9 @@ experimentAttributes = list(
   nTrials = 800,
   samplingScheme = "entropy",
   pResp = pRespYN,
-  mdlFile = mdlYesNoBivarProbit,
+  mdlFile = mdlYN,
   recomputeStimRange = T
 )
 
-runSimulations(25, experimentAttributes, "adaptive", T)
+runSimulations(1, experimentAttributes, "adaptive", T)
 

@@ -1,4 +1,4 @@
-%!Rnw root = ../Main.Rnw
+%!Rnw root = ../Joni_Paakko_-_Thesis.Rnw
 
 \section{Introduction}
 
