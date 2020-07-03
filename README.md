@@ -4,20 +4,9 @@ That's the current title of my thesis. It's subject to a lot of change in the co
 
 ## Current stage
 
-The thesis is not done yet; it shall be very soon, though! Currently I am writing the first version:
+The first version is complete soon; there's now text in every section, but I'm afraid there's lot of problems. 
 
-- [x] Abstract
-- [x] Introduction
-- [x] Theoretical Background: SDT
-- [x] Theoretical Background: GRT
-- [x] Theoretical Background: Bayes
-- [ ] Theoretical Background: Adaptive estimation
-- [x] Simulations
-- [ ] Psychophysical Experiments
-- [ ] Discussion
-- [ ] Appendices
-
-Download the latest PDF via this link (right click on it and save it, opening it in GitHub is slow): [the latest pdf](PDF/Main.pdf).
+Download the latest PDF via this link (right click on it and save it, opening it in GitHub is slow): [the latest pdf](PDF/Joni_Paakko_-_Thesis.pdf).
 
 ## Abstract
 
