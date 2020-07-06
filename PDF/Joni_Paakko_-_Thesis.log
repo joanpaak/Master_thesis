@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.14159265-2.6-0.99996 (MiKTeX 2.9 64-bit) (preloaded format=xelatex 2016.10.10)  6 JUL 2020 10:49
+This is XeTeX, Version 3.14159265-2.6-0.99996 (MiKTeX 2.9 64-bit) (preloaded format=xelatex 2016.10.10)  6 JUL 2020 20:06
 entering extended mode
 **./Joni_Paakko_-_Thesis.tex
 (Joni_Paakko_-_Thesis.tex
@@ -983,16 +983,16 @@ File: ./figures/Process_model.png Graphic file (type QTm)
 
 <use  "./figures/Process_model.png" > [20] [21] [22] [23]
 
-Package xcolor Warning: Incompatible color definition on input line 687.
+Package xcolor Warning: Incompatible color definition on input line 689.
 
 File: figure/unnamed-chunk-12-1.pdf Graphic file (type QTm)
 <use  "figure/unnamed-chunk-12-1.pdf" >
 
-Package xcolor Warning: Incompatible color definition on input line 702.
+Package xcolor Warning: Incompatible color definition on input line 704.
 
 File: figure/unnamed-chunk-13-1.pdf Graphic file (type QTm)
 <use  "figure/unnamed-chunk-13-1.pdf" >
-Underfull \hbox (badness 1199) in paragraph at lines 721--721
+Underfull \hbox (badness 1199) in paragraph at lines 723--723
 [][][]\T1/cmr/m/n/8 Andrew Gel-man has col-lected a bunch of dif-fer-ent names 
 for hi-er-ar-chi-cal mod-els in to a blog post:
  []
@@ -1002,22 +1002,22 @@ File: ./figures/Hierarchical_model_for_groups.png Graphic file (type QTm)
  <use  "./figures/Hierarchical_model_for_groups.png" > [26]
 File: ./figures/Basic_hierarchical_mixture_model.png Graphic file (type QTm)
 
-<use  "./figures/Basic_hierarchical_mixture_model.png" > [27]
+<use  "./figures/Basic_hierarchical_mixture_model.png" > [27] [28]
 Package hyperref Info: bookmark level for unknown algorithm defaults to 0 on in
-put line 786.
+put line 794.
 
 
-Package xcolor Warning: Incompatible color definition on input line 805.
+Package xcolor Warning: Incompatible color definition on input line 813.
 
 File: figure/degeneracy-1.pdf Graphic file (type QTm)
-<use  "figure/degeneracy-1.pdf" > [28] [29] [30] [31] [32]
+<use  "figure/degeneracy-1.pdf" > [29] [30] [31] [32]
 
-Package xcolor Warning: Incompatible color definition on input line 895.
+Package xcolor Warning: Incompatible color definition on input line 903.
 
 File: figure/unnamed-chunk-14-1.pdf Graphic file (type QTm)
 <use  "figure/unnamed-chunk-14-1.pdf" > [33] [34] [35] [36]
 
-Package xcolor Warning: Incompatible color definition on input line 1008.
+Package xcolor Warning: Incompatible color definition on input line 1016.
 
 File: figure/unnamed-chunk-15-1.pdf Graphic file (type QTm)
 <use  "figure/unnamed-chunk-15-1.pdf" > [37]
@@ -1061,7 +1061,7 @@ File: ./figures/qs_AFC_sq_error.png Graphic file (type QTm)
  <use  "./figures/qs_AFC_sq_error.png" >
 [45] [46]
 
-Package xcolor Warning: Incompatible color definition on input line 1218.
+Package xcolor Warning: Incompatible color definition on input line 1226.
 
 File: figure/unnamed-chunk-16-1.pdf Graphic file (type QTm)
 <use  "figure/unnamed-chunk-16-1.pdf" > [47] [48] [49]
@@ -1111,23 +1111,23 @@ m)
 <use  "./figures/Analysis_of_Human_Data/JP_YN_AFC_Both.png" > [61] [62]
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 1424.
+(hyperref)                removing `math shift' on input line 1432.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\kappa' on input line 1424.
+(hyperref)                removing `\kappa' on input line 1432.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `subscript' on input line 1424.
+(hyperref)                removing `subscript' on input line 1432.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\sigma' on input line 1424.
+(hyperref)                removing `\sigma' on input line 1432.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 1424.
+(hyperref)                removing `math shift' on input line 1432.
 
 File: ./figures/Analysis_of_Human_Data/JP_YN_AFC_Both_T.png Graphic file (type 
 QTm)
@@ -1139,7 +1139,7 @@ file (type QTm)
 [64] [65]
 
 LaTeX Warning: Reference `fig:fig:JP_YN_post_pred' on page 66 undefined on inpu
-t line 1483.
+t line 1491.
 
 [66] [67] [68] [69] (Joni_Paakko_-_Thesis.bbl
 Missing character: There is no – in font ecrm1000!
@@ -1152,13 +1152,13 @@ LaTeX Font Info:    Try loading font information for T1+cmtt on input line 656.
 
 ("C:\Program Files\MiKTeX 2.9\tex\latex\base\t1cmtt.fd"
 File: t1cmtt.fd 2014/09/29 v2.5h Standard LaTeX font definitions
-) [71]) [72]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 1544.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 1544.
+) [71] [72]) [73]
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 1552.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 1552.
 
 (Joni_Paakko_-_Thesis.aux)
-Package atveryend Info: Empty hook `AtVeryEndDocument' on input line 1544.
-Package atveryend Info: Empty hook `AtEndAfterFileList' on input line 1544.
+Package atveryend Info: Empty hook `AtVeryEndDocument' on input line 1552.
+Package atveryend Info: Empty hook `AtEndAfterFileList' on input line 1552.
 
 
 LaTeX Warning: There were undefined references.
@@ -1166,15 +1166,15 @@ LaTeX Warning: There were undefined references.
 
 LaTeX Warning: There were multiply-defined labels.
 
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 1544.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 1552.
  ) 
 Here is how much of TeX's memory you used:
- 21802 strings out of 428408
- 367421 string characters out of 3160623
- 453127 words of memory out of 3000000
- 24777 multiletter control sequences out of 15000+200000
+ 21812 strings out of 428408
+ 367613 string characters out of 3160623
+ 453247 words of memory out of 3000000
+ 24787 multiletter control sequences out of 15000+200000
  24929 words of font info for 64 fonts, out of 3000000 for 9000
  1328 hyphenation exceptions out of 8191
- 53i,17n,73p,1218b,604s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 53i,17n,73p,1218b,664s stack positions out of 5000i,500n,10000p,200000b,50000s
 
-Output written on Joni_Paakko_-_Thesis.pdf (75 pages).
+Output written on Joni_Paakko_-_Thesis.pdf (76 pages).

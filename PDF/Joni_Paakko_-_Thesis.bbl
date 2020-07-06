@@ -718,6 +718,33 @@ Kellen, D.%
 \PrintBackRefs{\CurrentBib}
 
 \bibitem [\protect \citeauthoryear {%
+Keller%
+\ \BBA {} Kamary%
+}{%
+Keller%
+\ \BBA {} Kamary%
+}{%
+{\protect \APACyear {2018}}%
+}]{%
+keller2018}
+\APACinsertmetastar {%
+keller2018}%
+\begin{APACrefauthors}%
+Keller, M.%
+\BCBT {}\ \BBA {} Kamary, K.%
+\end{APACrefauthors}%
+\unskip\
+\newblock
+\APACrefYearMonthDay{2018}{}{}.
+\newblock
+{\BBOQ}\APACrefatitle {Bayesian model selection and averating via mixture model
+  estimation} {Bayesian model selection and averating via mixture model
+  estimation}.{\BBCQ}
+\newblock
+\APAChowpublished {arxiv:1711.1006v2}.
+\PrintBackRefs{\CurrentBib}
+
+\bibitem [\protect \citeauthoryear {%
 Kemler~Nelson%
 }{%
 Kemler~Nelson%
@@ -1635,6 +1662,33 @@ Wickens, T.%
   detection theory}\ (\PrintOrdinal{3}\ \BEd).
 \newblock
 \APACaddressPublisher{}{New York: Oxford University Press}.
+\PrintBackRefs{\CurrentBib}
+
+\bibitem [\protect \citeauthoryear {%
+Zeigenfuse%
+\ \BBA {} Lee%
+}{%
+Zeigenfuse%
+\ \BBA {} Lee%
+}{%
+{\protect \APACyear {2010}}%
+}]{%
+zeigenfuse2010}
+\APACinsertmetastar {%
+zeigenfuse2010}%
+\begin{APACrefauthors}%
+Zeigenfuse, M.%
+\BCBT {}\ \BBA {} Lee, M.%
+\end{APACrefauthors}%
+\unskip\
+\newblock
+\APACrefYearMonthDay{2010}{}{}.
+\newblock
+{\BBOQ}\APACrefatitle {A general latent assignment approach for modeling
+  psychological contaminants} {A general latent assignment approach for
+  modeling psychological contaminants}.{\BBCQ}
+\newblock
+\APACjournalVolNumPages{Journal of Mathematical Psychology}{54}{}{352 - 362}.
 \PrintBackRefs{\CurrentBib}
 
 \end{thebibliography}

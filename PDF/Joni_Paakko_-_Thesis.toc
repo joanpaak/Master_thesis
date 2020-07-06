@@ -30,10 +30,10 @@
 \contentsline {subsection}{\numberline {3.1}Basics of Bayesian statistics}{24}{subsection.3.1}
 \contentsline {subsection}{\numberline {3.2}Hierarchical models}{26}{subsection.3.2}
 \contentsline {subsection}{\numberline {3.3}Approximating the Posterior Probability Densities}{28}{subsection.3.3}
-\contentsline {subsubsection}{\numberline {3.3.1}Resample-Move algorithm}{28}{subsubsection.3.3.1}
-\contentsline {subsubsection}{\numberline {3.3.2}Laplace Approximation}{30}{subsubsection.3.3.2}
+\contentsline {subsubsection}{\numberline {3.3.1}Resample-Move algorithm}{29}{subsubsection.3.3.1}
+\contentsline {subsubsection}{\numberline {3.3.2}Laplace Approximation}{31}{subsubsection.3.3.2}
 \contentsline {subsection}{\numberline {3.4}Bayesian inference in the General Recognition Theory}{31}{subsection.3.4}
-\contentsline {paragraph}{Posterior predictive checks}{31}{section*.18}
+\contentsline {paragraph}{Posterior predictive checks}{32}{section*.18}
 \contentsline {section}{\numberline {4}Adaptive estimation}{33}{section.4}
 \contentsline {subsection}{\numberline {4.1}Entropy minimization}{33}{subsection.4.1}
 \contentsline {paragraph}{Unconstrained parameterization}{34}{section*.19}
