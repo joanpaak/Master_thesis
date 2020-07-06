@@ -7,7 +7,7 @@ So far I have covered the case in which the participant has to make a single dec
 
 A widely used theoretical framework for generalizing SDT into multiple dimensions is the General Recognition Theory. As in SDT, also in GRT randomness in the responses is thought to arise from the evidence having a probabilistic nature \citep{ashby1986, ashby2015, kadlec1992}. 
 
-In the two-dimensional case also the evidence distribution is two dimensional. Following the assumption made earlier that evidence is distributed normally, it is possible to represent evidence in two dimensions by a bivariate normal distribution. This is demonstrated in Figure \ref{fig:2dimnorm}. Left panel shows a projection of the 3-dimensional shape of the bivariate density; right panel shows the same distribution from above, as a contour.  
+In the two-dimensional case also the evidence distribution is two dimensional. Following the assumption made earlier that evidence is distributed normally, it is possible to represent evidence in two dimensions by a bivariate normal distribution. A bivariate normal distribution can be defined by two means, which correspond to its location on each dimension, and a correlation coefficient, which corresponds to the shape of the distribution. A bivariate normal distribution with positive correlation is shown graphically in Figure \ref{fig:2dimnorm}. Left panel shows a projection of the 3-dimensional shape of the bivariate density; right panel shows the same distribution from above, as a contour. Rest of the figures in this thesis will represent bivariate distributions as contours.
 
 \begin{figure}
 \centering
@@ -50,88 +50,18 @@ lines(c(-2, 1), c(2, 2), lty = 2, lwd = lwd_global)
 
 \subsubsection{Calculation of $d'$ in two dimensions}
 
-In the one dimensional case $d'$ value tells the location, i.e. $\mu$, of the evidence distribution on the evidence axis. Situation in two dimensions is similar to this, however, now $\mu$ becomes a vector with two possible values corresponding to the location of the evidence distribution on the two dimensions: $\bm{\mu} = [\mu_x, \mu_y]^T$. Here $\mu_x$ could correspond to evidence about pitch change and $\mu_y$ to evidence about timbre change. In Figure \ref{fig:2dimnorm} $\mu_x$ is represented by the vertical dashed line, while $\mu_y$ is represented by the horizontal dashed line.\footnote{Note that the vector $\bm{mu}$--and all vectors after his--is transposed (the $T$ in the superscript) since it is customary to define these as column vectors.}
 
-Since there are two $d'$ and $\mu$ parameters, also the parameters of the psychometric function, signals and responses become vectors: $\bm{\sigma} = [\sigma_x, \sigma_y]^T$, $\bm{\beta} = [\beta_x, \beta_y]^T$, $\bm{S} = [S_x, S_y]^T$ and $\bm{R} = [R_x, R_y]^T$. Interactions can be thought of as coupling between the psychometric functions.
-
-\subsubsection{Coupling between the functions}
-
-I will be considering two different types of coupling between the $d'$ functions. The first type is coupling between the means of the evidence distributions, the other kind is coupling between the variances of the evidence distributions. 
+For two-dimensional stimuli, two $d'$ values have to be calculated, on for each dimension. Similar to SDT, the $d'$ values are the location of the evidence distribution, but now the location has to be determined in the two-dimensional space on the $x$ and $y$ axes separately. This also implies that now there are two $d'$ functions, and consequently, two of each parameter: 
 
 \begin{align}
 \label{eq:twodimdprime}
 \begin{split}
-d'_x &= (\frac{S_x}{\sigma_x})^{\beta_x} + \kappa_x^{\mu} S_y \\
-d'_y &= (\frac{S_y}{\sigma_y})^{\beta_y} + \kappa_y^{\mu} S_x
+d'_x &= (\frac{S_x}{\sigma_x})^{\beta_x}\\
+d'_y &= (\frac{S_y}{\sigma_y})^{\beta_y}
 \end{split}
 \end{align}
 
-Through the parameter $\kappa_i^{mu}$ any non-zero signal on the other dimension is able to influence the $d'$ value of the other dimension, as demonstrated in the left panel of Figure \ref{fig:GRTinteractions}.
-
-The other possibility is that the $\sigma$ terms are coupled:
-
-\begin{align}
-\label{eq:varshift}
-\begin{split}
-\sigma_x &= exp(log\sigma_x + \kappa_x^{\sigma} S_y) \\
-\sigma_y &= exp(log\sigma_y + \kappa_y^{\sigma} S_x)
-\end{split}
-\end{align}
-
-Note that in the \textit{Yes/No} model also the criteria have to be divided by $\sigma$--this will be discussed at the end of the section on the \textit{Yes/No} model.
-
-\paragraph{Within stimuli interference}
-
-It is also possible that the evidence is correlated between the dimensions: see the right panel of Figure \ref{fig:GRTinteractions}. This is sometimes also referred to as \textit{perceptual interference} or \textit{correlated noise}. Correlated evidence is not included in the $d'$ functions; it affects only the response probabilities and will be discussed in conjunction with the psychometric functions. 
-
-\begin{figure}
-\begin{center}
-<<echo=F, fig=T, fig.height = 3.0>>=
-library(mvtnorm)
-y = seq(-2, 4, length.out = 50)
-x = seq(-2, 4, length.out = 50)
-expected = matrix(NaN, nrow = length(x), ncol = length(y))
-meanshift = matrix(NaN, nrow = length(x), ncol = length(y))
-varshift = matrix(NaN, nrow = length(x), ncol = length(y))
-correlated = matrix(NaN, nrow = length(x), ncol = length(y))
-
-for(i in 1:length(x)) {
-  for(j in 1:length(y)) {
-    expected[i, j] = dmvnorm(c(x[i], y[j]), mean = c(1, 0), sigma = matrix(c(1, 0, 0, 1), 2, 2))
-    meanshift[i, j] = dmvnorm(c(x[i], y[j]), mean = c(1, 1), sigma = matrix(c(1, 0, 0, 1), 2, 2))
-    varshift[i, j] = dmvnorm(c(x[i], y[j]), mean = c(1, 0), sigma = matrix(c(4, 0, 0, 1), 2, 2))
-    correlated[i, j] = dmvnorm(c(x[i], y[j]), mean = c(1, 0), sigma = matrix(c(1, 0.8, 0.8, 1), 2, 2))
-  }
-}
-
-par(family = font_family_global)
-par(mfrow = c(1, 3))
-
-contour(x, y, expected, lty = 2, levels = c(0.05), main = expression(kappa[mu]),
-        xlab = "Evidence (x)", ylab = "Evidence (y)", drawlabels = F, axes = F, lwd = lwd_global)
-axis(side = 1); axis(side = 2)
-contour(x, y, meanshift, add =T, levels = c(0.05), drawlabels = F, lwd = lwd_global)
-points(1, 0, pch = 4)
-points(1, 1, pch = 3)
-
-contour(x, y, expected, lty = 2, levels = c(0.05), main = expression(kappa[sigma]),
-        xlab = "Evidence (x)", ylab = "Evidence (y)", drawlabels = F, axes = F, lwd = lwd_global)
-axis(side = 1); axis(side = 2)
-contour(x, y, varshift, add =T, levels = c(0.05), drawlabels = F, lwd = lwd_global)
-points(1, 0, pch = 4)
-points(1, 0, pch = 3)
-
-contour(x, y, expected, lty = 2, levels = c(0.05), main = expression(rho), 
-        xlab = "Evidence (x)", ylab = "Evidence (y)", drawlabels = F, axes = F, lwd = lwd_global)
-axis(side = 1); axis(side = 2)
-contour(x, y, correlated, add=T, levels = c(0.05), drawlabels = F, lwd = lwd_global)
-points(1, 0, pch = 4)
-points(1, 0, pch = 3)
-@
-\end{center}
-\caption{The three kinds of interactions in the model. The contours depict bivariate normal distributions. Dashed lines indicate the shape and location of the distribution in the absence of interaction; the solid lines depict them in the case that interaction is present. Left panel: shift in the mean of the evidence distribution. Centre panel: shift in the variance of the evidence distribution. Right panel: correlated noise between the dimensions.}
-\label{fig:GRTinteractions}
-\end{figure}
+However, since the main motivation in GRT is to model interactions between the dimensions, this would be rather incomplete. I will first discuss how response probabilities are found in GRT, and then discuss the types of interference included in the models in this thesis.
 
 \subsubsection{Modelling responses in two dimensions}
 \label{sec:modelling_responses}
@@ -140,12 +70,9 @@ Whereas in SDT the participant is usually required to make a single decision on 
 
 \paragraph{Yes/No task in two dimensions}
 
-Figure \ref{fig:GRTsimple} shows how the two-dimensional space is separated into response regions analogously to how it was shown from SDT Figure \ref{fig:SDT}. The contours represent the bivariate normal distributions, as seen from above. Because the signal is two-dimensional, the participant has to hold two decisional boundaries, here represented by the dashed lines that divide the internal scale into four response regions. Numbers in each corner correspond to the different response categories: 0 indicating a negative response on that dimension and 1 a positive response. In this case the most probable response is $[1,1]$, a positive response on both dimensions.
-
 \begin{figure}
 \begin{center}
 <<echo=F, fig = T, fig.height = 3.5, fig.width = 3.5>>=
-
 y = seq(-2, 3, length.out = 50)
 x = seq(-2, 3, length.out = 50)
 
@@ -165,29 +92,30 @@ contour(x, y, s00, xlab = "Evidence (x)", ylab = "Evidence (y)",
 axis(side = 1); axis(side = 2)
 abline(h = -0.7, lty = 2); abline(v = -0.7, lty = 2)
 text(-1.6, -1.8, "(0, 0)"); text(2.6, -1.8, "(1, 0)"); text(-1.6, 2.8, "(0, 1)"); text(2.6, 2.8, "(1, 1)")
-
 @
 \end{center}
 \caption{In two dimensions, the evidence distribution--when binary responses are required--is separated into four response regions.}
 \label{fig:GRTsimple}
 \end{figure}
 
-Again, similar to unidimensional SDT, the response probabilities are found by integrating over the evidence distribution, split into response regions by the decisional boundaries as shown in the figure. For example the probability of observing a positive response on both dimensions is found by  integrating the two-dimensional normal distribution from the response criteria to positive infinity (region (1,1) in Figure \ref{fig:GRTsimple}). Whereas in the unidimensional case two psychometric functions were needed to model the binary responses, here four are needed, for each of the response possibilities:
+Figure \ref{fig:GRTsimple} shows how the two-dimensional space is separated into response regions analogously to how it was shown from SDT Figure \ref{fig:SDT}. The distribution represented by the solid line has $d' = [0.00, 0.00]$ and the distribution represented by the dashed lines $d' = [1.00, 1.25]$. The dashed straight lines are the criteria: the vertical line is criterion for the dimension $x$ and the horizontal for dimension $y$. These criteria divide the two-dimensional space into four response regions. Most of the solid lined distribution falls into the region labelled $(0, 0)$ indicating high probability of a negative response on both dimensions. As the signal level on both dimensions is increased, as is done for the dashed line distribution, more of the distribution falls into the other regions, in this case the region $(1,1)$.  
+
+Again, similar to unidimensional SDT, the response probabilities are found by integrating over the evidence distribution, split into response regions at the decisional boundaries as shown in Figure \ref{fig:GRTsimple}. For example the probability of observing a positive response on both dimensions is found by  integrating the two-dimensional normal distribution from the response criteria to positive infinity (region (1,1)). Whereas in the unidimensional case two psychometric functions were needed to model the two response categories, here four are needed, for each of the response possibilities:
 
 \begin{align}
 \begin{split}
 \label{eq:probs}
-\psi(\bm{S}; \theta)_{(0, 0)}  = \int_{-\infty}^{C_x} \int_{-\infty}^{C_y} N(\bm{\mu}, \bm{\Sigma})
+\psi(\bm{S}; \theta)_{(\text{No}, \text{No})}  = \int_{-\infty}^{C_x} \int_{-\infty}^{C_y} N(\bm{\mu}, \bm{\Sigma})
 \\
-\psi(\bm{S}; \theta)_{(1, 0)}  = \int_{C_x}^{\infty} \int_{-\infty}^{C_y} N(\bm{\mu}, \bm{\Sigma})
+\psi(\bm{S}; \theta)_{(\text{Yes}, \text{No})}  = \int_{C_x}^{\infty} \int_{-\infty}^{C_y} N(\bm{\mu}, \bm{\Sigma})
 \\
-\psi(\bm{S}; \theta)_{(0, 1)}  = \int_{-\infty}^{C_x} \int_{C_y}^{\infty} N(\bm{\mu}, \bm{\Sigma})
+\psi(\bm{S}; \theta)_{(\text{No}, \text{Yes})}  = \int_{-\infty}^{C_x} \int_{C_y}^{\infty} N(\bm{\mu}, \bm{\Sigma})
 \\
-\psi(\bm{S}; \theta)_{(1, 1)}  = \int_{C_x}^{\infty} \int_{C_y}^{\infty} N(\bm{\mu}, \bm{\Sigma})
+\psi(\bm{S}; \theta)_{(\text{Yes}, \text{Yes})}  = \int_{C_x}^{\infty} \int_{C_y}^{\infty} N(\bm{\mu}, \bm{\Sigma})
 \end{split}
 \end{align}
 
-Here $\bm{S}$ is a vector containing the physical signal levels on the individual dimensions, $\bm{\mu}$ corresponds to the vector of $d'$-values. $\bm{\Sigma}$ is the correlation matrix, in which correlated evidence--see right panel of Figure \ref{fig:GRTinteractions}--is modelled by treating the correlation coefficient as a free parameter:
+Here $\bm{S}$ is a vector containing the physical signal levels on the individual dimensions, $\bm{\mu}$ corresponds to the vector of $d'$-values. $\bm{\Sigma}$ is the correlation matrix, in which correlated evidence is modelled by treating the correlation coefficient as a free parameter:
 
 $$
 \begin{bmatrix}
@@ -196,7 +124,7 @@ $$
 \end{bmatrix}
 $$
 
-Again, the psychometric functions are most practically thought about in terms of the bivariate standard normal cumulative distribution function, $\phi_2(u_x, u_y, \rho)$ (\cite{boys1989, pan2017}). First one has to find $u_x$ and $u_y$ (the first two inputs to $\phi_2$) which stand for the upper integration limits:
+Similar to SDT, the psychometric functions are most practically thought about in terms of the (bivariate) standard normal cumulative distribution function, $\phi_2(u_x, u_y, \rho) = \int_{-\infty}^{u_x} \int_{-\infty}^{u_y} N([0,0], \bm{\Sigma})$, in which $\bm{\Sigma}$ is defined as before. The upper integration limits can be found by calculating:
 
 \begin{align*}
 \begin{split}
@@ -205,7 +133,7 @@ u_y &= -c_y + d'_y
 \end{split}
 \end{align*}
 
-Then, if responses are coded with $-1$ and $1$, inputs for the $\phi_2$ function are:
+Then, if responses are coded with $\text{No} = -1$ and $ \text{Yes} = 1$, inputs for the $\phi_2$ function are:
 
 \begin{align*}
 \begin{split}
@@ -224,17 +152,6 @@ This process can be defined generally with the equation:
 \end{equation}
 
 in which the $\bm{R} = [r_x r_y]$. All of the Stan \citep{stan2019} programs in appendix A assume that responses are coded in this way.
-
-In the case of variance shift also the criterion has to be also divided by the standard deviation. This is intuitively clear from the observation that as the variance of the evidence distribution becomes larger, the parts of the evidence distribution falling into the response regions become increasingly equal. In other words response probabilities get closer to 0.25, and a larger denominator for the term $c$ will achieve just this:
-
-\begin{equation}
-\psi_2(\bm{S}; \theta)_{\bm{R}} = \phi_2([-\frac{c_x}{\sigma_x} + d'_x]r_x, [-\frac{c_y}{\sigma_y} + d'_y] r_y, \rho [r_x r_y])
-\label{eq:generalPfun_varshift}
-\end{equation}  
-
-The term $\sigma$ is also affected  and is defined in equation \ref{eq:varshift}.
-
-This means that the definition of criterion is a bit different from that of when no variance-shift is present. In the model with constant variance, the criterion corresponds to the Z-score of the false alarm probability (see \citet[Chapter 6]{kingdomprins2010}): $\text{criterion} = \phi^{-1}(P(FA))$, in which $\phi^{-1}$ is the standard normal inverse cumulative distribution function; in the model with variance shift the whole first term corresponds to the Z-score: $\text{criterion}/\sigma = \phi^{-1}(P(FA))$. This means that in the variance-shift model the criterion parameter is more accurately the geometric location of the decisional criterion in the decisional space, independent of the variance of the evidence distributions. However, since it is easier to interpret false alarm probabilities, in the models with variance shift the prior is placed on the term $\text{criterion}/\sigma$.
 
 \paragraph{2I-4AFC}
 
@@ -280,7 +197,7 @@ abline(h = 0, lwd = 2)
 abline(v = 0, lwd = 2)
 
 @
-\caption{}
+\caption{In the 21-4AFC task, the participant is assumed to base their responses on the difference in the evidence from signal and noise distributions (left panel). Variance of the distribution of differences is th sum of the variances of the individual distributions (right panel).}
 \label{fig:2I4AFC}
 \end{figure}
 
@@ -303,6 +220,109 @@ The issue of catch trials is exacerbated in the multidimensional case. This is b
 
 Then, on theoretical grounds, the only difference to be expected is the omission of the criterion parameters from the 2I-4AFC model--reduction in sensitivity is taken into account by incorporating the term $\sqrt{2}$. 
 
+\subsubsection{Interactions between the dimensions}
+
+As already discussed GRT aims to model \textit{interactions} between the dimensions. When the one dimension has an effect on the other, this is called \textit{interference}. There are three kinds of interactions considered in this thesis. Two of these interactions are defined as \textit{couplings} between the psychometric functions, and the third interaction is the correlation of the evidence distribution, but since including correlation coefficient was already discussed, I will only discuss the couplings here.
+
+Couplings from two of the parameters are modelled. These are demonstrated graphically  in Figure \ref{fig:grt_couplings}. Panels in the left column demonstrate coupling between means while panel on the right side demonstrate coupling between standard deviations. Top row shows effects of the interactions on the evidence distributions while the bottom row shows the effect on the psychometric function on one dimension.\footnote{mathematically the union of the psychometric functions $\psi{\bm{S}}_{(\text{Yes}, \text{Yes})}$ and $\psi{\bm{S}}_{(\text{Yes}, \text{No})}$.} In all panels dashed lines show the situation in the absence of interaction while the solid lines are drawn in the presence of interaction. 
+
+\begin{figure}
+\begin{center}
+<<echo=F, fig=T, fig.height = 6.0>>=
+library(mvtnorm)
+y = seq(-2, 4, length.out = 50)
+x = seq(-2, 4, length.out = 50)
+expected = matrix(NaN, nrow = length(x), ncol = length(y))
+meanshift = matrix(NaN, nrow = length(x), ncol = length(y))
+varshift = matrix(NaN, nrow = length(x), ncol = length(y))
+
+for(i in 1:length(x)) {
+  for(j in 1:length(y)) {
+    expected[i, j] = dmvnorm(c(x[i], y[j]), mean = c(1, 0), sigma = matrix(c(1, 0, 0, 1), 2, 2))
+    meanshift[i, j] = dmvnorm(c(x[i], y[j]), mean = c(1, 1), sigma = matrix(c(1, 0, 0, 1), 2, 2))
+    varshift[i, j] = dmvnorm(c(x[i], y[j]), mean = c(1, 0), sigma = matrix(c(4, 0, 0, 1), 2, 2))
+
+  }
+}
+
+par(family = font_family_global)
+par(mfrow = c(2, 2))
+
+contour(x, y, expected, lty = 2, levels = c(0.05), main = expression(kappa[mu]),
+        xlab = "Evidence (x)", ylab = "Evidence (y)", drawlabels = F, axes = F, lwd = lwd_global)
+axis(side = 1); axis(side = 2)
+contour(x, y, meanshift, add =T, levels = c(0.05), drawlabels = F, lwd = lwd_global)
+points(1, 0, pch = 4)
+points(1, 1, pch = 3)
+
+contour(x, y, expected, lty = 2, levels = c(0.05), main = expression(kappa[sigma]),
+        xlab = "Evidence (x)", ylab = "Evidence (y)", drawlabels = F, axes = F, lwd = lwd_global)
+axis(side = 1); axis(side = 2)
+contour(x, y, varshift, add =T, levels = c(0.05), drawlabels = F, lwd = lwd_global)
+points(1, 0, pch = 4)
+points(1, 0, pch = 3)
+
+
+##
+
+curve(pnorm(-1.2 + x/2), 0, 10, lty = 2, axes = F, 
+      xlab = "Signal strength", ylab = "P(Yes)")
+axis(side = 1); axis(side = 2)
+curve(pnorm(-1.2 + x/2 + 0.5), 0, 10, add = T)
+
+curve(pnorm(-1.2 + x/2), 0, 10, lty = 2, axes = F,
+      xlab ="Signal strength", ylab = "P(Yes)")
+axis(side = 1); axis(side = 2)
+curve(pnorm(-1.2/5 + x/5), 0, 10, add = T)
+
+@
+\end{center}
+\caption{The two kinds of couplings in the model. The contours in the top row depict bivariate normal distributions. Dashed lines indicate the shape and location of the distribution in the absence of interaction; the solid lines depict them in the case that interaction is present. Curves in the lower row are psychometric functions for a single dimension.}
+\label{fig:grt_couplings}
+\end{figure}
+
+\paragraph{Coupled means, $\kappa_{\mu}$}
+
+Coupling between the means of the distributions is modelled by letting the other dimension influence the $d'$ values: 
+
+\begin{align}
+\label{eq:twodimdprime}
+\begin{split}
+d'_x &= (\frac{S_x}{\sigma_x})^{\beta_x} + \kappa_x^{\mu} S_y \\
+d'_y &= (\frac{S_y}{\sigma_y})^{\beta_y} + \kappa_y^{\mu} S_x
+\end{split}
+\end{align}
+
+As can be seen from the lower left panel of Figure \ref{fig:grt_couplings} this kind of interactions shifts the psychometric on the affected dimension. Here, the presense of interference has increased the $d'$ values and consequently probabilities for positive responses all along the range of the function.
+
+\paragraph{Coupled standard deviations, $\kappa_{\sigma}$}
+
+This kind of situation can arise if for example the other dimension is length: shorter signals contain less information, thus making frequency judgments noisier (see \citet[p.274]{houtsma1995}; also worse accuracy with shorter signal times has been reported by e.g. \cite{townsend1988} implying more noise).
+
+Similar to $\kappa_{\mu}$, terms are included for letting the other dimension influence the $\sigma$ parameter. However, since the $\sigma$ parameters are constrained to positive real numbers (standard deviation can't be negative), this interaction is defined on the logarithmic scale:
+
+\begin{align}
+\label{eq:varshift}
+\begin{split}
+\sigma_x &= exp(log\sigma_x + \kappa_x^{\sigma} S_y) \\
+\sigma_y &= exp(log\sigma_y + \kappa_y^{\sigma} S_x)
+\end{split}
+\end{align}
+
+When the model parameters relating to response boundaries or criteria--as is the case in here for the \textit{Yes/No} model--they also have to be divided by the standard deviation. This is intuitively clear from the observation that as the spread of the evidence distribution becomes larger, the parts of the evidence distribution falling into the response regions become increasingly equal. In other words response probabilities get closer to 0.25, and a larger denominator for the term $c$ will achieve just this:
+
+\begin{equation}
+\psi_2(\bm{S}; \theta)_{\bm{R}} = \phi_2([-\frac{c_x}{\sigma_x} + d'_x]r_x, [-\frac{c_y}{\sigma_y} + d'_y] r_y, \rho [r_x r_y])
+\label{eq:generalPfun_varshift}
+\end{equation}  
+This means that the definition of criterion is a bit different from that of when no variance-shift is present. In the model with constant variance, the criterion corresponds to the Z-score of the false alarm probability (see \citet[Chapter 6]{kingdomprins2010}): $\text{criterion} = \phi^{-1}(P(FA))$, in which $\phi^{-1}$ is the standard normal inverse cumulative distribution function; in the model with variance shift the whole first term corresponds to the Z-score: $\frac{\text{criterion}}{\sigma} = \phi^{-1}(P(FA))$. This means that in the variance-shift model the criterion parameter is more accurately the geometric location of the decisional criterion in the decisional space, independent of the variance of the evidence distributions. However, since it is easier to interpret false alarm probabilities, in the models with variance shift the prior is placed on the term $\frac{\text{criterion}}{\sigma}$.
+
+From the lower right panel of Figure \ref{fig:grt_couplings} one can see that the effect is to draw the response probabilities towards 0.5 on a single dimension. 
+
+\paragraph{Note on terminology} 
+
+The couplings, $\kappa_{\mu}$ and $\kappa_{\sigma}$, are sometimes called \textit{between stimuli/distributions interference} \citep{silbert2009} and the situation in which they are absent can be referred to as \textit{sensory independence} \citep{ashby2015}. Correlation can be called \textit{within stimulus/distribution interference} \citep{silbert2009} and the absence of correlation as \textit{perceptual independence} \citep{ashby2015}. In addition, $\kappa_{\mu}$ can be called \textit{mean-shift integrality} and $\kappa_{\sigma}$ \textit{variance-shift integrality} \citep{ashby1994}.
+
 \subsection{Lapsing behaviour}
 \label{sec:lapses_general}
 
@@ -311,3 +331,6 @@ It is possible that during a psychophysical task, people sometimes \textit{lapse
 Estimating lapsing rate from data can be problematic (\cite{wichmannhill2001, treutwein1999}), and this problem can be worse for adaptive procedures \citep{prins2012}. Since the values of the psychometric function that are closer to zero are affected both the lapses and the decision criterion (in the Yes/No task), most of the information gained about lapsing behaviour comes from lapses happening at high intensities. What makes matters worse is that the lapsing response doesn't necessarily differ from what the participant would've answered otherwise, so the distinction between lapses and genuine response is ambiguous (for further discussion on these problems, see \cite{prins2012}). For these reasons I fixed the values of $\lambda$ and $\gamma$ during the adaptive estimation phase. However, during the analysis of the psychophysical data I estimated the parameter $\lambda$ from the data, a decision, which will be discussed in more detail in the analysis section.
 
 Here, lapsing behaviour is modelled by using a hierarchical model. The mathematical details of how lapses were included are thus discussed in the chapter discussing hierarchical models. 
+
+
+
