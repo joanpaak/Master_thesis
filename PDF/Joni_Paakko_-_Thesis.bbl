@@ -104,6 +104,33 @@ Ashby, F.%
 
 \bibitem [\protect \citeauthoryear {%
 Ashby%
+\ \BBA {} Maddox%
+}{%
+Ashby%
+\ \BBA {} Maddox%
+}{%
+{\protect \APACyear {1994}}%
+}]{%
+ashby1994}
+\APACinsertmetastar {%
+ashby1994}%
+\begin{APACrefauthors}%
+Ashby, F.%
+\BCBT {}\ \BBA {} Maddox, W.%
+\end{APACrefauthors}%
+\unskip\
+\newblock
+\APACrefYearMonthDay{1994}{}{}.
+\newblock
+{\BBOQ}\APACrefatitle {A Response Time Theory of Separability and Integrality
+  in Speeded Classification} {A response time theory of separability and
+  integrality in speeded classification}.{\BBCQ}
+\newblock
+\APACjournalVolNumPages{Journal of Mathematical Psychology}{38}{}{423 - 466}.
+\PrintBackRefs{\CurrentBib}
+
+\bibitem [\protect \citeauthoryear {%
+Ashby%
 \ \BBA {} Soto%
 }{%
 Ashby%
@@ -214,30 +241,28 @@ Box, G.%
 \PrintBackRefs{\CurrentBib}
 
 \bibitem [\protect \citeauthoryear {%
-Boys%
+Burns%
 }{%
-Boys%
+Burns%
 }{%
-{\protect \APACyear {1989}}%
+{\protect \APACyear {2014}}%
 }]{%
-boys1989}
+burns2014}
 \APACinsertmetastar {%
-boys1989}%
+burns2014}%
 \begin{APACrefauthors}%
-Boys, R.%
+Burns, D.%
 \end{APACrefauthors}%
 \unskip\
 \newblock
-\APACrefYearMonthDay{1989}{}{}.
+\APACrefYear{2014}.
+\unskip\
 \newblock
-{\BBOQ}\APACrefatitle {Algorithm {AS R80}: A Remark on Algorithm {AS 76}: An
-  Integral Useful in Calculating Noncentral $t$ and Bivariate Normal
-  Probabilities} {Algorithm {AS R80}: A remark on algorithm {AS 76}: An
-  integral useful in calculating noncentral $t$ and bivariate normal
-  probabilities}.{\BBCQ}
+\APACrefbtitle {The many faces of {Garner} interference} {The many faces of
+  {Garner} interference}\ \APACtypeAddressSchool {\BUPhD}{}{}.
+\unskip\
 \newblock
-\APACjournalVolNumPages{Journal of the Royal Statistical Society. Series C
-  (Applied Statistics)}{38}{3}{580 - 582}.
+\APACaddressSchool {}{Indiana University}.
 \PrintBackRefs{\CurrentBib}
 
 \bibitem [\protect \citeauthoryear {%
@@ -441,6 +466,32 @@ Ennis, D.%
 \PrintBackRefs{\CurrentBib}
 
 \bibitem [\protect \citeauthoryear {%
+Fastl%
+\ \BBA {} Zwicker%
+}{%
+Fastl%
+\ \BBA {} Zwicker%
+}{%
+{\protect \APACyear {2007}}%
+}]{%
+zwickerfastl}
+\APACinsertmetastar {%
+zwickerfastl}%
+\begin{APACrefauthors}%
+Fastl, H.%
+\BCBT {}\ \BBA {} Zwicker, E.%
+\end{APACrefauthors}%
+\unskip\
+\newblock
+\APACrefYear{2007}.
+\newblock
+\APACrefbtitle {Psychoacoustics: Facts and Models} {Psychoacoustics: Facts and
+  models}.
+\newblock
+\APACaddressPublisher{}{Springer}.
+\PrintBackRefs{\CurrentBib}
+
+\bibitem [\protect \citeauthoryear {%
 Garner%
 }{%
 Garner%
@@ -574,6 +625,39 @@ Greenland, S.%
   confidence intervals, and power: a guide to misinterpretations}.{\BBCQ}
 \newblock
 \APACjournalVolNumPages{European journal of epidemiology}{31}{4}{337–350}.
+\PrintBackRefs{\CurrentBib}
+
+\bibitem [\protect \citeauthoryear {%
+Houtsma%
+}{%
+Houtsma%
+}{%
+{\protect \APACyear {1995}}%
+}]{%
+houtsma1995}
+\APACinsertmetastar {%
+houtsma1995}%
+\begin{APACrefauthors}%
+Houtsma, A\BPBI J.%
+\end{APACrefauthors}%
+\unskip\
+\newblock
+\APACrefYearMonthDay{1995}{}{}.
+\newblock
+{\BBOQ}\APACrefatitle {Chapter 8 - Pitch Perception} {Chapter 8 - pitch
+  perception}.{\BBCQ}
+\newblock
+\BIn{} B\BPBI C.~Moore\ (\BED), \APACrefbtitle {Hearing} {Hearing}\ (\BPG~267 -
+  295).
+\newblock
+\APACaddressPublisher{San Diego}{Academic Press}.
+\newblock
+\begin{APACrefURL}
+  \url{http://www.sciencedirect.com/science/article/pii/B9780125056267500108}
+  \end{APACrefURL}
+\newblock
+\begin{APACrefDOI} \doi{https://doi.org/10.1016/B978-012505626-7/50010-8}
+  \end{APACrefDOI}
 \PrintBackRefs{\CurrentBib}
 
 \bibitem [\protect \citeauthoryear {%
@@ -862,32 +946,6 @@ Lesmes, L.%
   yes-no and forced-choice tasks}.{\BBCQ}
 \newblock
 \APACjournalVolNumPages{Frontiers in Psychology}{6}{1070}{}.
-\PrintBackRefs{\CurrentBib}
-
-\bibitem [\protect \citeauthoryear {%
-Pan%
-}{%
-Pan%
-}{%
-{\protect \APACyear {2017}}%
-}]{%
-pan2017}
-\APACinsertmetastar {%
-pan2017}%
-\begin{APACrefauthors}%
-Pan, K.%
-\end{APACrefauthors}%
-\unskip\
-\newblock
-\APACrefYearMonthDay{2017}{}{}.
-\newblock
-\APACrefbtitle {An Analytical Expression for Bivariate Normal Distribution.}
-  {An analytical expression for bivariate normal distribution.}
-\newblock
-\APAChowpublished
-  {\url{https://papers.ssrn.com/sol3/papers.cfm?abstract_id=2924071}}.
-\newblock
-\APACrefnote{Accessed: 26.11.2019}
 \PrintBackRefs{\CurrentBib}
 
 \bibitem [\protect \citeauthoryear {%
@@ -1371,6 +1429,34 @@ Stigler, S.%
   before 1900}.
 \newblock
 \APACaddressPublisher{}{Cambridge: Belknap Press of Harvard University Press}.
+\PrintBackRefs{\CurrentBib}
+
+\bibitem [\protect \citeauthoryear {%
+Townsend%
+, Hu%
+\BCBL {}\ \BBA {} Kadlec%
+}{%
+Townsend%
+\ \protect \BOthers {.}}{%
+{\protect \APACyear {1988}}%
+}]{%
+townsend1988}
+\APACinsertmetastar {%
+townsend1988}%
+\begin{APACrefauthors}%
+Townsend, J.%
+, Hu, G.%
+\BCBL {}\ \BBA {} Kadlec, H.%
+\end{APACrefauthors}%
+\unskip\
+\newblock
+\APACrefYearMonthDay{1988}{}{}.
+\newblock
+{\BBOQ}\APACrefatitle {Feature sensitivity, bias, and interdependencies as a
+  function of energy and payoffs} {Feature sensitivity, bias, and
+  interdependencies as a function of energy and payoffs}.{\BBCQ}
+\newblock
+\APACjournalVolNumPages{Perception \& Psychophysics}{43}{}{575 - 591}.
 \PrintBackRefs{\CurrentBib}
 
 \bibitem [\protect \citeauthoryear {%
