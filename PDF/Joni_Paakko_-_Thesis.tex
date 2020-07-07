@@ -494,14 +494,14 @@ Couplings from two of the parameters are modelled. These are demonstrated graphi
 Coupling between the means of the distributions is modelled by letting the other dimension influence the $d'$ values: 
 
 \begin{align}
-\label{eq:twodimdprime}
+\label{eq:kappa_mu}
 \begin{split}
 d'_x &= (\frac{S_x}{\sigma_x})^{\beta_x} + \kappa_x^{\mu} S_y \\
 d'_y &= (\frac{S_y}{\sigma_y})^{\beta_y} + \kappa_y^{\mu} S_x
 \end{split}
 \end{align}
 
-As can be seen from the lower left panel of Figure \ref{fig:grt_couplings} this kind of interactions shifts the psychometric on the affected dimension. Here, the presense of interference has increased the $d'$ values and consequently probabilities for positive responses all along the range of the function.
+As can be seen from the lower left panel of Figure \ref{fig:grt_couplings} this kind of interactions shifts the psychometric on the affected dimension. Here, the presence of interference has increased the $d'$ values and consequently probabilities for positive responses all along the range of the function.
 
 \paragraph{Coupled standard deviations, $\kappa_{\sigma}$}
 
@@ -668,20 +668,30 @@ In the present paper the focus is on orthogonal decisional boundaries. Non-ortho
 \section{Bayesian statistics}
 \label{sec:bayes}
 
-Bayesian statistics is at the core of this thesis: the adaptive algorithm to be used is based on the idea of representing uncertainty about parameters as probability distributions over them. Bayesian statistics will also be used for making inferences about data. In this section I will provide a short introduction to the central concepts that are needed for understanding the adaptive algorithm and, later, inferences made about the data. 
+Bayesian statistics is at the core of this thesis: the adaptive algorithm to be used is based on the idea of representing uncertainty about parameters as probability distributions over them. Bayesian statistics will also be used for making inferences about data, and Bayesian philosophy will guide the model development process. In this section I will provide a short introduction to the central concepts that are needed for understanding the adaptive algorithm and, later, inferences made about the data. 
 
 \subsection{Basics of Bayesian statistics}
 
-The core idea of Bayesian statistics is the updating of prior information with observed data to arrive at a synthesis of them. This synthesis is called the posterior distribution. Both the prior information and the posterior distribution are represented as probability functions over the parameters, $\theta$. Equation \ref{eq:bayesprop} represents this process mathematically. \citep{kruschke2015}.
+The core idea of Bayesian statistics is the updating of prior information with observed data to arrive at a synthesis of them. This synthesis is called the posterior probability distribution. In other words, whereas in "classical" statistics one would calculate point estimates, that is for example the average difference between groups, in Bayesian statistics the goal is evaluate how well \textit{any} plausible value fits (the word "fit" is used colloquially here) the observed difference. If wide range of values fit the data almost as well, this indicates that there's more uncertainty about what can be said for example about the difference between the groups, in contrast to situation in which only a narrow range of values fit the data. In this way the posterior probability density quantifies uncertainty in a very intuitive way. 
+
+Both the prior information and the posterior distribution are represented as probability distributions over the parameters, $\theta$. Usually some common probability densities with simple functional forms are used. Equation \ref{eq:bayesprop} represents updating prior information mathematically. \citep{kruschke2015}.
 
 \begin{equation}
 P(\theta | Data) \propto P(\theta) P(Data | \theta)
 \label{eq:bayesprop}
 \end{equation} 
 
-$P(\theta | Data)$ is the posterior distribution, $P(\theta)$ is the prior distribution and $P(Data | \theta)$ is the likelihood function, i.e. the probability of observing the data given the parameter values.\footnote{In the full Bayes' theorem the posterior distribution is normalized with the integral over the possible observed values, $P(Data)$, assuring that it always integrates to one and is a proper probability distribution: $P(\theta | Data) = (P(\theta) P(Data | \theta)) / P(Data)$ \citep{kruschke2015}, but I think the equation without the normalizing constant captures the main idea more clearly. This is why the symbol $\propto$ ("proportional to") is used in Equation \ref{eq:bayesprop}.}
+$P(\theta | Data)$ is the posterior distribution, $P(\theta)$ is the prior distribution and $P(Data | \theta)$ is the likelihood function, i.e. the probability of observing the data given the parameter values.\footnote{In the full Bayes' theorem the posterior distribution is normalized with the integral over the possible observed values, $P(Data)$, assuring that it always integrates to one and is a proper probability distribution: $P(\theta | Data) = (P(\theta) P(Data | \theta)) / P(Data)$ \citep{kruschke2015}, but I think the equation without the normalizing constant captures the main idea more clearly. This is why the symbol $\propto$ ("proportional to") is used in Equation \ref{eq:bayesprop}.} The likelihood function determines \textit{how} the observed data updates the prior information. 
 
-Updating is demonstrated for a single parameter in Figure \ref{fig:priorpost}. The shaded region represents the prior distribution $P(\theta)$, which in this case, is a log-normal distribution.  After some data has been observed the prior distribution is updated with evidence, $P(Data | \theta)$, represented by the dashed line, which then results in the posterior distribution $P(\theta | Data)$, represented by the solid line. Observing data, in this particular case, has reduced our uncertainty about likely values for the parameter $\sigma$, the probability density has become more concentrated.
+In practice, this means that there needs to be a model which determines how observed data translates into probabilities about parameter values, or how the model learns from observed data. Here, the likelihood is defined by any of the models defined earlier in this thesis. Also, for numerical stability, likelihood is usually defined using logarithms of probabilities. Here, the likelihood for a particular $\theta$ is simply the sum of the logarithms of the probabilities of the observed responses: (for a similar approach see \citet[p. 218]{wickens1992}):
+
+\begin{equation}
+\sum_{t=1}^n ln P(\bm{R}^t, \bm{S}^t; \theta; M)
+\end{equation}
+
+in which $M$ is some of the models defined in this thesis. 
+
+Updating of prior information is demonstrated for a single parameter in Figure \ref{fig:priorpost}. The shaded region represents the prior distribution $P(\theta)$, which in this case, is a log-normal distribution.  After some data has been observed the prior distribution is updated with evidence, $P(Data | \theta)$, represented by the dashed line, which then results in the posterior distribution $P(\theta | Data)$, represented by the solid line. Observing data, in this particular case, has reduced our uncertainty about likely values for the parameter $\sigma$, which is evident in how the probability density has become more concentrated. In addition to this, the mode of the distribution has shifted, indicating shift in what values are found to be likely on average.
 
 \begin{figure}
 \centering
@@ -694,9 +704,7 @@ Updating is demonstrated for a single parameter in Figure \ref{fig:priorpost}. T
 \label{fig:priorpost}
 \end{figure}
 
-Of course, in models of any complexity prior and posterior probability densities are defined over a multidimensional space, e.g. in this thesis the dimensionalities range from 7 to 27. 
-
-Often it is useful to summarize multidimensional posterior density as its marginals. Most analyses done in this thesis will use the marginals of  the posterior probability densities somehow. Figure \ref{fig:marginals} demonstrates the relationship between a two-dimensional posterior probability density and its margins. The leftmost panel shows the two-dimensional distribution from above, and the two other figures show its marginals, which in this case correspond to viewing the two-dimensional "bump" from either axis. 
+Of course, in models of any complexity prior and posterior probability densities are defined over a multidimensional space, e.g. in this thesis the dimensionalities range from 7 to 27. Often it is useful to summarize multidimensional posterior density as its marginals. Most analyses done in this thesis will use the marginals of  the posterior probability densities somehow. Figure \ref{fig:marginals} demonstrates the relationship between a two-dimensional posterior probability density and its margins. The leftmost panel shows the two-dimensional distribution from above, and the two other figures show its marginals, which in this case correspond to viewing the two-dimensional "bump" from either axis. 
 
 \begin{figure}
 \centering
@@ -708,15 +716,7 @@ Often it is useful to summarize multidimensional posterior density as its margin
 \caption{A two-dimensional posterior probability density and its marginals. }
 \label{fig:marginals}
 \end{figure}
-
-The term $P(Data | \theta)$ defines how the model learns from data, and is usually called \textit{likelihood} \citep{kruschke2015}. Also, for numerical stability, likelihood is usually defined using logarithms of probabilities. Here, the likelihood for a particular $\theta$ is simply the sum of the logarithms of the probabilities of the observed responses: (for a similar approach see \citet[p. 218]{wickens1992}):
-
-\begin{equation}
-\sum_{t=1}^n ln P(\bm{R}^t, \bm{S}^t; \theta; M)
-\end{equation}
-
-in which $M$ is some of the models defined in this thesis. 
-
+s
 \subsection{Hierarchical models}
 \label{sec:hierarchical_models}
 
@@ -744,7 +744,7 @@ Since the parameters are related on a higher level, some information is shared b
 
 Often the same data set can be fit by multiple models, or there are many plausible candidates for models of for the cognitive processes of interest. These are often also called \textit{mixture} models, since the idea is to model observed data as a mixture of the different models (for the general statistical idea see \citet{keller2018}). Since the individual models are embedded in a larger scale structure that models the mixing proportions, this kind of model is naturally also thought of as a hierarchical model (see \citet[Chapter 10]{kruschke2015}).
 
-The simple two-level model I describe corresponds with how lapsing behaviour is often modelled in the psychophysical literature (see e.g. \citet{zeigenfuse2010}). The model is presented in figure \ref{fig:Basic_hierarchical_model}. At the lowest level, the figure shows two models, one labelled \textit{lapses} and the other \textit{cognitive}, embedded in the higher level model. Both of the lower level models aim to explain the same set of observations, $y_1, y_2 \dots y_i$, the $y$ terms, in this case, consisting of pairs of stimuli ($\bm{S} = [S_x, S_y]$) and responses ($\bm{R} = [R_x, R_y]$). 
+The simple two-level model I describe corresponds with how lapsing behaviour is often modelled in the psychophysical literature (see e.g. \citet{zeigenfuse2010} for a theoretical summary or e.g \citet{lesmes2015} for a practical implementation). The model is presented in figure \ref{fig:Basic_hierarchical_model}. At the lowest level, the figure shows two models, one labelled \textit{lapses} and the other \textit{cognitive}, embedded in the higher level model. Both of the lower level models aim to explain the same set of observations, $y_1, y_2 \dots y_i$, the $y$ terms, in this case, consisting of pairs of stimuli ($\bm{S} = [S_x, S_y]$) and responses ($\bm{R} = [R_x, R_y]$). 
 
 \begin{figure}[!htb]
 \begin{center}
@@ -754,7 +754,7 @@ The simple two-level model I describe corresponds with how lapsing behaviour is 
 \label{fig:Basic_hierarchical_model}
 \end{figure}
 
-The cognitive model can be any of the models defined in Section \ref{sec:grt_mdls} \textit{\nameref{sec:grt_mdls}}. The lapsing model (which was described generally in Section \ref{sec:lapses_general} \textit{\nameref{sec:lapses_general}}) is defined by the single parameter $\gamma$, which is a multinomial distribution containing the response probabilities for the individual response categories. These probabilities do not depend on the signal levels, or in fact, on anything else outside them (see Section \ref{sec:modelling_responses} \textit{\nameref{sec:modelling_responses}} for how the responses are coded):
+The cognitive model can be any of the models defined in Section \ref{sec:grt_mdls} \textit{\nameref{sec:grt_mdls}}. The lapsing model (which was discussed in general terms in Section \ref{sec:lapses_general} \textit{\nameref{sec:lapses_general}}) is defined by the single parameter $\gamma$, which is a multinomial distribution containing the response probabilities for the individual response categories. These probabilities do not depend on the signal levels, or in fact, on anything else outside them (see Section \ref{sec:modelling_responses} \textit{\nameref{sec:modelling_responses}} for how the responses are coded):
 
 \begin{equation}
 P(y_i)=
@@ -766,7 +766,7 @@ P(y_i)=
 \end{cases}
 \end{equation}
 
-This simply says that if, for example, on a certain trial the response $[1,-1]$ is observed, the likelihood is incremented by $\gamma_2$. I will be assuming that all responses are as likely, i.e. $\gamma = [0.25, 0.25, 0.25, 0.25]$. This implies that the parameters of the lapsing model are not inferred from the data, partially due to the aforementioned (see Section \ref{sec:lapses_general} \textit{\nameref{sec:lapses_general}}) difficulty of inferring details of lapsing behaviour from psychophysical data. This is a very common way of including model of lapses, see e.g. ERROR ERROR ERROR.
+This simply says that if, for example, on a certain trial the response $[1,-1]$ is observed, the likelihood is incremented by $\gamma_2$. I will be assuming that all responses are as likely, i.e. $\gamma = [0.25, 0.25, 0.25, 0.25]$. This implies that the parameters of the lapsing model are not inferred from the data, partially due to the aforementioned (see Section \ref{sec:lapses_general} \textit{\nameref{sec:lapses_general}}) difficulty of inferring details of lapsing behaviour from psychophysical data. 
 
 The contributions of these two models are defined by the coefficient $\lambda$, which defines the weight of each model to the total likelihood:
 
@@ -872,9 +872,9 @@ This shift should not be seen only as a trivial data analytical decision: it sho
 
 \paragraph{Posterior predictive checks}
 
-An important part of Bayesian work flow is \textit{model critique}. The starting point is the boxian philosophy that \textit{"All models are wrong . . ."} \citep{box2005}: since we can be a priori certain that all models are wrong to a degree, it becomes important to check the model against the data to see \textit{how} it is wrong, and how bad is it. This kind of \textit{model criticism} is an integral part of Bayesian workflow, as desscribed e.g. in \citet[Part II]{bda}.
+An important part of Bayesian work flow is \textit{model critique}. The starting point is the boxian philosophy that \textit{"All models are wrong . . ."} \citep{box2005}: since we can be a priori certain that all models are wrong to a degree, it becomes important to check the model against the data to see \textit{how} it is wrong, and if the mismatch is significant. This kind of \textit{model criticism} is an integral part of Bayesian workflow, as described e.g. in \citet[Part II]{bda}.
 
-In the classical GRT models, model checking has usually been limited to comparing the predicted response probabilities with the observed probabilities (see for example \citet[Figure 4]{silbert2009}).  However this suffers from the fact that, as discussed earlier in Section \ref{sec:grt_criticism} \textit{\nameref{sec:grt_criticism}}, the classic GRT models are prone to over-fitting, which means that the predicted response probabilities will \textit{always} be fairly close to the observed probabilities. This not evidence for the theoretical assumptions behind the model, but rather just an artifact of the flexibility of the model.
+In the classical GRT models, model checking has usually been limited to comparing the predicted response probabilities with the observed probabilities (see for example \citet[Figure 4]{silbert2009}).  However this suffers from the fact that, as discussed earlier in Section \ref{sec:grt_criticism} \textit{\nameref{sec:grt_criticism}}, the classic GRT models are prone to over-fitting, which means that the predicted response probabilities will \textit{always} be fairly close to the observed probabilities. This not evidence for the theoretical assumptions behind the model, but rather just an artefact of the flexibility of the model.
 
 In Bayesian setting, \textit{posterior predictive checks} can be used to assess the fit of the model to the data. The idea is to use the posterior distribution to predict new data. The distribution of predicted data can be thought of has what the model "thinks" about the data. If there's large discrepancies between what the model thinks and data, this is a clear indication that the model does not sufficiently capture all relevant features of the data. \citep[Chapter 7]{bda}.
 

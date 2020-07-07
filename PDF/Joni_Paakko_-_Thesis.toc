@@ -28,7 +28,7 @@
 \contentsline {paragraph}{Non-orthogonality of decisional boundaries}{23}{section*.15}
 \contentsline {section}{\numberline {3}Bayesian statistics}{24}{section.3}
 \contentsline {subsection}{\numberline {3.1}Basics of Bayesian statistics}{24}{subsection.3.1}
-\contentsline {subsection}{\numberline {3.2}Hierarchical models}{26}{subsection.3.2}
+\contentsline {subsection}{\numberline {3.2}Hierarchical models}{25}{subsection.3.2}
 \contentsline {subsection}{\numberline {3.3}Approximating the Posterior Probability Densities}{28}{subsection.3.3}
 \contentsline {subsubsection}{\numberline {3.3.1}Resample-Move algorithm}{29}{subsubsection.3.3.1}
 \contentsline {subsubsection}{\numberline {3.3.2}Laplace Approximation}{31}{subsubsection.3.3.2}

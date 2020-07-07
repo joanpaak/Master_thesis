@@ -286,14 +286,14 @@ curve(pnorm(-1.2/5 + x/5), 0, 10, add = T)
 Coupling between the means of the distributions is modelled by letting the other dimension influence the $d'$ values: 
 
 \begin{align}
-\label{eq:twodimdprime}
+\label{eq:kappa_mu}
 \begin{split}
 d'_x &= (\frac{S_x}{\sigma_x})^{\beta_x} + \kappa_x^{\mu} S_y \\
 d'_y &= (\frac{S_y}{\sigma_y})^{\beta_y} + \kappa_y^{\mu} S_x
 \end{split}
 \end{align}
 
-As can be seen from the lower left panel of Figure \ref{fig:grt_couplings} this kind of interactions shifts the psychometric on the affected dimension. Here, the presense of interference has increased the $d'$ values and consequently probabilities for positive responses all along the range of the function.
+As can be seen from the lower left panel of Figure \ref{fig:grt_couplings} this kind of interactions shifts the psychometric on the affected dimension. Here, the presence of interference has increased the $d'$ values and consequently probabilities for positive responses all along the range of the function.
 
 \paragraph{Coupled standard deviations, $\kappa_{\sigma}$}
 
