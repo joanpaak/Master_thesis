@@ -106,7 +106,7 @@ Data from the psychophysical experiments indicate that non-sensory factors play 
 
 \section{Introduction}
 
-Perception can be thought of as being multidimensional, that is natural stimuli can be decomposed into their constituent dimensions. For example, a single tone played with a guitar could be said to consist of pitch, length and timbre, which are some of the dimensions of an auditory signal, in this case, a musical tone. Another way in which perception is multidimensional is when it is \textit{multimodal}: in many situations we combine information from different sensory modalities, for example haptic and auditory information when pressing a key on the keyboard, or visual and auditory information when watching someone's lips as they speak.
+Perception can be thought of as being multidimensional. For example, a single tone played with a guitar could be said to consist of pitch, length and timbre, which are some of the dimensions of an auditory signal, in this case, a musical tone. Another way in which perception is multidimensional is when it is \textit{multimodal}: in many situations we combine information from different sensory modalities, for example haptic and auditory information when pressing a key on the keyboard, or visual and auditory information when watching someone's lips as they speak.
 
 How we perceive such multidimensional signals is a fundamental psychological question: during perception, are the dimensions processed independently, or do they interfere with each other? Is the perception of auditory signals influenced by visual or other signals, and if so, in what situations? Do the physical dimensions, such as amplitude, correspond to the psychological (in this case loudness) or do we perceive them as combinations (do e.g. high pitches sound louder)?
 
@@ -672,26 +672,26 @@ Bayesian statistics is at the core of this thesis: the adaptive algorithm to be 
 
 \subsection{Basics of Bayesian statistics}
 
-The core idea of Bayesian statistics is the updating of prior information with observed data to arrive at a synthesis of them. This synthesis is called the posterior probability distribution. In other words, whereas in "classical" statistics one would calculate point estimates, that is for example the average difference between groups, in Bayesian statistics the goal is evaluate how well \textit{any} plausible value fits (the word "fit" is used colloquially here) the observed difference. If wide range of values fit the data almost as well, this indicates that there's more uncertainty about what can be said for example about the difference between the groups, in contrast to situation in which only a narrow range of values fit the data. In this way the posterior probability density quantifies uncertainty in a very intuitive way. 
+The core idea of Bayesian statistics is the updating of prior information with observed data to arrive at a synthesis of them. This synthesis is called the posterior probability distribution, which brings me to another idiosyncrasy of Bayesian statistics: whereas in "classical" statistics one would calculate point estimates, that is for example the average difference between conditions, in Bayesian statistics the goal is evaluate how well \textit{any} plausible value fits (the word "fit" is used colloquially here) the observed difference resulting, indeed,  in a probability \textit{distribution} which is taken as the estimate. This can be taken as an intuitive quantification of uncertainty: if wide range of values fit the data almost as well, this indicates that there's more uncertainty about what can be said for example about the difference between the conditions, in contrast to situation in which only a narrow range of values fit the data.
 
-Both the prior information and the posterior distribution are represented as probability distributions over the parameters, $\theta$. Usually some common probability densities with simple functional forms are used. Equation \ref{eq:bayesprop} represents updating prior information mathematically. \citep{kruschke2015}.
+Both the prior information and the posterior distribution are represented as probability distributions over the parameters, $\theta$. Usually some common probability densities with simple functional forms are used, for example normal distributions. Equation \ref{eq:bayesprop} represents updating prior information mathematically. \citep{kruschke2015}.
 
 \begin{equation}
 P(\theta | Data) \propto P(\theta) P(Data | \theta)
 \label{eq:bayesprop}
 \end{equation} 
 
-$P(\theta | Data)$ is the posterior distribution, $P(\theta)$ is the prior distribution and $P(Data | \theta)$ is the likelihood function, i.e. the probability of observing the data given the parameter values.\footnote{In the full Bayes' theorem the posterior distribution is normalized with the integral over the possible observed values, $P(Data)$, assuring that it always integrates to one and is a proper probability distribution: $P(\theta | Data) = (P(\theta) P(Data | \theta)) / P(Data)$ \citep{kruschke2015}, but I think the equation without the normalizing constant captures the main idea more clearly. This is why the symbol $\propto$ ("proportional to") is used in Equation \ref{eq:bayesprop}.} The likelihood function determines \textit{how} the observed data updates the prior information. 
+In this equation $P(\theta | Data)$ is the posterior distribution, $P(\theta)$ is the prior distribution and $P(Data | \theta)$ is the likelihood function, i.e. the probability of observing the data given the parameter values.\footnote{In the full Bayes' theorem the posterior distribution is normalized with the integral over the possible observed values, $P(Data)$, assuring that it always integrates to one and is a proper probability distribution: $P(\theta | Data) = (P(\theta) P(Data | \theta)) / P(Data)$ \citep{kruschke2015}, but I think the equation without the normalizing constant captures the main idea more clearly. This is why the symbol $\propto$ ("proportional to") is used in Equation \ref{eq:bayesprop}.} The likelihood function determines \textit{how} the observed data updates the prior information. 
 
-In practice, this means that there needs to be a model which determines how observed data translates into probabilities about parameter values, or how the model learns from observed data. Here, the likelihood is defined by any of the models defined earlier in this thesis. Also, for numerical stability, likelihood is usually defined using logarithms of probabilities. Here, the likelihood for a particular $\theta$ is simply the sum of the logarithms of the probabilities of the observed responses: (for a similar approach see \citet[p. 218]{wickens1992}):
+In practice, this means that there needs to be a model which determines how observed data translates into probabilities about parameter values, or how the model learns from observed data. Here, the likelihood is defined by any of the models (M in the equation) introduced earlier in this thesis. Consequently the likelihood for a particular $\theta$ is simply the product of the probabilities of the observed responses given the $\theta$ (and the model):
 
 \begin{equation}
-\sum_{t=1}^n ln P(\bm{R}^t, \bm{S}^t; \theta; M)
+\prod_{t=1}^n (\bm{R}^t, \bm{S}^t; \theta, M)
 \end{equation}
 
-in which $M$ is some of the models defined in this thesis. 
+Note that usually the logarithmic likelihood function is used of numerical stability, $\sum_{t=1}^n ln (\bm{R}^t, \bm{S}^t; \theta, M)$, which is how the likelihood is defined in all of the R and Stan programs.
 
-Updating of prior information is demonstrated for a single parameter in Figure \ref{fig:priorpost}. The shaded region represents the prior distribution $P(\theta)$, which in this case, is a log-normal distribution.  After some data has been observed the prior distribution is updated with evidence, $P(Data | \theta)$, represented by the dashed line, which then results in the posterior distribution $P(\theta | Data)$, represented by the solid line. Observing data, in this particular case, has reduced our uncertainty about likely values for the parameter $\sigma$, which is evident in how the probability density has become more concentrated. In addition to this, the mode of the distribution has shifted, indicating shift in what values are found to be likely on average.
+Updating prior information is demonstrated for a single parameter in Figure \ref{fig:priorpost}. The shaded region represents the prior distribution $P(\theta)$, which in this case, is a log-normal distribution.  After some data has been observed the prior distribution is updated with evidence, $P(Data | \theta)$, represented by the dashed line, which then results in the posterior distribution $P(\theta | Data)$, represented by the solid line. Observing data, in this particular case, has reduced our uncertainty about likely values for the parameter $\sigma$, which is evident in how the probability density has become more concentrated. In addition to this, the mode of the distribution has shifted, indicating shift in what values are found to be likely on average.
 
 \begin{figure}
 \centering
@@ -716,7 +716,7 @@ Of course, in models of any complexity prior and posterior probability densities
 \caption{A two-dimensional posterior probability density and its marginals. }
 \label{fig:marginals}
 \end{figure}
-s
+
 \subsection{Hierarchical models}
 \label{sec:hierarchical_models}
 
