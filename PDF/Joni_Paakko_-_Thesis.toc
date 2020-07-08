@@ -6,17 +6,17 @@
 \contentsline {subsubsection}{\numberline {2.1.2}Modelling responses: relationship between $d'$ and response}{5}{subsubsection.2.1.2}
 \contentsline {paragraph}{Responses in the Yes/No task}{6}{section*.1}
 \contentsline {paragraph}{Responses in the 2I-2AFC task}{8}{section*.2}
-\contentsline {subsection}{\numberline {2.2}General Recognition Theory}{10}{subsection.2.2}
+\contentsline {subsection}{\numberline {2.2}General Recognition Theory}{9}{subsection.2.2}
 \contentsline {subsubsection}{\numberline {2.2.1}Calculation of $d'$ in two dimensions}{11}{subsubsection.2.2.1}
 \contentsline {subsubsection}{\numberline {2.2.2}Modelling responses in two dimensions}{11}{subsubsection.2.2.2}
-\contentsline {paragraph}{Yes/No task in two dimensions}{11}{figure.9}
+\contentsline {paragraph}{Yes/No task in two dimensions}{12}{figure.9}
 \contentsline {paragraph}{2I-4AFC}{13}{section*.4}
 \contentsline {paragraph}{Comparison of the Yes/No and 2I-4AFC tasks}{14}{section*.5}
 \contentsline {subsubsection}{\numberline {2.2.3}Interactions between the dimensions}{15}{subsubsection.2.2.3}
 \contentsline {paragraph}{Coupled means, $\kappa _{\mu }$}{15}{section*.6}
 \contentsline {paragraph}{Coupled standard deviations, $\kappa _{\sigma }$}{17}{section*.7}
-\contentsline {paragraph}{Model with both kinds of couplings}{17}{section*.8}
-\contentsline {paragraph}{Note on terminology}{17}{section*.9}
+\contentsline {paragraph}{Model with both kinds of couplings}{18}{section*.8}
+\contentsline {paragraph}{Note on terminology}{18}{section*.9}
 \contentsline {subsection}{\numberline {2.3}Lapsing behaviour}{18}{subsection.2.3}
 \contentsline {subsection}{\numberline {2.4}Critical discussion}{18}{subsection.2.4}
 \contentsline {subsubsection}{\numberline {2.4.1}Relationship to other models}{18}{subsubsection.2.4.1}
@@ -27,60 +27,60 @@
 \contentsline {paragraph}{What do the latent distributions really represent?}{22}{section*.13}
 \contentsline {paragraph}{Criterial noise}{23}{section*.14}
 \contentsline {paragraph}{Non-orthogonality of decisional boundaries}{23}{section*.15}
-\contentsline {section}{\numberline {3}Bayesian statistics}{24}{section.3}
-\contentsline {subsection}{\numberline {3.1}Basics of Bayesian statistics}{24}{subsection.3.1}
-\contentsline {subsection}{\numberline {3.2}Hierarchical models}{26}{subsection.3.2}
-\contentsline {subsection}{\numberline {3.3}Approximating the Posterior Probability Densities}{28}{subsection.3.3}
-\contentsline {subsubsection}{\numberline {3.3.1}Resample-Move algorithm}{29}{subsubsection.3.3.1}
-\contentsline {subsubsection}{\numberline {3.3.2}Laplace Approximation}{31}{subsubsection.3.3.2}
-\contentsline {subsection}{\numberline {3.4}Bayesian inference in the General Recognition Theory}{31}{subsection.3.4}
-\contentsline {paragraph}{Posterior predictive checks}{32}{section*.18}
-\contentsline {section}{\numberline {4}Adaptive estimation}{33}{section.4}
-\contentsline {subsection}{\numberline {4.1}Entropy minimization}{33}{subsection.4.1}
-\contentsline {paragraph}{Unconstrained parameterization}{34}{section*.19}
-\contentsline {paragraph}{Some practical considerations}{35}{section*.20}
-\contentsline {section}{\numberline {5}Simulations}{37}{section.5}
-\contentsline {subsection}{\numberline {5.1}Methods}{37}{subsection.5.1}
-\contentsline {paragraph}{Prior distributions}{37}{section*.21}
-\contentsline {subsection}{\numberline {5.2}Results}{39}{subsection.5.2}
-\contentsline {paragraph}{Trial-by-trial estimates}{39}{section*.22}
-\contentsline {paragraph}{Hierarchical model}{43}{section*.23}
-\contentsline {subsection}{\numberline {5.3}Discussion}{45}{subsection.5.3}
-\contentsline {paragraph}{Question 1: is the adaptive algorithm more efficient?}{45}{section*.24}
-\contentsline {paragraph}{Question 2: how well are generating parameters recovered?}{46}{section*.25}
-\contentsline {section}{\numberline {6}Psychophysical experiments}{47}{section.6}
-\contentsline {subsection}{\numberline {6.1}Methods}{47}{subsection.6.1}
-\contentsline {paragraph}{Procedure}{47}{section*.26}
-\contentsline {paragraph}{Stimuli}{47}{section*.27}
-\contentsline {subsection}{\numberline {6.2}Results}{49}{subsection.6.2}
-\contentsline {subsubsection}{\numberline {6.2.1}Posterior predictive plots}{49}{subsubsection.6.2.1}
-\contentsline {subsubsection}{\numberline {6.2.2}Participant OK, Models 1 to 3}{51}{subsubsection.6.2.2}
-\contentsline {paragraph}{Participant OK, Models 1 to 3: Discussion}{54}{section*.28}
-\contentsline {subsubsection}{\numberline {6.2.3}Participant OK, Model with both interactions}{56}{subsubsection.6.2.3}
-\contentsline {paragraph}{Participant OK, Model with both interactions: Discussion}{57}{section*.29}
-\contentsline {subsubsection}{\numberline {6.2.4}Participant JP, Models 1 to 3}{58}{subsubsection.6.2.4}
-\contentsline {paragraph}{Participant JP, Models 1 to 3: Discussion}{61}{section*.30}
-\contentsline {subsubsection}{\numberline {6.2.5}Participant JP, Model with both interactions}{62}{subsubsection.6.2.5}
-\contentsline {paragraph}{Participant JP, Model with both interactions: Discussion}{63}{section*.31}
-\contentsline {subsubsection}{\numberline {6.2.6}Participant JP, Model with both interactions, $\kappa _{\sigma } > 0$}{64}{subsubsection.6.2.6}
-\contentsline {paragraph}{Participant JP, Model with both interactions, $\kappa _{\sigma } > 0$: Discussion}{65}{section*.32}
-\contentsline {subsection}{\numberline {6.3}Some introspective remarks}{65}{subsection.6.3}
-\contentsline {subsection}{\numberline {6.4}General discussion}{66}{subsection.6.4}
-\contentsline {paragraph}{Question 1: Was the original model (Model 1) sufficient?}{66}{section*.33}
-\contentsline {paragraph}{Question 2: Did coefficients in the Yes/No and 2I-4AFC tasks correspond with each other?}{66}{section*.34}
-\contentsline {paragraph}{Question 3: What inferences can we make about the processing of pitch and timbre?}{67}{section*.35}
-\contentsline {paragraph}{Conclusions from introspection}{67}{section*.36}
-\contentsline {section}{\numberline {7}Conclusions}{68}{section.7}
+\contentsline {section}{\numberline {3}Bayesian statistics}{25}{section.3}
+\contentsline {subsection}{\numberline {3.1}Basics of Bayesian statistics}{25}{subsection.3.1}
+\contentsline {subsection}{\numberline {3.2}Hierarchical models}{27}{subsection.3.2}
+\contentsline {subsection}{\numberline {3.3}Approximating the Posterior Probability Densities}{29}{subsection.3.3}
+\contentsline {subsubsection}{\numberline {3.3.1}Resample-Move algorithm}{30}{subsubsection.3.3.1}
+\contentsline {subsubsection}{\numberline {3.3.2}Laplace Approximation}{32}{subsubsection.3.3.2}
+\contentsline {subsection}{\numberline {3.4}Bayesian inference in the General Recognition Theory}{32}{subsection.3.4}
+\contentsline {paragraph}{Posterior predictive checks}{33}{section*.18}
+\contentsline {section}{\numberline {4}Adaptive estimation}{34}{section.4}
+\contentsline {subsection}{\numberline {4.1}Entropy minimization}{34}{subsection.4.1}
+\contentsline {paragraph}{Unconstrained parameterization}{35}{section*.19}
+\contentsline {paragraph}{Some practical considerations}{36}{section*.20}
+\contentsline {section}{\numberline {5}Simulations}{38}{section.5}
+\contentsline {subsection}{\numberline {5.1}Methods}{38}{subsection.5.1}
+\contentsline {paragraph}{Prior distributions}{38}{section*.21}
+\contentsline {subsection}{\numberline {5.2}Results}{40}{subsection.5.2}
+\contentsline {paragraph}{Trial-by-trial estimates}{40}{section*.22}
+\contentsline {paragraph}{Hierarchical model}{44}{section*.23}
+\contentsline {subsection}{\numberline {5.3}Discussion}{46}{subsection.5.3}
+\contentsline {paragraph}{Question 1: is the adaptive algorithm more efficient?}{46}{section*.24}
+\contentsline {paragraph}{Question 2: how well are generating parameters recovered?}{47}{section*.25}
+\contentsline {section}{\numberline {6}Psychophysical experiments}{48}{section.6}
+\contentsline {subsection}{\numberline {6.1}Methods}{48}{subsection.6.1}
+\contentsline {paragraph}{Procedure}{48}{section*.26}
+\contentsline {paragraph}{Stimuli}{48}{section*.27}
+\contentsline {subsection}{\numberline {6.2}Results}{50}{subsection.6.2}
+\contentsline {subsubsection}{\numberline {6.2.1}Posterior predictive plots}{50}{subsubsection.6.2.1}
+\contentsline {subsubsection}{\numberline {6.2.2}Participant OK, Models 1 to 3}{52}{subsubsection.6.2.2}
+\contentsline {paragraph}{Participant OK, Models 1 to 3: Discussion}{55}{section*.28}
+\contentsline {subsubsection}{\numberline {6.2.3}Participant OK, Model with both interactions}{57}{subsubsection.6.2.3}
+\contentsline {paragraph}{Participant OK, Model with both interactions: Discussion}{58}{section*.29}
+\contentsline {subsubsection}{\numberline {6.2.4}Participant JP, Models 1 to 3}{59}{subsubsection.6.2.4}
+\contentsline {paragraph}{Participant JP, Models 1 to 3: Discussion}{62}{section*.30}
+\contentsline {subsubsection}{\numberline {6.2.5}Participant JP, Model with both interactions}{63}{subsubsection.6.2.5}
+\contentsline {paragraph}{Participant JP, Model with both interactions: Discussion}{64}{section*.31}
+\contentsline {subsubsection}{\numberline {6.2.6}Participant JP, Model with both interactions, $\kappa _{\sigma } > 0$}{65}{subsubsection.6.2.6}
+\contentsline {paragraph}{Participant JP, Model with both interactions, $\kappa _{\sigma } > 0$: Discussion}{66}{section*.32}
+\contentsline {subsection}{\numberline {6.3}Some introspective remarks}{66}{subsection.6.3}
+\contentsline {subsection}{\numberline {6.4}General discussion}{67}{subsection.6.4}
+\contentsline {paragraph}{Question 1: Was the original model (Model 1) sufficient?}{67}{section*.33}
+\contentsline {paragraph}{Question 2: Did coefficients in the Yes/No and 2I-4AFC tasks correspond with each other?}{67}{section*.34}
+\contentsline {paragraph}{Question 3: What inferences can we make about the processing of pitch and timbre?}{68}{section*.35}
+\contentsline {paragraph}{Conclusions from introspection}{68}{section*.36}
+\contentsline {section}{\numberline {7}Conclusions}{69}{section.7}
 \contentsline {section}{Appendices}{}{section*.37}
-\contentsline {section}{\numberline {A}Algorithm for calculating $\phi _2$}{74}{appendix.A}
-\contentsline {section}{\numberline {B}Code for models for the Yes/No task}{76}{appendix.B}
-\contentsline {subsection}{\numberline {B.1}Model 1}{76}{subsection.B.1}
-\contentsline {subsection}{\numberline {B.2}Model 2}{77}{subsection.B.2}
-\contentsline {subsection}{\numberline {B.3}Model 3}{78}{subsection.B.3}
-\contentsline {subsection}{\numberline {B.4}Both}{79}{subsection.B.4}
-\contentsline {subsection}{\numberline {B.5}Both (Truncated)}{80}{subsection.B.5}
-\contentsline {section}{\numberline {C}Code for model for the 2I-4AFC task}{83}{appendix.C}
-\contentsline {subsection}{\numberline {C.1}Model 1}{83}{subsection.C.1}
-\contentsline {subsection}{\numberline {C.2}Model 2}{84}{subsection.C.2}
-\contentsline {subsection}{\numberline {C.3}Model 3}{85}{subsection.C.3}
-\contentsline {subsection}{\numberline {C.4}Both}{86}{subsection.C.4}
+\contentsline {section}{\numberline {A}Algorithm for calculating $\phi _2$}{75}{appendix.A}
+\contentsline {section}{\numberline {B}Code for models for the Yes/No task}{77}{appendix.B}
+\contentsline {subsection}{\numberline {B.1}Model 1}{77}{subsection.B.1}
+\contentsline {subsection}{\numberline {B.2}Model 2}{78}{subsection.B.2}
+\contentsline {subsection}{\numberline {B.3}Model 3}{79}{subsection.B.3}
+\contentsline {subsection}{\numberline {B.4}Both}{80}{subsection.B.4}
+\contentsline {subsection}{\numberline {B.5}Both (Truncated)}{81}{subsection.B.5}
+\contentsline {section}{\numberline {C}Code for model for the 2I-4AFC task}{84}{appendix.C}
+\contentsline {subsection}{\numberline {C.1}Model 1}{84}{subsection.C.1}
+\contentsline {subsection}{\numberline {C.2}Model 2}{85}{subsection.C.2}
+\contentsline {subsection}{\numberline {C.3}Model 3}{86}{subsection.C.3}
+\contentsline {subsection}{\numberline {C.4}Both}{87}{subsection.C.4}

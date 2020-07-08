@@ -1,6 +1,7 @@
 %Rnw root = "../Joni_Paakko_-_Thesis.Rnw"
 
 \section{Adaptive estimation}
+\label{sec:adaptive}
 
 The motivation behind adaptive psychophysical testing can be traced to intuitive enough starting point. Suppose that the researcher is interested in finding out what is the faintest possible sound that the subject is able to detect with some reliability. Now, it wouldn't make sense to waste time presenting them with stimuli that they can always detect, rather, if the subject has very low threshold for detection, it would make sense to reduce the level of the stimuli until the subject starts making errors. This indeed is how adaptive \textit{staircase methods work}. (c.f. \citet[Chapter 5]{kingdomprins2010}).
 

@@ -44,7 +44,7 @@ lines(c(1, 1), c(-2, 2), lty = 2, lwd = lwd_global)
 lines(c(-2, 1), c(2, 2), lty = 2, lwd = lwd_global)
 
 @
-\caption{Two projections of a two-dimensional normal distribution with the parameters $\mu = [1.0, 2.0]^T$, $\rho = 0.6$}. 
+\caption{Two projections of a two-dimensional normal distribution with the parameters $\mu = [1.0, 2.0]$, $\rho = 0.6$.} 
 \label{fig:2dimnorm}
 \end{figure}
 
@@ -76,10 +76,12 @@ y = seq(-2, 3, length.out = 50)
 x = seq(-2, 3, length.out = 50)
 
 s00 = matrix(NaN, nrow = length(x), ncol = length(y))
+s11 = matrix(NaN, nrow = length(x), ncol = length(y))
 
 for(i in 1:length(x)) {
   for(j in 1:length(y)) {
-    s00[i, j] = dmvnorm(c(x[i], y[j]), mean = c(0.25, 0.5), sigma = matrix(c(1, 0.2, 0.2, 1), 2, 2))
+    s00[i, j] = dmvnorm(c(x[i], y[j]), mean = c(0, 0), sigma = matrix(c(1, 0.2, 0.2, 1), 2, 2))
+    s11[i, j] = dmvnorm(c(x[i], y[j]), mean = c(1.00, 1.25), sigma = matrix(c(1, 0.2, 0.2, 1), 2, 2))
   }
 }
 
@@ -88,9 +90,12 @@ par(mfrow = c(1, 1))
 
 contour(x, y, s00, xlab = "Evidence (x)", ylab = "Evidence (y)",
         main = "", levels = c(0.05, 0.10, 0.15), drawlabels = F, axes = F)
+contour(x, y, s11, levels = c(0.05, 0.10, 0.15), drawlabels = F, add = T, lty = 2)
+
 axis(side = 1); axis(side = 2)
-abline(h = -0.7, lty = 2); abline(v = -0.7, lty = 2)
+abline(h = 0.7, lty = 2); abline(v = 0.7, lty = 2)
 text(-1.6, -1.8, "(0, 0)"); text(2.6, -1.8, "(1, 0)"); text(-1.6, 2.8, "(0, 1)"); text(2.6, 2.8, "(1, 1)")
+
 @
 \end{center}
 \caption{In two dimensions, the evidence distribution--when binary responses are required--is separated into four response regions.}

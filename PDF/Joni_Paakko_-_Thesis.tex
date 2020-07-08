@@ -113,19 +113,19 @@ Perception can be thought of as being multidimensional. For example, a single to
 
 How we perceive such multidimensional signals is a fundamental psychological question: during perception, are the dimensions processed independently, or do they interfere with each other? Is the perception of auditory signals influenced by visual or other signals, and if so, in what situations? Do the physical dimensions, such as amplitude, correspond to the psychological (in this case loudness) or do we perceive them as combinations (do e.g. high pitches sound louder)?
 
-A popular approach is the General Recognition Theory (GRT), which is a multidimensional generalization of Signal Detection Theory (SDT) (\citealp{wickens2002,ashby1986, ashby2015}). SDT is a much-studied mathematical framework describing--among other things--the detection of signals in the presence of noise. Thus, GRT offers a theoretical framework for modelling multidimensional perception. 
+A popular approach for modelling multidimensional perception is the General Recognition Theory (GRT), which is a multidimensional generalization of Signal Detection Theory (SDT) (\citealp{wickens2002,ashby1986, ashby2015}). SDT is a much-studied mathematical framework describing--among other things--the detection of signals in the presence of noise and for dissociating perceptual and decisional processes. 
 
 Most experiments employing GRT use preselected stimuli, i.e. use a paradigm called \textit{method of constant stimuli} (MOCS).  However, it is known that using methods that can adapt the stimulus values to the behaviour of the subject can make the testing more efficient (\citealp{kontsevichtyler1999}). These kinds of methods are usually simply referred to as \textit{adaptive} methods.
 
 The main focus of this thesis is in applying Bayesian adaptive estimation to General Recognition Theory (GRT). However, this is a multifaceted problem, and it's useful to break it down into a few separate topics. I will present the reader with a brief roadmap into these topics, and where they are discussed in more detail. However, one should also be aware that all of these issues are closely interrelated.
 
-First, the "classic" GRT models could be described as non-parametric in the sense that they don't parameterize the relationship between the signal strength and the probability of a response; response probabilities are calculated only for stimulus categories. However, in order to meaningfully implement the adaptive method, one should be able to calculate response probabilities for arbitrary stimuli. In order to achieve just this, I will be integrating psychophysical functions into the theory of GRT. This constitutes the main part of section \ref{sec:GRT} \textit{\nameref{sec:GRT}}.  
+First, the "classic" GRT models could be described as non-parametric in the sense that they don't parameterize the relationship between the signal strength and the probability of a response; response probabilities are calculated only for stimulus categories. However, in order to meaningfully implement the adaptive method, one should be able to calculate response probabilities for arbitrary stimuli. In order to achieve just this, I will be integrating psychophysical functions--functions that relate continuous stimulus levels to response probabilities \citep[Chapter 4]{kingdomprins2010}-- into the theory of GRT. This constitutes the main part of Section \ref{sec:GRT} \textit{\nameref{sec:GRT}}.  
 
-Second, when such functional relationships are implemented, the question of \textit{how} or what kind of functional relationships between stimuli and responses should be modelled becomes an issue. There are many different kinds of functions one can choose from, and many kinds of interactions that one could incorporate into the model. This issue will be touched upon in section \ref{sec:GRT} when \textit{mean shift} and \textit{variance shift} interactions are discussed, and also in the context of hierarchical models in section \ref{sec:hierarchical_models} \textit{\nameref{sec:hierarchical_models}}. Practical ramifications of this are discussed when analysing the data from the psychophysical experiments. 
+Second, when such functional relationships are implemented, the question of \textit{how} or what kind of functional relationships between stimuli and responses should be modelled becomes an issue. There are many different kinds of functions one can choose from, and many kinds of interactions that one could incorporate into the model. This issue will be touched upon in Section \ref{sec:GRT} when different kinds of interactions are discussed. Practical ramifications of this are discussed when analysing the data from the psychophysical experiments. 
 
-Related to this, I will be criticizing the implementation of the classic 2X2 detection experiment in the context of auditory psychophysics and, instead, arguing for a model based on auditory discrimination. The main gist is that it is unlikely that participants wouldn't be basing their categorization decisions based on the perceived difference to the preceding stimulus.
+Related to this, I will be criticizing the implementation of the classic 2X2 identification experiment in the context of auditory psychophysics and, instead arguing for a model based on auditory discrimination. The main gist is that in a psychophysical experiment, in which the stimulus levels are extremely low, it is likely that participants base their decisions based on differences between the stimuli.
 
-Third, Bayesian statistical inference is different from the usual frequentist methods used when analysing GRT models. This is most apparent in how the concept of \textit{interaction} is not dependent on statistical significance, but rather the posterior probability densities for the coefficients that model interactions. This is, of course, closely related to the previous point, since the choice of the model determines how those coefficients are to be interpreted. 
+Third, Bayesian statistical inference is different from the usual frequentist methods used when analysing GRT models. This is most apparent in how the concept of \textit{interaction} is not dependent on statistical significance, but rather the posterior probability densities for the coefficients that model interactions. This is, of course, closely related to the earlier point, since the choice of the model determines how those coefficients are to be interpreted. 
 
 Fourth, Bayesian adaptive estimation requires, as its name already implies, the calculation of prior and posterior probability densities. This is mainly a computational problem: since the aim of adaptive estimation is to select optimal stimuli in "real time", the algorithms used have to be relatively lightweight. The posterior probability densities are not analytically calculable, so approximations based on Monte Carlo methods (random sampling) are used. This issue is discussed in Section \ref{sec:posterior_approx} \textit{\nameref{sec:posterior_approx}}.
 
@@ -133,7 +133,7 @@ Related to all of the above angles are multiple practical problems, such as how 
 
 The reader should be aware that what is being evaluated here is the intersection of all the factors just mentioned, and changing any of these would change the results. This limits the generalizability of the results, which is a common problem with studies like this. The main contribution of this thesis, then, is to explore the application of Bayesian (adaptive) methods to GRT and map some of the problems associated with this.
 
-The work is divided into three main parts: The first part describes GRT, beginning from Signal Detection Theory and gradually exposing the reader to the models used in this thesis (Section \ref{sec:GRT} \textit{\nameref{sec:GRT}}); Second part describes Bayesian statistics and the adaptive algorithm used here (Section \ref{sec:bayes} \textit{\nameref{sec:bayes}}); The final part consists of simulations and psychophysical experiments which are used to evaluate the models (Sections \ref{sec:simulations} \textit{\nameref{sec:simulations}} and \ref{sec:pp_exp} \textit{\nameref{sec:pp_exp}}).
+This thesis is divided into three main parts: The first part describes GRT, beginning from Signal Detection Theory and gradually exposing the reader to the models used in this thesis (Section \ref{sec:GRT} \textit{\nameref{sec:GRT}}); Second part describes Bayesian statistics and the adaptive algorithm (Sections \ref{sec:bayes} \textit{\nameref{sec:bayes}} and \ref{sec:adaptive} \textit{\nameref{sec:adaptive}}); the final part consists of simulations and psychophysical experiments which are used to evaluate the models (Sections \ref{sec:simulations} \textit{\nameref{sec:simulations}} and \ref{sec:pp_exp} \textit{\nameref{sec:pp_exp}}).
 
 \newpage
 
@@ -157,15 +157,13 @@ A stimulus in which the difference between reference and test tones is zero is c
 
 \subsection{Signal Detection Theory}
 
-Continuing the example of a  pitch discrimination task, during such experiment it is not rare to observe the participant sometimes give a negative and sometimes a positive response to the same stimulus on different presentations. The view that SDT takes is that the responses are not based directly on the physical signals, but rather some latent (unobserved) internal quantity, sometimes referred to as \textit{evidence} \citep{wickens2002} or \textit{judgments} \cite{stigler2003}. It is thought that the latent amount of evidence for e.g. the test tone being higher than the reference tone is subject to random variation, which in turn leads to variation in responses (\citet[p. 154]{kingdomprins2010}, \citet[p. 11]{wickens2002}). These random perturbations to the amount of evidence are commonly thought to arise primarily from sensory sources, but I will discuss this issue later in greater detail.
+Continuing the example of a  pitch discrimination task, during such experiment it is not rare to observe the participant sometimes give a negative and sometimes a positive response to the same stimulus on different presentations. The view that SDT takes is that the responses are not based directly on the physical signals, but rather some latent (unobserved) internal quantity, sometimes referred to as \textit{evidence} \citep{wickens2002} or \textit{judgments} \cite{stigler2003}, I will be using the term \textit{evidence} from here on. It is thought that the latent amount of evidence for e.g. the test tone being higher than the reference tone is subject to random variation, which in turn leads to variation in responses (\citet[p. 154]{kingdomprins2010}, \citet[p. 11]{wickens2002}). These random perturbations to the amount of evidence are commonly thought to arise primarily from sensory sources, but I will discuss this issue later in greater detail.
 
-Some assumptions about the nature of the perturbations are usually made, for example that small perturbations are more common than large ones, and that the average amount of error is zero. A popular choice for modelling the distribution of the perturbations is the normal distribution with mean 0 and unknown variance. This is also the assumption that I will be making in this thesis.
-
-By making an assumption about the distribution of the perturbations, one can calculate the predicted response probabilities for set of stimuli, and consequently make statistical inferences about the sensory processes of interest. Rest of the discussion will deal with the minutiae of these calculations. 
+Some assumptions about the nature of the perturbations are usually made, for example that small perturbations are more common than large ones, and that the average amount of error is zero. A popular choice for modelling the distribution of the perturbations is the normal distribution with mean 0 and unknown variance. This is also the assumption that I will be making in this thesis. By making this assumption about the distribution of the perturbations, one can calculate the predicted response probabilities for different stimuli, and consequently make statistical inferences about the sensory processes of interest. Rest of the discussion will deal with the minutiae of these calculations. 
 
 \subsubsection{Relationship between stimulus and $d'$}
 
-Since the amount of evidence is assumed to be random, it can be represented as probability distributions as in Figure \ref{fig:SDT}, in which $S$ stands for physical signal level, for example the difference in frequencies between the reference and test tones. As was discussed in the previous section, normal distribution is used to model the distribution of evidence. 
+Since the amount of evidence is assumed to be random, it can be represented as probability distributions as in Figure \ref{fig:SDT}. In the figure $S$ stands for physical signal level, for example the difference in frequencies between the reference and test tones. As was discussed in the previous section, normal distribution is used to model the distribution of evidence. 
 
 If the subject is presented with a noise stimulus (one in which $S = 0$), the amount of evidence on any single trial is assumed to be a random sample from the zero-centred distribution in Figure \ref{fig:SDT}; in the context of the pitch discrimination task this would correspond with stimulus in which the test and reference pitches are identical. As $S$ is increased, the distribution from which the evidence is assumed to be sampled from shifts rightward, farther from zero, as is shown for $S = 2$ and $S = 4$.
 
@@ -181,9 +179,9 @@ If the subject is presented with a noise stimulus (one in which $S = 0$), the am
 \label{fig:SDT}
 \end{figure}
 
-Signal level divided by the standard deviation of evidence is called $d'$, usually interpreted as \textit{discriminability} or \textit{signal-to-noise ratio}. Standardized in this way, the standard deviation of evidence is always one, and the mean of the evidence distribution is $d'$. 
+Signal level divided by the standard deviation of evidence is called $d'$, usually interpreted as \textit{discriminability} \citep[Chapter 6]{kingdomprins2010} or \textit{signal-to-noise ratio} \citep{kontsevichtyler1999}. Standardized in this way, the standard deviation of evidence is always one, and the mean of the evidence distribution is $d'$.
 
-Relationship between $d'$ and $S$ is not necessarily linear. Theoretically this kind of non-linearity could  arise e.g. from changes in the variance of the evidence distribution. However, the non-linearity is often interpreted as being the result of non-linearity in signal transduction, i.e. the change of physical signal into internal.\footnote{Familiar example of non-linear transduction is how pitch is experienced in large scale: in order to move one octave up on the psychological scale of pitch, one has to move increasingly fast on the physical frequency, see \citet[Chapter 5]{zwickerfastl}}
+Relationship between $d'$ and $S$ is not necessarily linear. Theoretically this kind of non-linearity could  arise e.g. from changes in the variance of the evidence distribution. However, the non-linearity is often interpreted as being the result of non-linearity in signal transduction, i.e. the change of physical signal into internal.\footnote{Familiar example of non-linear transduction is how pitch is experienced in large scale: in order to move one octave up on the psychological scale of pitch, one has to move increasingly fast on the physical frequency, see \citet[Chapter 5]{zwickerfastl}.}
 
 The functional relationship between physical signal strength and $d'$ has been quantified in many different ways in the psychophysical literature (for a selection, see \citet[Appendix A]{lesmes2015}). The functional form used here is based on the widely used \textit{power law} model of signal transduction (see e.g. \citet{kontsevichtyler1999, dai2011, lesmes2015}):
 
@@ -192,7 +190,7 @@ d' = (\frac{S}{\sigma})^\beta
 \label{eq:dprimefunc}
 \end{equation}
 
-Here $S$ is again the physical signal strength, $\sigma$ corresponds to the standard deviation of evidence and $\beta$ models non-linearity between signal level and signal-to-noise ratio. Note that often $\alpha$ is used for the standard deviation of evidence (e.g. in \cite{dai2011, kontsevichtyler1999}), but since this parameter indeed is directly related to the standard deviation of the evidence distribution, I feel $\sigma$ is more appropriate. 
+Here $S$ is again the physical signal strength, $\sigma$ corresponds to the standard deviation of evidence and $\beta$ models non-linearity between signal level and signal-to-noise ratio. Note that often the letter $\alpha$ is used for the standard deviation of evidence (e.g. in \cite{dai2011, kontsevichtyler1999, kingdomprins2010}), but since this parameter is directly related to the standard deviation of the evidence distribution, I feel $\sigma$ is more appropriate. 
 
 The effects of changing these parameters are shown in Figure \ref{fig:dprimefunc}. The smaller $\sigma$ is, the faster $d'$ increases. $\beta$ parameter affects the linearity of the function: when $\beta < 1$ the function increases faster than the linear case before the point at which $d' = 1$ and slower after that; the opposite happens when $\beta > 1$. 
 
@@ -204,13 +202,13 @@ The effects of changing these parameters are shown in Figure \ref{fig:dprimefunc
 
 \end{knitrout}
 \end{center}
-\caption{ The effect of $\sigma$ and $\beta$ parameters on the $d'$ function. Left panel shows the effect of changing $\sigma$ parameter while keeping $\beta$ constant and the right panel shows the effect of changing $\beta$ parameter while keeping $\sigma$ constant ($\sigma = 2$).}
+\caption{ The effect of $\sigma$ and $\beta$ parameters on the $d'$ function. Left panel shows the effect of changing $\sigma$ parameter while keeping $\beta$ constant ($\beta = 1$) and the right panel shows the effect of changing $\beta$ parameter while keeping $\sigma$ constant ($\sigma = 2$).}
 \label{fig:dprimefunc}
 \end{figure}
 
 \subsubsection{Modelling responses: relationship between $d'$ and response}
 
-The preceding discussion about relating $S$-values to $d'$-values is just one half of SDT, there has to be a way of relating the $d'$-values to responses, $R$. Usually categorical decisions are required from the participant. I will be considering two different tasks, a Yes/No task and a 2-interval 2-alternative forced choice task (2I-2AFC). These are shown schematically in Figure \ref{fig:YesNoAfc}.
+The preceding discussion about relating $S$-values to $d'$-values is just one half of SDT, there has to be a way of relating the $d'$-values to responses, $R$. Usually categorical decisions are required from the participant, and the specific response categories depend on what kind of task they are performing. I will be considering a Yes/No and a 2-interval 2-alternative forced choice (2I-2AFC) tasks. These are shown schematically in Figure \ref{fig:YesNoAfc}.
 
 \begin{figure}[!htb]
 \centering
@@ -219,13 +217,13 @@ The preceding discussion about relating $S$-values to $d'$-values is just one ha
 \label{fig:YesNoAfc}
 \end{figure}
 
-In the Yes/No task (panel \textit{a} of Figure \ref{fig:YesNoAfc}) the participant's task is to indicate if they detected the signal. The name of the task is quite literal as the participants provide \textit{Yes} and \textit{No} answers. As shown in the figure, the participant is first presented with the stimulus, and they are then expected to give their answer.
+In the Yes/No task (panel \textit{a)} of Figure \ref{fig:YesNoAfc}) the participant's task is to indicate if they detected the signal. The name of the task is quite literal as the participants provide \textit{Yes} and \textit{No} answers. As shown in the figure, the participant is first presented with the stimulus after which they are expected to give their answer.
 
-In contrast to this, in the 2I-2AFC task the participant is presented with two \textit{observation intervals}, interval referring here to a temporal interval as can be seen from panel \textit{b} of Figure \ref{fig:YesNoAfc}. During each interval the participant is presented with a stimulus, one containing only noise and the other containing the signal. The participant's task is then to indicate which interval they thought contained the signal. Again, the name is quite literal: the participant is presented with two intervals and they have to choose their response among two alternatives.
+In contrast to this, in the 2I-2AFC task the participant is presented with two \textit{observation intervals}, interval referring here to a temporal interval as can be seen from panel \textit{b)} of Figure \ref{fig:YesNoAfc}. During each interval the participant is presented with a stimulus, one containing only noise and the other containing the signal. The participant's task is then to indicate which interval they thought contained the signal. Again, the name is quite literal: the participant is presented with two \textit{intervals} and they have to choose their response among two \textit{alternatives}.
 
 \paragraph{Responses in the Yes/No task}
 
-Decisional processing is modelled by assuming that the participant has an internal criterion for the evidence. When evidence is below this criterion the participant will respond negatively and when evidence exceeds the criterion they will respond  positively.
+Decisional processing in the Yes/No task is modelled by assuming that the participant has an internal criterion for the evidence. When evidence is below this criterion the participant will respond negatively and when evidence exceeds the criterion they will respond  positively.
 
 When the participant is presented with a signal stimulus, positive responses are called \textit{hits}; when they  are presented with a noise stimulus, positive responses are called \textit{false alarms}. \citep{wickens2002, kingdomprins2010}. 
 
@@ -253,7 +251,7 @@ where $N$ is the normal distribution function with parameters $\mu$ (mean) and $
 
 The integral in this equation is usually written in terms of the cumulative standard normal distribution function, $\phi$. The resulting function, denoted with the Greek letter $\psi$, is called the \textit{psychometric function}. \cite[Chapter 4]{kingdomprins2010}
 
-Usually only the positive response is considered, since the probability of a negative response is simply the complement of it, but it is more principled to show the probabilities for both the positive and negative responses. 
+Usually only the positive response is considered, since the probability of a negative response is simply the complement of it, but it is more principled to show the probabilities for both the positive and negative responses:
 
 \begin{align*}
 \begin{split}
@@ -262,9 +260,9 @@ Usually only the positive response is considered, since the probability of a neg
 \end{split}
 \end{align*}
 
-Here $\Theta$ is a vector containing the parameters of the psychometric function ($\sigma$, $c$ and $\beta$), and $S$ is the physical signal level. Given a vectors of observed signals and responses ($S$ and $R$), one can find the best fitting values for the parameters, which then would taken as the Signal Detection Theoretical interpretation of the observer's performance. In this interpretation the performance is divided into sensory (parameters $\sigma$ and $\beta$) and decisional (parameter $c$) factors.
+Here $\Theta$ is a vector containing the parameters of the psychometric function ($\sigma$, $c$ and $\beta$), and $S$ is the physical signal level. Given vectors of observed signals and responses ($S$ and $R$), one can find the best fitting values for the parameters, which then would taken as the Signal Detection Theoretical interpretation of the observer's performance. In this interpretation the performance is divided into sensory (parameters $\sigma$ and $\beta$) and decisional (parameter $c$) factors.
 
-Since sensory and decisional processes are separate in the model, keeping the parameters that model sensory processing constant while varying the criterion will result in different predicted proportions of hits and false alarms. That is to say that the perceptual processing capabilities can be exactly the same for two participants, but the observed amounts of hits and false alarms can be different, if one participant has a more lax criterion. This is shown in the left panel of Figure \ref{fig:critchange}. Here, the parameters relating to sensory factors are kept constant while the criterion is varied.
+Since sensory and decisional processes are separate in the model, keeping the parameters that model sensory processing constant while varying the criterion will result in different predicted proportions of \textit{Yes} and \textit{No} responses and as a consequence hits and false alarms. That is to say that the perceptual processing capabilities can be exactly the same for two participants, but the observed amounts of hits and false alarms can be different, if one participant has a more lax criterion. This is shown in the left panel of Figure \ref{fig:critchange}. Here, the parameters relating to sensory factors are kept constant while the criterion is varied.
 
 It is also important to notice that hits and false alarms are coupled. If the participant wants to avoid false alarms, they will have to adopt a stricter criterion for the evidence, and  as a consequence they  will inevitably also make less hits. This is because the aim of SDT is to model situation in which there is a non-zero probability of confusing signal with noise. 
 
@@ -341,7 +339,7 @@ In the two-dimensional case also the evidence distribution is two dimensional. F
 \includegraphics[width=\maxwidth]{figure/unnamed-chunk-7-1} 
 
 \end{knitrout}
-\caption{Two projections of a two-dimensional normal distribution with the parameters $\mu = [1.0, 2.0]^T$, $\rho = 0.6$}. 
+\caption{Two projections of a two-dimensional normal distribution with the parameters $\mu = [1.0, 2.0]$, $\rho = 0.6$.} 
 \label{fig:2dimnorm}
 \end{figure}
 
@@ -896,6 +894,7 @@ Developing good posterior predictive checks can be difficult, and there is not a
 %Rnw root = "../Joni_Paakko_-_Thesis.Rnw"
 
 \section{Adaptive estimation}
+\label{sec:adaptive}
 
 The motivation behind adaptive psychophysical testing can be traced to intuitive enough starting point. Suppose that the researcher is interested in finding out what is the faintest possible sound that the subject is able to detect with some reliability. Now, it wouldn't make sense to waste time presenting them with stimuli that they can always detect, rather, if the subject has very low threshold for detection, it would make sense to reduce the level of the stimuli until the subject starts making errors. This indeed is how adaptive \textit{staircase methods work}. (c.f. \citet[Chapter 5]{kingdomprins2010}).
 
