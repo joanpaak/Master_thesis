@@ -89,8 +89,8 @@ par(family = font_family_global)
 par(mfrow = c(1, 1))
 
 contour(x, y, s00, xlab = "Evidence (x)", ylab = "Evidence (y)",
-        main = "", levels = c(0.05, 0.10, 0.15), drawlabels = F, axes = F)
-contour(x, y, s11, levels = c(0.05, 0.10, 0.15), drawlabels = F, add = T, lty = 2)
+        main = "", levels = c(0.05), drawlabels = F, axes = F)
+contour(x, y, s11, levels = c(0.05), drawlabels = F, add = T, lty = 2)
 
 axis(side = 1); axis(side = 2)
 abline(h = 0.7, lty = 2); abline(v = 0.7, lty = 2)
