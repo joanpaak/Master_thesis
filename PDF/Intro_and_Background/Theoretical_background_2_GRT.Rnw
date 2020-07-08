@@ -50,7 +50,6 @@ lines(c(-2, 1), c(2, 2), lty = 2, lwd = lwd_global)
 
 \subsubsection{Calculation of $d'$ in two dimensions}
 
-
 For two-dimensional stimuli, two $d'$ values have to be calculated, on for each dimension. Similar to SDT, the $d'$ values are the location of the evidence distribution, but now the location has to be determined in the two-dimensional space on the $x$ and $y$ axes separately. This also implies that now there are two $d'$ functions, and consequently, two of each parameter: 
 
 \begin{align}
@@ -315,9 +314,14 @@ When the model parameters relating to response boundaries or criteria--as is the
 \psi_2(\bm{S}; \theta)_{\bm{R}} = \phi_2([-\frac{c_x}{\sigma_x} + d'_x]r_x, [-\frac{c_y}{\sigma_y} + d'_y] r_y, \rho [r_x r_y])
 \label{eq:generalPfun_varshift}
 \end{equation}  
+
 This means that the definition of criterion is a bit different from that of when no variance-shift is present. In the model with constant variance, the criterion corresponds to the Z-score of the false alarm probability (see \citet[Chapter 6]{kingdomprins2010}): $\text{criterion} = \phi^{-1}(P(FA))$, in which $\phi^{-1}$ is the standard normal inverse cumulative distribution function; in the model with variance shift the whole first term corresponds to the Z-score: $\frac{\text{criterion}}{\sigma} = \phi^{-1}(P(FA))$. This means that in the variance-shift model the criterion parameter is more accurately the geometric location of the decisional criterion in the decisional space, independent of the variance of the evidence distributions. However, since it is easier to interpret false alarm probabilities, in the models with variance shift the prior is placed on the term $\frac{\text{criterion}}{\sigma}$.
 
-From the lower right panel of Figure \ref{fig:grt_couplings} one can see that the effect is to draw the response probabilities towards 0.5 on a single dimension. 
+From the lower right panel of Figure \ref{fig:grt_couplings} one can see that the effect is to draw the response probabilities towards 0.5 on a single dimension. Note that this is in agreement with what was said earlier about response probabilities being drawn towards 0.25: since the psychometric function in the figure is shown only for one dimension, it represents the probability of a positive response irregardless of the other dimension. 
+
+\paragraph{Model with both kinds of couplings}
+
+The most realistic case is one in which both kinds of couplings are included in the model. This is achieved easily by using Equation \ref{eq:kappa_mu} and calculating the $\sigma$ terms as in Equation \ref{eq:varshift}.
 
 \paragraph{Note on terminology} 
 

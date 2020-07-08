@@ -21,6 +21,9 @@
 \usepackage{multirow}
 \usepackage{graphicx}
 \usepackage{float}
+\usepackage{listings}
+\usepackage{appendix}
+\usepackage{tocloft}
 
 \usepackage{amsthm}
 \usepackage{adjustbox}
@@ -180,9 +183,13 @@ Data from the psychophysical experiments indicate that non-sensory factors play 
 <<conclusion, child='Conclusions/Conclusions.Rnw'>>=
 @
 
-
 \clearpage
 \bibliography{references}
 \bibliographystyle{apacite}
+
+\newpage
+<<conclusion, child='Appendices/appendices.rnw'>>=
+@
+
 
 \end{document}

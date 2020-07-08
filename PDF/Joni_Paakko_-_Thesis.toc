@@ -4,31 +4,32 @@
 \contentsline {subsection}{\numberline {2.1}Signal Detection Theory}{3}{subsection.2.1}
 \contentsline {subsubsection}{\numberline {2.1.1}Relationship between stimulus and $d'$}{4}{subsubsection.2.1.1}
 \contentsline {subsubsection}{\numberline {2.1.2}Modelling responses: relationship between $d'$ and response}{5}{subsubsection.2.1.2}
-\contentsline {paragraph}{Responses in the Yes/No task}{6}{section*.2}
-\contentsline {paragraph}{Responses in the 2I-2AFC task}{8}{section*.3}
+\contentsline {paragraph}{Responses in the Yes/No task}{6}{section*.1}
+\contentsline {paragraph}{Responses in the 2I-2AFC task}{8}{section*.2}
 \contentsline {subsection}{\numberline {2.2}General Recognition Theory}{10}{subsection.2.2}
 \contentsline {subsubsection}{\numberline {2.2.1}Calculation of $d'$ in two dimensions}{11}{subsubsection.2.2.1}
 \contentsline {subsubsection}{\numberline {2.2.2}Modelling responses in two dimensions}{11}{subsubsection.2.2.2}
 \contentsline {paragraph}{Yes/No task in two dimensions}{11}{figure.9}
-\contentsline {paragraph}{2I-4AFC}{13}{section*.5}
-\contentsline {paragraph}{Comparison of the Yes/No and 2I-4AFC tasks}{14}{section*.6}
+\contentsline {paragraph}{2I-4AFC}{13}{section*.4}
+\contentsline {paragraph}{Comparison of the Yes/No and 2I-4AFC tasks}{14}{section*.5}
 \contentsline {subsubsection}{\numberline {2.2.3}Interactions between the dimensions}{15}{subsubsection.2.2.3}
-\contentsline {paragraph}{Coupled means, $\kappa _{\mu }$}{15}{section*.7}
-\contentsline {paragraph}{Coupled standard deviations, $\kappa _{\sigma }$}{17}{section*.8}
+\contentsline {paragraph}{Coupled means, $\kappa _{\mu }$}{15}{section*.6}
+\contentsline {paragraph}{Coupled standard deviations, $\kappa _{\sigma }$}{17}{section*.7}
+\contentsline {paragraph}{Model with both kinds of couplings}{17}{section*.8}
 \contentsline {paragraph}{Note on terminology}{17}{section*.9}
-\contentsline {subsection}{\numberline {2.3}Lapsing behaviour}{17}{subsection.2.3}
+\contentsline {subsection}{\numberline {2.3}Lapsing behaviour}{18}{subsection.2.3}
 \contentsline {subsection}{\numberline {2.4}Critical discussion}{18}{subsection.2.4}
 \contentsline {subsubsection}{\numberline {2.4.1}Relationship to other models}{18}{subsubsection.2.4.1}
 \contentsline {paragraph}{Classic GRT}{18}{section*.10}
-\contentsline {paragraph}{Process model}{19}{section*.11}
-\contentsline {paragraph}{Relationship to Generalized Linear Models}{20}{section*.12}
-\contentsline {subsubsection}{\numberline {2.4.2}Nonidentifiabilities and other limitations of the model}{21}{subsubsection.2.4.2}
-\contentsline {paragraph}{What do the latent distributions really represent?}{21}{section*.13}
-\contentsline {paragraph}{Criterial noise}{22}{section*.14}
+\contentsline {paragraph}{Process model}{20}{section*.11}
+\contentsline {paragraph}{Relationship to Generalized Linear Models}{21}{section*.12}
+\contentsline {subsubsection}{\numberline {2.4.2}Nonidentifiabilities and other limitations of the model}{22}{subsubsection.2.4.2}
+\contentsline {paragraph}{What do the latent distributions really represent?}{22}{section*.13}
+\contentsline {paragraph}{Criterial noise}{23}{section*.14}
 \contentsline {paragraph}{Non-orthogonality of decisional boundaries}{23}{section*.15}
 \contentsline {section}{\numberline {3}Bayesian statistics}{24}{section.3}
 \contentsline {subsection}{\numberline {3.1}Basics of Bayesian statistics}{24}{subsection.3.1}
-\contentsline {subsection}{\numberline {3.2}Hierarchical models}{25}{subsection.3.2}
+\contentsline {subsection}{\numberline {3.2}Hierarchical models}{26}{subsection.3.2}
 \contentsline {subsection}{\numberline {3.3}Approximating the Posterior Probability Densities}{28}{subsection.3.3}
 \contentsline {subsubsection}{\numberline {3.3.1}Resample-Move algorithm}{29}{subsubsection.3.3.1}
 \contentsline {subsubsection}{\numberline {3.3.2}Laplace Approximation}{31}{subsubsection.3.3.2}
@@ -70,3 +71,16 @@
 \contentsline {paragraph}{Question 3: What inferences can we make about the processing of pitch and timbre?}{67}{section*.35}
 \contentsline {paragraph}{Conclusions from introspection}{67}{section*.36}
 \contentsline {section}{\numberline {7}Conclusions}{68}{section.7}
+\contentsline {section}{Appendices}{}{section*.37}
+\contentsline {section}{\numberline {A}Algorithm for calculating $\phi _2$}{74}{appendix.A}
+\contentsline {section}{\numberline {B}Code for models for the Yes/No task}{76}{appendix.B}
+\contentsline {subsection}{\numberline {B.1}Model 1}{76}{subsection.B.1}
+\contentsline {subsection}{\numberline {B.2}Model 2}{77}{subsection.B.2}
+\contentsline {subsection}{\numberline {B.3}Model 3}{78}{subsection.B.3}
+\contentsline {subsection}{\numberline {B.4}Both}{79}{subsection.B.4}
+\contentsline {subsection}{\numberline {B.5}Both (Truncated)}{80}{subsection.B.5}
+\contentsline {section}{\numberline {C}Code for model for the 2I-4AFC task}{83}{appendix.C}
+\contentsline {subsection}{\numberline {C.1}Model 1}{83}{subsection.C.1}
+\contentsline {subsection}{\numberline {C.2}Model 2}{84}{subsection.C.2}
+\contentsline {subsection}{\numberline {C.3}Model 3}{85}{subsection.C.3}
+\contentsline {subsection}{\numberline {C.4}Both}{86}{subsection.C.4}

@@ -241,6 +241,33 @@ Box, G.%
 \PrintBackRefs{\CurrentBib}
 
 \bibitem [\protect \citeauthoryear {%
+Boys%
+}{%
+Boys%
+}{%
+{\protect \APACyear {1989}}%
+}]{%
+boys1989}
+\APACinsertmetastar {%
+boys1989}%
+\begin{APACrefauthors}%
+Boys, R.%
+\end{APACrefauthors}%
+\unskip\
+\newblock
+\APACrefYearMonthDay{1989}{}{}.
+\newblock
+{\BBOQ}\APACrefatitle {Algorithm {AS R80}: A Remark on Algorithm {AS 76}: An
+  Integral Useful in Calculating Noncentral $t$ and Bivariate Normal
+  Probabilities} {Algorithm {AS R80}: A remark on algorithm {AS 76}: An
+  integral useful in calculating noncentral $t$ and bivariate normal
+  probabilities}.{\BBCQ}
+\newblock
+\APACjournalVolNumPages{Journal of the Royal Statistical Society. Series C
+  (Applied Statistics)}{38}{3}{580 - 582}.
+\PrintBackRefs{\CurrentBib}
+
+\bibitem [\protect \citeauthoryear {%
 Burns%
 }{%
 Burns%
@@ -973,6 +1000,32 @@ Lesmes, L.%
   yes-no and forced-choice tasks}.{\BBCQ}
 \newblock
 \APACjournalVolNumPages{Frontiers in Psychology}{6}{1070}{}.
+\PrintBackRefs{\CurrentBib}
+
+\bibitem [\protect \citeauthoryear {%
+Pan%
+}{%
+Pan%
+}{%
+{\protect \APACyear {2017}}%
+}]{%
+pan2017}
+\APACinsertmetastar {%
+pan2017}%
+\begin{APACrefauthors}%
+Pan, K.%
+\end{APACrefauthors}%
+\unskip\
+\newblock
+\APACrefYearMonthDay{2017}{}{}.
+\newblock
+\APACrefbtitle {An Analytical Expression for Bivariate Normal Distribution.}
+  {An analytical expression for bivariate normal distribution.}
+\newblock
+\APAChowpublished
+  {\url{https://papers.ssrn.com/sol3/papers.cfm?abstract_id=2924071}}.
+\newblock
+\APACrefnote{Accessed: 26.11.2019}
 \PrintBackRefs{\CurrentBib}
 
 \bibitem [\protect \citeauthoryear {%

@@ -44,7 +44,9 @@ I will also present the reader with some introspective remarks, to act as qualit
 
 Models one to three present the initial stage of model development: Model 1 is the same as the one used in simulations. For models 2 and 3 the parameter $\lambda$ was estimated from the data, to accomodate the (presumably) higher proportion of lapsing trials than assumed a prior; also the prior for the criterion was widened, again, to better accomodate smaller false alarm probabilities. Model 3 uses the $\kappa_{sigma}$ style model of interference. 
 
-The model labelled \textit{Both} has, as the name implies, both kinds of interferences in it. The last model, \textit{Both (Truncated)} is otherwise identical to the previous model, but the $\kappa{sigma}$ is bound to positive values. For these models also the parameter $\rho$ was bound between -0.8 and 0.8 to improve computational stability: for the model with normal prior on tanh transformed scale the chains\footnote{It is not possible to present an introduction to Markov Chain Monte Carlo methods here, see for example  ERROR or ERROR for that. The point is that posterior distributions are approximated via random sampling, but since random deviates can't be directly drawn from the posterior distribution,  } sometimes can get stuck to extreme values of correlation.
+The model labelled \textit{Both} has, as the name implies, both kinds of interferences in it. The last model, \textit{Both (Truncated)} is otherwise identical to the previous model, but the $\kappa{sigma}$ is bound to positive values. For these models also the parameter $\rho$ was bound between -0.8 and 0.8 to improve computational stability: for the model with normal prior on tanh transformed scale the chains of the MCMC sampler sometimes get stuck to extreme values of correlation.
+
+All of the models are included in the appendix, the naming convention follows the one established in this section. 
 
 \subsubsection{Posterior predictive plots}
 
@@ -52,9 +54,9 @@ I did model checking by dividing the two dimensional space of stimuli into three
 
 This method resulted in unequal bin sizes and I would recommend that future works use more sophisticated methods for finding boundaries for the bins. 
 
-In all of the posterior predictive plots (Figures ERROR) The black dots joined by the dashed lines indicate observed data. For example in the top left of figure ERROR the first three black dots indicate responses to increasingly large pitch changes pitch when timbre category is 1 (no change in timbre), the next three dots indicate response to pitch when timbre category is 2 (some change in timbre) and so on. 
+In all of the posterior predictive plots (see for example Figure \ref{fig:OK_YN_post_pred}) the black dots joined by the dashed lines indicate observed data. For example in the top left of Figure \ref{fig:OK_YN_post_pred} the first three black dots indicate responses to increasingly large pitch changes pitch when timbre category is 1 (no change in timbre), the next three dots indicate response to pitch when timbre category is 2 (some change in timbre) and so on. 
 
-In this exemplar figure one can can see that in each timbre category the probability of a positive response to a pitch change increases when the pitch differences get larger. However, the magnitude changes with the timbre category, indicating interference between pitch and timbre.
+In this exemplar figure one can can see that in each timbre category the probability of a positive response to a pitch change increases when the pitch differences get larger. However, the magnitude changes with the timbre category, indicating some kind of interference between pitch and timbre.
 
 The data, in each case, is also divided by the category of the irrelevant dimension. For example on the upper row probability of a positive response to pitch dimension (relevant dimension) is plotted. These are broken down with regards to timbre (irrelevant dimension). Inside each timbre category, pitch category goes up from left to right. 
 
