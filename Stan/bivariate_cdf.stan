@@ -1,8 +1,6 @@
 functions {
   real bivariate_cdf(real h, real k, real rho) {
     real p;
-    //real h_;
-    //real k_;
     real a1;
     real a2;
     real denominator;
