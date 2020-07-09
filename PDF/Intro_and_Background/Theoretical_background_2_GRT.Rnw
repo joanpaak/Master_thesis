@@ -7,7 +7,7 @@ So far I have covered the case in which the participant has to make a single dec
 
 A widely used theoretical framework for generalizing SDT into multiple dimensions is the General Recognition Theory. As in SDT, also in GRT randomness in the responses is thought to arise from the evidence having a probabilistic nature \citep{ashby1986, ashby2015, kadlec1992}. 
 
-In the two-dimensional case also the evidence distribution is two dimensional. Following the assumption made earlier that evidence is distributed normally, it is possible to represent evidence in two dimensions by a bivariate normal distribution. A bivariate normal distribution can be defined by two means, which correspond to its location on each dimension, and a correlation coefficient, which corresponds to the shape of the distribution. A bivariate normal distribution with positive correlation is shown graphically in Figure \ref{fig:2dimnorm}. Left panel shows a projection of the 3-dimensional shape of the bivariate density; right panel shows the same distribution from above, as a contour. Rest of the figures in this thesis will represent bivariate distributions as contours.
+In the two-dimensional case also the evidence distribution is two dimensional. Following the assumption made earlier that evidence is distributed normally, it is possible to represent evidence in two dimensions by a bivariate normal distribution. A bivariate normal distribution can be defined by two means, which correspond to its location on each dimension, and a correlation coefficient, which corresponds to the shape of the distribution. A bivariate normal distribution with positive correlation is shown graphically in Figure \ref{fig:2dimnorm}. Left panel shows a projection of the 3-dimensional shape of the bivariate density; right panel shows the same distribution from above, as a contour. Rest of the figures in this thesis will represent bivariate distributions as contours similar to the one in the right panel.
 
 \begin{figure}
 \centering
@@ -48,9 +48,9 @@ lines(c(-2, 1), c(2, 2), lty = 2, lwd = lwd_global)
 \label{fig:2dimnorm}
 \end{figure}
 
-\subsubsection{Calculation of $d'$ in two dimensions}
+\subsubsection{Calculating $d'$ in two dimensions}
 
-For two-dimensional stimuli, two $d'$ values have to be calculated, on for each dimension. Similar to SDT, the $d'$ values are the location of the evidence distribution, but now the location has to be determined in the two-dimensional space on the $x$ and $y$ axes separately. This also implies that now there are two $d'$ functions, and consequently, two of each parameter: 
+For two-dimensional stimuli, two $d'$ values have to be calculated, on for each dimension. Similar to SDT, the $d'$ values are the location of the evidence distribution, but now the location has to be determined in the two-dimensional space on the $x$ and $y$ axes separately: for example, how much evidence there is for a difference in pitch AND how much is there evidence for a difference in timbre. This implies that now there are two $d'$ functions, and consequently, two of each parameter: 
 
 \begin{align}
 \label{eq:twodimdprime}
@@ -155,15 +155,15 @@ This process can be defined generally with the equation:
 \label{eq:generalPfun}
 \end{equation}
 
-in which the $\bm{R} = [r_x r_y]$. All of the Stan \citep{stan2019} programs in appendix A assume that responses are coded in this way.
+in which the $\bm{R} = [r_x r_y]$. All of the Stan \citep{stan2019} programs in the appendices assume that responses are coded in this way.
 
 \paragraph{2I-4AFC}
 
-In the SDT section 2I-2AFC task was discussed. Here it is expanded to a 2I-4AFC task. There are still two temporal intervals, as was shown in the schematic in Figure \ref{fig:YesNoAfc}, but now the participant has four response alternatives, since either signal could be in either interval. What has to be taken into account is that there can be interactions, which means that the mean of the noise distribution on either dimension can be non-zero. 
+In the SDT section I discussed the 2I-2AFC task. Here I expand it to the 2I-4AFC task. There are still two temporal intervals, as was shown in the schematic in Figure \ref{fig:YesNoAfc}, but now the participant has four response alternatives, since either signal could be in either interval: for example that pitch changed in the first interval and timbre in the second. The same dimension never changes in both intervals, that is, if there's a pitch change in the first interval, there never is a pitch change in the second interval.
 
 Similar to Figure \ref{fig:2AFC}, Figure \ref{fig:2I4AFC} shows the distributions of evidence from the two intervals. Note that each of the signals could be in either of the intervals, so there are four possible arrangements for the signals, but similar to the case in 2I-2AFC it is not important in which intervals the signals are concretely, what is important is the difference between the signal and noise distributions. 
 
-It is assumed in Figure \ref{fig:2I4AFC} that $\kappa_x$ parameter is non-zero, which means that signal on $y$-dimension is able to increase the $d'$-value on the $x$-dimension. This can be seen from the fact that in the left panel the mean of the noise distribution on the $x$-axis is slightly greater than zero. This shrinks the difference between the signal and noise distributions on that dimension.
+It is assumed in Figure \ref{fig:2I4AFC} that $\kappa_{x}^{\mu}$ parameter is non-zero, which means that signal on $y$-dimension is able to increase the $d'$-value on the $x$-dimension--the interaction parameters, which $\kappa_{mu x}$ is one of, will be defined more comprehensively in the next section. This can be seen from the fact that in the left panel the mean of the noise distribution on the $x$-axis is slightly greater than zero. If such interaction was absent, the mean of the noise distribution would be zero on both dimensions, there would be on average no evidence for change in either dimension. The interaction shrinks the difference between the signal and noise distributions on that dimension.
 
 As before, the participant is thought to base their decision on a decision variable that represents the difference of evidence in the intervals. As a consequence the $d'$ values on both dimensions have to be divided by $\sqrt{2}$ (cf. section on 2I-2AFC). The distribution of the decisional variable can be seen in the right panel of Figure \ref{fig:2I4AFC}. The thick black lines mark boundaries between \textit{hits} and \textit{false alarms}. The participant, in this particular scenario, is very likely to score a \textit{hit} on the $y$-axis, but on $x$-axis they are almost as likely to pick the wrong interval as the correct; the most likely response pairs being (FA, Hit) and (Hit, Hit).
 
@@ -205,7 +205,7 @@ abline(v = 0, lwd = 2)
 \label{fig:2I4AFC}
 \end{figure}
 
-As in the Yes/No task, responses can be coded with -1 and 1. Here, \textit{false alarms} are coded with -1 and \textit{hits} with 1.  The psychometric functions is then simply
+As in the Yes/No task, responses can be coded with -1 and 1. Here, \textit{false alarms} are coded with -1 and \textit{hits} with 1.  The general expression for the psychometric function is then
 
 \begin{equation}
 \psi_2(\bm{S}; \theta)_{\bm{R}} = \phi_2(\frac{d'_x}{\sqrt{2}}r_x, \frac{d'_y}{\sqrt{2}} r_y, \rho [r_x r_y])
@@ -214,21 +214,21 @@ As in the Yes/No task, responses can be coded with -1 and 1. Here, \textit{false
 
 \paragraph{Comparison of the Yes/No and 2I-4AFC tasks}
 
-The main difference between the Yes/No and 2I-4AFC tasks is what the participant bases their decision on. In the Yes/No task the decision is based directly on the appearance of the stimulus. As was already discussed, this means that the performance of the observer cannot be decoupled from their decisional criterion. This adds one more parameter to be estimated from the data. 
+The main difference between the Yes/No and 2I-4AFC tasks is what the participant's decision is directly related to. In the Yes/No task the decision is about the \textit{appearance} of the stimulus. As was already discussed, this means that the performance of the observer cannot be decoupled from their decisional criterion. This adds one more parameter to be estimated from the data. 
 
-In the 2I-4AFC task the decision is removed one step from the signal compared to the Yes/No task. This means that it is not necessary for the participant to adopt a criterion relating the strength of evidence to a response. Also, since the participants are choosing an interval, it is usually thought that this kind of task is less susceptible to bias.
+In the 2I-4AFC task the decision about the \textit{interval}. This means that it is not necessary for the participant to adopt a criterion relating the strength of evidence to a response. Also, since the participants are choosing an interval, which is by its nature more neutral decision, it is usually thought that this kind of task is less susceptible to bias \citep[Chapter 6]{kingdomprins2010}.
 
-Since on each trial two stimuli have to be presented in the 2I-4AFC task, it is somewhat slower to administer. However, if, in the Yes/No task, the observer knows that some non-zero signal is present on each trial, nothing prevents them from answering \textit{yes} on each trial--they will always be correct, and seemingly able to detect the faintest of signals. To counter this, some amount of \textit{catch} trials are usually included. These are trials during which the signal level is zero. During these trials no information about the sensory processing--the parameters $\alpha$ and $\beta$--is accumulated. So even though individual trials are faster to complete, there has to be more of them. 
+Since on each trial two stimuli have to be presented in the 2I-4AFC task, it is somewhat slower to administer. However, if the observer knows, in the Yes/No task, that some non-zero signal is present on each trial, nothing prevents them from answering \textit{yes} on each trial--they will always be correct, and seemingly able to detect the faintest of signals. To counter this, some amount of \textit{catch} trials are usually included. These are trials during which the signal level is zero. During these trials no information about the sensory processing--the parameters $\sigma$ and $\beta$--is accumulated. So even though individual trials are faster to complete, there has to be more of them. 
 
-The issue of catch trials is exacerbated in the multidimensional case. This is because in the one-dimensional the issue is simple solved by including some noise stimuli as catch trials in the experimental run, resulting in two kinds of stimuli being presented: noise and signal stimuli. In the two-dimensional case there has to be three kinds of catch trials: noise only stimulus on either of the dimensions or both. Otherwise if the participant became aware of e.g. that the adaptive procedure only rarely selects a stimulus in which there's a noise stimulus on either dimension--i.e. [0,S] or [S,0] --, they might become biased towards choosing the responses [0, 0] and [1,1]. The linear decision bounds used in this work are not able to model this kind of response bias; an issue which will be discussed later. 
+The issue of catch trials is exacerbated in the multidimensional case. This is because in the one-dimensional the issue is simple solved by including some noise stimuli as catch trials in the experimental run, resulting in two kinds of stimuli being presented: noise and signal stimuli. In the two-dimensional case there has to be three kinds of catch trials: noise only stimulus on either of the dimensions or both. Otherwise if the participant became aware of e.g. that the adaptive procedure only rarely selects a stimulus in which there's a noise stimulus on one dimension--i.e. [0,S] or [S,0] --, they might become biased towards choosing the responses [No, No] and [Yes,Yes]. The linear decision bounds used in this work are not able to model this kind of response bias; an issue which will be discussed later. 
 
 Then, on theoretical grounds, the only difference to be expected is the omission of the criterion parameters from the 2I-4AFC model--reduction in sensitivity is taken into account by incorporating the term $\sqrt{2}$. 
 
 \subsubsection{Interactions between the dimensions}
 
-As already discussed GRT aims to model \textit{interactions} between the dimensions. When the one dimension has an effect on the other, this is called \textit{interference}. There are three kinds of interactions considered in this thesis. Two of these interactions are defined as \textit{couplings} between the psychometric functions, and the third interaction is the correlation of the evidence distribution, but since including correlation coefficient was already discussed, I will only discuss the couplings here.
+As already discussed GRT aims to model \textit{interactions} between the dimensions. When the one dimension has an effect on the other, this is called \textit{interference}. There are three kinds of interactions considered in this thesis. Two of these interactions are defined as \textit{couplings} between the psychometric functions, and the third interaction is the correlation of the evidence distribution, but since including correlation coefficient was already conclusively discussed in the preceding section, I will only discuss the couplings here.
 
-Couplings from two of the parameters are modelled. These are demonstrated graphically  in Figure \ref{fig:grt_couplings}. Panels in the left column demonstrate coupling between means while panel on the right side demonstrate coupling between standard deviations. Top row shows effects of the interactions on the evidence distributions while the bottom row shows the effect on the psychometric function on one dimension.\footnote{mathematically the union of the psychometric functions $\psi{\bm{S}}_{(\text{Yes}, \text{Yes})}$ and $\psi{\bm{S}}_{(\text{Yes}, \text{No})}$.} In all panels dashed lines show the situation in the absence of interaction while the solid lines are drawn in the presence of interaction. 
+Two kinds of couplings are modelled. These are demonstrated graphically  in Figure \ref{fig:grt_couplings}. Panels in the left column demonstrate coupling between means while panel on the right side demonstrate coupling between standard deviations. Top row shows effects of the interactions on the evidence distributions while the bottom row shows the effect on the psychometric function on one dimension.\footnote{mathematically the union of the psychometric functions $\psi{\bm{S}}_{(\text{Yes}, \text{Yes})}$ and $\psi{\bm{S}}_{(\text{Yes}, \text{No})}$.} In all panels dashed lines show the situation in the absence of interaction while the solid lines are drawn in the presence of interaction. 
 
 \begin{figure}
 \begin{center}
@@ -301,9 +301,9 @@ As can be seen from the lower left panel of Figure \ref{fig:grt_couplings} this 
 
 \paragraph{Coupled standard deviations, $\kappa_{\sigma}$}
 
-This kind of situation can arise if for example the other dimension is length: shorter signals contain less information, thus making frequency judgments noisier (see \citet[p.274]{houtsma1995}; also worse accuracy with shorter signal times has been reported by e.g. \cite{townsend1988} implying more noise).
+Another possibility is that the standard deviations are coupled. This kind of situation can arise if for example the other dimension is length: shorter signals contain less information, thus making frequency judgments noisier (see \citet[p.274]{houtsma1995}, also worse accuracy with shorter signal times has been reported by e.g. \cite{townsend1988} implying more noise).
 
-Similar to $\kappa_{\mu}$, terms are included for letting the other dimension influence the $\sigma$ parameter. However, since the $\sigma$ parameters are constrained to positive real numbers (standard deviation can't be negative), this interaction is defined on the logarithmic scale:
+Similar to $\kappa_{\mu}$, terms are included for letting the other dimension influence the $\sigma$ parameter. However, since the $\sigma$ parameters are constrained to positive real numbers (standard deviation can't be negative), this interaction is defined on the logarithmic scale (for a similar approach in probit modelling, which is closely related to SDT as will be discussed shortly, see \citet{freeman2018}):
 
 \begin{align}
 \label{eq:varshift}
@@ -320,7 +320,7 @@ When the model parameters relating to response boundaries or criteria--as is the
 \label{eq:generalPfun_varshift}
 \end{equation}  
 
-This means that the definition of criterion is a bit different from that of when no variance-shift is present. In the model with constant variance, the criterion corresponds to the Z-score of the false alarm probability (see \citet[Chapter 6]{kingdomprins2010}): $\text{criterion} = \phi^{-1}(P(FA))$, in which $\phi^{-1}$ is the standard normal inverse cumulative distribution function; in the model with variance shift the whole first term corresponds to the Z-score: $\frac{\text{criterion}}{\sigma} = \phi^{-1}(P(FA))$. This means that in the variance-shift model the criterion parameter is more accurately the geometric location of the decisional criterion in the decisional space, independent of the variance of the evidence distributions. However, since it is easier to interpret false alarm probabilities, in the models with variance shift the prior is placed on the term $\frac{\text{criterion}}{\sigma}$.
+This means that the definition of criterion is a bit different from that of when no coupling between standard deviations is present. In the model with constant variance, the criterion corresponds to the Z-score of the false alarm probability (see \citet[Chapter 6]{kingdomprins2010}): $\text{criterion} = \phi^{-1}(P(FA))$, in which $\phi^{-1}$ is the standard normal inverse cumulative distribution function; in the model with coupled standard deviations the whole first term corresponds to the Z-score of false alarm probability: $\frac{\text{criterion}}{\sigma} = \phi^{-1}(P(FA))$. This means that in this model the criterion parameter is more accurately the geometric location of the decisional criterion in the decisional space, independent of the variance of the evidence distributions. However, since it is easier to interpret false alarm probabilities, prior in the models is placed on the term $\frac{\text{criterion}}{\sigma}$--what this means in practice will be discussed in the section on Bayesian statistics
 
 From the lower right panel of Figure \ref{fig:grt_couplings} one can see that the effect is to draw the response probabilities towards 0.5 on a single dimension. Note that this is in agreement with what was said earlier about response probabilities being drawn towards 0.25: since the psychometric function in the figure is shown only for one dimension, it represents the probability of a positive response irregardless of the other dimension. 
 
@@ -339,7 +339,4 @@ It is possible that during a psychophysical task, people sometimes \textit{lapse
 
 Estimating lapsing rate from data can be problematic (\cite{wichmannhill2001, treutwein1999}), and this problem can be worse for adaptive procedures \citep{prins2012}. Since the values of the psychometric function that are closer to zero are affected both the lapses and the decision criterion (in the Yes/No task), most of the information gained about lapsing behaviour comes from lapses happening at high intensities. What makes matters worse is that the lapsing response doesn't necessarily differ from what the participant would've answered otherwise, so the distinction between lapses and genuine response is ambiguous (for further discussion on these problems, see \cite{prins2012}). For these reasons I fixed the values of $\lambda$ and $\gamma$ during the adaptive estimation phase. However, during the analysis of the psychophysical data I estimated the parameter $\lambda$ from the data, a decision, which will be discussed in more detail in the analysis section.
 
-Here, lapsing behaviour is modelled by using a hierarchical model. The mathematical details of how lapses were included are thus discussed in the chapter discussing hierarchical models. 
-
-
-
+I model lapsing behaviour by using a (hierarchical) mixture model (see \citet{zeigenfuse2010}), which will be discussed in Section \ref{sec:hierarchical_models} \textit{\nameref{sec:hierarchical_models}}.

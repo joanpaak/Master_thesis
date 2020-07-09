@@ -16,9 +16,9 @@ P(\theta | Data) \propto P(\theta) P(Data | \theta)
 \label{eq:bayesprop}
 \end{equation} 
 
-In this equation $P(\theta | Data)$ is the posterior distribution, $P(\theta)$ is the prior distribution and $P(Data | \theta)$ is the likelihood function, i.e. the probability of observing the data given the parameter values.\footnote{In the full Bayes' theorem the posterior distribution is normalized with the integral over the possible observed values, $P(Data)$, assuring that it always integrates to one and is a proper probability distribution: $P(\theta | Data) = (P(\theta) P(Data | \theta)) / P(Data)$ \citep{kruschke2015}, but I think the equation without the normalizing constant captures the main idea more clearly. This is why the symbol $\propto$ ("proportional to") is used in Equation \ref{eq:bayesprop}.} 
+In this equation $P(\theta | Data)$ is the posterior distribution, $P(\theta)$ is the prior distribution and $P(Data | \theta)$ is the likelihood function, i.e. the probability of observing the data given the parameter values.\footnote{In the full Bayes' theorem the posterior distribution is normalized with the integral over the possible observed values, $P(Data)$, assuring that it always integrates to one and is a proper probability distribution: $P(\theta | Data) = (P(\theta) P(Data | \theta)) / P(Data)$ \citep{kruschke2015}, but I think the equation without the normalizing constant captures the main idea more clearly. This is why the symbol $\propto$ ("proportional to") is used in Equation \ref{eq:bayesprop}.} $Data$ refers to observations collected during a psychophysical experiment, that is, pairs of stimuli and responses, and $\theta$ are the parameters of any model in this thesis. 
 
-The likelihood function determines \textit{how} the observed data updates the prior information. In practice, this means that there needs to be a model which determines how observed data translates into probabilities about parameter values, or how the model learns from observed data. Here, the likelihood is defined by any of the models (M in Equation \ref{eq:likelihood}) introduced earlier in this thesis. Consequently the likelihood for a particular $\theta$ is simply the product of the probabilities of the observed responses given the $\theta$ (and the model)\footnote{Remembering that multiplying probabilities corresponds to the logical operand \textit{and}, this means the we are interested in finding out the probability of the response on the first trial AND the response on the second trial AND on the third trial and so on, depending on how many responses there are.}:
+The likelihood function determines \textit{how} the observed data updates the prior information. In practice, this means that there needs to be a model which determines how observed data translates into probabilities about parameter values, or how the model learns from observed data. Here, the likelihood is defined by any of the models (M in Equation \ref{eq:likelihood}) introduced earlier in this thesis. Consequently the likelihood for a particular $\theta$ is simply the product of the probabilities of the observed responses given the $\theta$ (and the model)\footnote{Remembering that multiplying probabilities corresponds to the logical operand \textit{and}, this means the we are interested in finding out the probability of the response on the first trial AND the response on the second trial and on the third trial and so on, depending on how many responses there are.}:
 
 \begin{equation}
 \prod_{t=1}^n (\bm{R}^t, \bm{S}^t; \theta, M)
@@ -27,7 +27,9 @@ The likelihood function determines \textit{how} the observed data updates the pr
 
 Note that usually the logarithmic likelihood function is used of numerical stability, $\sum_{t=1}^n ln (\bm{R}^t, \bm{S}^t; \theta, M)$, which is how the likelihood is defined in all of the R and Stan programs. Stan programs can be found from the appendices. 
 
-Updating prior information is demonstrated for a single parameter in Figure \ref{fig:priorpost}. The shaded region represents the prior distribution $P(\theta)$, which in this case, is a log-normal distribution.  After some data has been observed the prior distribution is updated with evidence, $P(Data | \theta)$, represented by the dashed line, which then results in the posterior distribution $P(\theta | Data)$, represented by the solid line. Observing data, in this particular case, has reduced our uncertainty about likely values for the parameter $\sigma$, which is evident in how the probability density has become more concentrated. In addition to this, the mode of the distribution has shifted, indicating shift in what values are found to be likely on average.
+Updating prior information is demonstrated for a single parameter in Figure \ref{fig:priorpost}. The shaded region represents the prior distribution $P(\theta)$, which in this case, is a log-normal distribution. The prior distribution is centred around $\sigma = 2$, indicating that values close to $2$ are seen as most probable prior to observing any data. 
+
+After some data has been observed the prior distribution is updated with evidence, $P(Data | \theta)$, represented by the dashed line in Figure \ref{fig:priorpost}, which then results in the posterior distribution $P(\theta | Data)$, represented by the solid line. Observing data, in this particular case, has reduced our uncertainty about likely values for the parameter $\sigma$, which is evident in how the probability density has become more concentrated. In addition to this, the mode of the distribution has shifted, indicating shift in what values are found to be likely on average.
 
 \begin{figure}
 \centering
@@ -54,7 +56,15 @@ points(xcoords, ycoords_3, type = "l", lty = 1)
 \label{fig:priorpost}
 \end{figure}
 
-Of course, in models of any complexity prior and posterior probability densities are defined over a multidimensional space, e.g. in this thesis the dimensionalities range from 7 to 27. This means that we are not interested in, for example, probabilities for values of $\sigma$ parameter alone but probabilities for combinations of parameter values, for example, that $\sigma = 2.0$ AND $\beta = 0.7$ and so on for all of the parameters of the specific model.
+How the prior distribution is determined is a complex question. First of all, the prior distribution should take into account mathematical constraints, for example here the fact that $\sigma$ must always be positive, which is why I used the log-normal distribution in the example. Another aspect is that one can encode current knowledge in a meaningful way by choosing the prior appropriately. A \textit{weak} or \textit{non-informative} prior mostly acts as a way of regularizing the inferences and increasing computational stability, while a textit{strong} or \textit{informative} prior can encode specific subject-matter knowledge (for accessible discussion on priors and discussion on weak and strong priors see \citet{prior_choice_recommendations}). 
+
+For determining priors for psychometric functions \citet{lee2018} recommends informative priors, and using prior predictive distributions--that is, distributions of psychometric functions--as a way of checking that the priors make sense and lead to psychometric functions that are realistic. One problem with this approach is that usually priors that assume independence among the parameters are used (an issue that is also discussed in \citet{prior_choice_recommendations}), but it is likely that the parameters of the psychometric functions have strong correlations between them. 
+
+For example psychometric functions with high values for $\sigma$ but low values for $\beta$ produce psychometric functions that can be unrealistically slow in reaching high performance levels, especially if values for $\kappa_{\mu}$ or $\kappa_{\sigma}$ parameters are significantly large. The issue of encoding such dependencies in the prior is left for future work, I will be using priors which are independent out of convenience, and choosing values that make sense for the parameters in isolation, which is admittedly not optimal.  
+
+Lastly, one particularly useful feature of priors is that it's easy to expand models into having a multilevel structure through them, which will be discussed in more detail in the next section.  
+
+Of course, in models of any complexity prior and posterior probability densities are defined over a multidimensional space, e.g. in this thesis the dimensionalities range from 7 to 27. This means that we are not interested in, for example, probabilities for values of $\sigma$ parameter alone but probabilities for combinations of parameter values, for example, that $\sigma = 2.0$ and $\beta = 0.7$ and $\kappa_{\mu} = 0.1$ and so on for all of the parameters of the specific model.
 
 Often it is useful to summarize multidimensional posterior density as its marginals. Most analyses done in this thesis will use the marginals of  the posterior probability densities somehow. Figure \ref{fig:marginals} demonstrates the relationship between a two-dimensional posterior probability density and its margins. The leftmost panel shows the two-dimensional distribution from above, and the two other figures show its marginals, which in this case correspond to viewing the two-dimensional "bump" from either axis. 
 
@@ -266,4 +276,36 @@ In the classical GRT models, model checking has usually been limited to comparin
 In Bayesian setting, \textit{posterior predictive checks} can be used to assess the fit of the model to the data. The idea is to use the posterior distribution to predict new data. The distribution of predicted data can be thought of has what the model "thinks" about the data. If there's large discrepancies between what the model thinks and data, this is a clear indication that the model does not sufficiently capture all relevant features of the data. \citep[Chapter 7]{bda}.
 
 Developing good posterior predictive checks can be difficult, and there is not a set way to conduct them. In this thesis I will be using simple checks that are based on dividing the data into discrete categories and counting the number of positive responses in each category. This is not exhaustive, but, as will be seen in the analysis section, is sufficient for some making some preliminary observations. 
+
+\paragraph{Unconstrained parameterization}
+
+By their very nature, $\sigma$ parameters are bound to be positive, since they represent standard deviations. The $\beta$ terms don't have to be positive, but since the psychometric functions are assumed to be monotonically increasing, I restricted the $\beta$ parameters to be positive too. The correlation parameter, $\rho$, is bound between -1 and 1. 
+
+As already mentioned, these bounds have to be taken into account when deciding what distributions to use as prior distributions for the parameters. One solution is to choose distributions with matching supports, i.e. for example log-normal distributions for the parameters bound to positive real numbers. Another possibility is to \textit{reparametrise} the model in such a way that some convenient distributions can be used. The latter approach is taken here. 
+
+Priors for $\sigma$ and $\beta$--and as a consequence the parameters themselves--are defined on the logarithmic scale. Prior for $\rho$ is defined on the inverse hyperbolic tangent scale. Both of these are widely used transformations in statistics for these kinds of situations (see \citet[Chapter 22]{stan_manual}). In practice this means  that the \textit{inverse} transformations have to be implemented in the likelihood calculations.
+
+For the $d'$ calculations this implies that Equation \ref{eq:twodimdprime} becomes
+
+\begin{align}
+\begin{split}
+d'_x &= (\frac{S_x}{exp(\sigma_x)})^{exp(\beta_x)} + \kappa_x S_y \\
+d'_y &= (\frac{S_y}{exp(\sigma_y)})^{exp(\beta_y)} + \kappa_y S_x
+\end{split}
+\end{align}
+
+and for the psychometric function (compare this with Equation \ref{eq:generalPfun}):
+
+\begin{equation}
+\psi_2(\bm{S}; \theta)_{(R_x, R_y)} = \phi_2([-c_x + d'_x]r_x, [-c_y + d'_y] r_y, \text{tanh}(\rho) [r_x r_y])
+\end{equation}
+
+A similar transformation would be applied also to Equation \ref{eq:generalPfun2}.
+
+An important aspect of this process to note is that since the priors are normal on the \textit{transformed scale}--i.e. $log\sigma \sim N(\mu, \sigma)$--, they are not normal on the \textit{original scale} (see \citealt[pp. 729 - 732]{kruschke2015}). Indeed, the current parameterization implies that for  example the prior for $\sigma$ is a log-normal distribution.
+
+Another consequence of reparametrisation is that it makes the rejuvenation step of the particle filter slightly simpler. During the rejuvenation step new proposal particles have to be generated from some distribution. It is possible to choose an asymmetric distribution, such as the log-normal distribution, but this leads to two additional complexities: the acceptance probability is now dependent also on the proposal distribution (see ERROR) and the moments calculated from the particle set (mean and standard deviations of the particles) have to be transformed to the parameters of the non-symmetric distribution. 
+
+On the other hand using an unbounded proposal distribution on the bounded space can lead to many proposals  being  outside the support of the distribution, reducing the efficiency of the rejuvenation step.
+
 

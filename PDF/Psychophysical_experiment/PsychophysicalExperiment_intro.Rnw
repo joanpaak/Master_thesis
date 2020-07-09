@@ -3,9 +3,9 @@
 \section{Psychophysical experiments}
 \label{sec:pp_exp}
 
-I conducted a psychophysical experiment with two participants to test the model. The most important prediction is that estimates from both tasks should be similar, since as was already discussed, the only difference should be that the sensitivity (parameter $\sigma$) in the 2I-4AFC task is reduced by $\sqrt{2}$. This prediction has been often used to test Signal Detection Theory models, see for example \citet{wickens2002}. 
+I conducted a psychophysical experiment with two participants to test the model. The most important prediction is that estimates from both tasks should be similar, since as was already discussed, the only difference should be that the sensitivity (parameter $\sigma$) in the 2I-4AFC task is reduced by $\sqrt{2}$. This prediction has been often used to test Signal Detection Theory models, see for example \citet{wickens2002}.  
 
-During the experimental run the model with $\kappa_{\mu}$ (Model 1) was used to determine the stimulus choices for two reasons. First, it's the most widely used model in the GRT related literature (or, the classic model that is analogous to it, see Section \ref{sec:grt_criticism} \textit{\nameref{sec:grt_criticism}}: The models used e.g. in the 2x2 categorization experiments commonly model interactions as interaction between means of the distributions. Second, there's some results suggesting timbre affects the pitch of signal \citep{allen2014, platt1985}, a phenomenon that would most naturally be modelled as shift in the mean of the evidence distribution; on the other hand, according to  \cite{silbert2009} the main source of interaction between pitch and timbre arises from correlated noise, which again is included in the model as the parameter $\rho$. 
+During the experimental run the model with $\kappa_{\mu}$ (Model 1) was used to determine the stimulus choices for two reasons. First, it's the most widely used model in the GRT related literature (or, the classic model that is analogous to it, see Section \ref{sec:grt_criticism} \textit{\nameref{sec:grt_criticism}}: The models used e.g. in the 2x2 categorization experiments commonly model interactions as interaction between means of the distributions. Second, there are some results suggesting timbre affects the pitch of signal \citep{allen2014, platt1985}, a phenomenon that would most naturally be modelled as shift in the mean of the evidence distribution; on the other hand, according to \cite{silbert2009} the main source of interaction between pitch and timbre arises from correlated noise, which again is included in the model as the parameter $\rho$.
 
 There were three main questions: 
 
@@ -19,7 +19,7 @@ There were three main questions:
 
 \paragraph{Procedure}
 
-The experiments were programmed in R \citep{r_language}. Both participants completed 400 trials for both tasks. Both participants completed both tasks during the same session.  Before each trial participants were prompted to press enter to hear the stimulus, and feedback was provided after each trial.
+The experiments were programmed and run in R \citep{r_language}. Both participants completed 400 trials for both tasks and completed both them during the same session.  Before each trial participants were prompted to press enter to hear the stimulus, and feedback was provided after each trial.
 
 The participants responded separately to both pitch and timbre. In both tasks the first input always corresponded with pitch and the second with timbre. In the Yes/No task the participant would type 0 for \textit{No} and 1 for \textit{Yes}. For example, if they thought that pitch didn't change but timbre changed, they typed the string "01". In the 2I-4AFC task the participant would type the intervals in which they thought the dimensions changed. For example, if they thought pitch changed in the second interval and timbre in the first interval, they typed the string "21". 
 
@@ -27,7 +27,7 @@ The participants responded separately to both pitch and timbre. In both tasks th
 
 A single stimulus consisted of a reference tone and a test tone, as shown schematically in Figure \ref{fig:discrtask}. 
 
-Similar to \citet{silbert2009} the stimuli consisted of 13 components that were integer multiples of the first component: pitch was manipulated by changing the frequency of the first component and timbre by filtering the harmonics with a Gaussian filter ($\sigma = 150Hz$).
+Similar to \citet{silbert2009} the individual tones consisted of 13 components that were integer multiples of the first component: pitch was manipulated by changing the frequency of the first component and timbre by filtering the harmonics with a Gaussian filter ($\sigma = 150Hz$).
 
 Reference level (pitch of the first component) for pitch was 150Hz; reference level ($\mu$ of the Gaussian filter) for spectral prominence was 850Hz .
 

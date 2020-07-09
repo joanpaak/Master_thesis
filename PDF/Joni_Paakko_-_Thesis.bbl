@@ -519,6 +519,35 @@ Fastl, H.%
 \PrintBackRefs{\CurrentBib}
 
 \bibitem [\protect \citeauthoryear {%
+Freeman%
+, Keele%
+, Park%
+\BCBL {}\ \BBA {} Salzman%
+}{%
+Freeman%
+\ \protect \BOthers {.}}{%
+{\protect \APACyear {2018}}%
+}]{%
+freeman2018}
+\APACinsertmetastar {%
+freeman2018}%
+\begin{APACrefauthors}%
+Freeman, E.%
+, Keele, L.%
+, Park, D.%
+\BCBL {}\ \BBA {} Salzman, J.%
+\end{APACrefauthors}%
+\unskip\
+\newblock
+\APACrefYearMonthDay{2018}{}{}.
+\newblock
+{\BBOQ}\APACrefatitle {The plateau problem in the heteroscedastic probit model}
+  {The plateau problem in the heteroscedastic probit model}.{\BBCQ}
+\newblock
+\APAChowpublished {arxiv:1508.03262v1}.
+\PrintBackRefs{\CurrentBib}
+
+\bibitem [\protect \citeauthoryear {%
 Garner%
 }{%
 Garner%
@@ -820,6 +849,33 @@ Kingdom, F.%
 \PrintBackRefs{\CurrentBib}
 
 \bibitem [\protect \citeauthoryear {%
+King-Smith%
+\ \BBA {} Rose%
+}{%
+King-Smith%
+\ \BBA {} Rose%
+}{%
+{\protect \APACyear {1997}}%
+}]{%
+king_smith1997}
+\APACinsertmetastar {%
+king_smith1997}%
+\begin{APACrefauthors}%
+King-Smith, P.%
+\BCBT {}\ \BBA {} Rose, D.%
+\end{APACrefauthors}%
+\unskip\
+\newblock
+\APACrefYearMonthDay{1997}{}{}.
+\newblock
+{\BBOQ}\APACrefatitle {Principles of an Adaptive Method for Measuring the Slope
+  of the Psychometric Function} {Principles of an adaptive method for measuring
+  the slope of the psychometric function}.{\BBCQ}
+\newblock
+\APACjournalVolNumPages{Vision Research}{37}{12}{1595 - 1604}.
+\PrintBackRefs{\CurrentBib}
+
+\bibitem [\protect \citeauthoryear {%
 Kline%
 }{%
 Kline%
@@ -939,6 +995,31 @@ Kujala, J.%
   {Bayesian adaptive estimation: The next dimension}.{\BBCQ}
 \newblock
 \APACjournalVolNumPages{Journal of Mathematical Psychology}{50}{}{369 - 389}.
+\PrintBackRefs{\CurrentBib}
+
+\bibitem [\protect \citeauthoryear {%
+Lee%
+}{%
+Lee%
+}{%
+{\protect \APACyear {2018}}%
+}]{%
+lee2018}
+\APACinsertmetastar {%
+lee2018}%
+\begin{APACrefauthors}%
+Lee, M.%
+\end{APACrefauthors}%
+\unskip\
+\newblock
+\APACrefYearMonthDay{2018}{}{}.
+\newblock
+{\BBOQ}\APACrefatitle {Bayesian methods in cognitive modeling} {Bayesian
+  methods in cognitive modeling}.{\BBCQ}
+\newblock
+\BIn{} J.~Wixted\ \BBA {} E\BHBI J.~Wagenmakers\ (\BEDS), \APACrefbtitle
+  {Steven's handbook of experimental psychology} {Steven's handbook of
+  experimental psychology}\ (\PrintOrdinal{4}\ \BEd).
 \PrintBackRefs{\CurrentBib}
 
 \bibitem [\protect \citeauthoryear {%
@@ -1076,6 +1157,24 @@ Prins, N.%
   {The psychometric function: The lapse rate revisited}.{\BBCQ}
 \newblock
 \APACjournalVolNumPages{Journal of vision}{12}{6}{1-16}.
+\PrintBackRefs{\CurrentBib}
+
+\bibitem [\protect \citeauthoryear {%
+\APACcitebtitle {Prior choice recommendations}}{%
+\APACcitebtitle {Prior choice recommendations}}{%
+{\protect \APACyear {{\protect \bibnodate {}}}}%
+}]{%
+prior_choice_recommendations}
+\APACinsertmetastar {%
+prior_choice_recommendations}%
+\APACrefbtitle {Prior choice recommendations.} {Prior choice recommendations.}
+\newblock
+\APACrefYearMonthDay{{\protect \bibnodate {}}}{}{}.
+\newblock
+\APAChowpublished
+  {\url{https://github.com/stan-dev/stan/wiki/Prior-Choice-Recommendations}}.
+\newblock
+\APACrefnote{Accessed: 9.7.2020}
 \PrintBackRefs{\CurrentBib}
 
 \bibitem [\protect \citeauthoryear {%
@@ -1592,6 +1691,29 @@ Verde, M.%
   The accuracy, precision and robustness of $d'$, {$A_z$}, and {$A'$}}.{\BBCQ}
 \newblock
 \APACjournalVolNumPages{Perception \& Psychophysics}{68}{4}{643 - 654}.
+\PrintBackRefs{\CurrentBib}
+
+\bibitem [\protect \citeauthoryear {%
+Watson%
+}{%
+Watson%
+}{%
+{\protect \APACyear {1983}}%
+}]{%
+watson1983}
+\APACinsertmetastar {%
+watson1983}%
+\begin{APACrefauthors}%
+Watson, A.%
+\end{APACrefauthors}%
+\unskip\
+\newblock
+\APACrefYearMonthDay{1983}{}{}.
+\newblock
+{\BBOQ}\APACrefatitle {{QUEST}: A Bayesian adaptive psychometric method}
+  {{QUEST}: A bayesian adaptive psychometric method}.{\BBCQ}
+\newblock
+\APACjournalVolNumPages{Perception \& Psychophysics}{32}{2}{113 - 120}.
 \PrintBackRefs{\CurrentBib}
 
 \bibitem [\protect \citeauthoryear {%

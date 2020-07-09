@@ -5,15 +5,15 @@
 \contentsline {subsubsection}{\numberline {2.1.1}Relationship between stimulus and $d'$}{4}{subsubsection.2.1.1}
 \contentsline {subsubsection}{\numberline {2.1.2}Modelling responses: relationship between $d'$ and response}{5}{subsubsection.2.1.2}
 \contentsline {paragraph}{Responses in the Yes/No task}{6}{section*.1}
-\contentsline {paragraph}{Responses in the 2I-2AFC task}{8}{section*.2}
-\contentsline {subsection}{\numberline {2.2}General Recognition Theory}{9}{subsection.2.2}
-\contentsline {subsubsection}{\numberline {2.2.1}Calculation of $d'$ in two dimensions}{11}{subsubsection.2.2.1}
-\contentsline {subsubsection}{\numberline {2.2.2}Modelling responses in two dimensions}{11}{subsubsection.2.2.2}
+\contentsline {paragraph}{Responses in the 2I-2AFC task}{9}{section*.2}
+\contentsline {subsection}{\numberline {2.2}General Recognition Theory}{10}{subsection.2.2}
+\contentsline {subsubsection}{\numberline {2.2.1}Calculating $d'$ in two dimensions}{11}{subsubsection.2.2.1}
+\contentsline {subsubsection}{\numberline {2.2.2}Modelling responses in two dimensions}{12}{subsubsection.2.2.2}
 \contentsline {paragraph}{Yes/No task in two dimensions}{12}{figure.9}
 \contentsline {paragraph}{2I-4AFC}{13}{section*.4}
-\contentsline {paragraph}{Comparison of the Yes/No and 2I-4AFC tasks}{14}{section*.5}
+\contentsline {paragraph}{Comparison of the Yes/No and 2I-4AFC tasks}{15}{section*.5}
 \contentsline {subsubsection}{\numberline {2.2.3}Interactions between the dimensions}{15}{subsubsection.2.2.3}
-\contentsline {paragraph}{Coupled means, $\kappa _{\mu }$}{15}{section*.6}
+\contentsline {paragraph}{Coupled means, $\kappa _{\mu }$}{16}{section*.6}
 \contentsline {paragraph}{Coupled standard deviations, $\kappa _{\sigma }$}{17}{section*.7}
 \contentsline {paragraph}{Model with both kinds of couplings}{18}{section*.8}
 \contentsline {paragraph}{Note on terminology}{18}{section*.9}
@@ -27,18 +27,17 @@
 \contentsline {paragraph}{What do the latent distributions really represent?}{22}{section*.13}
 \contentsline {paragraph}{Criterial noise}{23}{section*.14}
 \contentsline {paragraph}{Non-orthogonality of decisional boundaries}{23}{section*.15}
-\contentsline {section}{\numberline {3}Bayesian statistics}{25}{section.3}
-\contentsline {subsection}{\numberline {3.1}Basics of Bayesian statistics}{25}{subsection.3.1}
+\contentsline {section}{\numberline {3}Bayesian statistics}{24}{section.3}
+\contentsline {subsection}{\numberline {3.1}Basics of Bayesian statistics}{24}{subsection.3.1}
 \contentsline {subsection}{\numberline {3.2}Hierarchical models}{27}{subsection.3.2}
 \contentsline {subsection}{\numberline {3.3}Approximating the Posterior Probability Densities}{29}{subsection.3.3}
 \contentsline {subsubsection}{\numberline {3.3.1}Resample-Move algorithm}{30}{subsubsection.3.3.1}
 \contentsline {subsubsection}{\numberline {3.3.2}Laplace Approximation}{32}{subsubsection.3.3.2}
 \contentsline {subsection}{\numberline {3.4}Bayesian inference in the General Recognition Theory}{32}{subsection.3.4}
 \contentsline {paragraph}{Posterior predictive checks}{33}{section*.18}
-\contentsline {section}{\numberline {4}Adaptive estimation}{34}{section.4}
-\contentsline {subsection}{\numberline {4.1}Entropy minimization}{34}{subsection.4.1}
-\contentsline {paragraph}{Unconstrained parameterization}{35}{section*.19}
-\contentsline {paragraph}{Some practical considerations}{36}{section*.20}
+\contentsline {paragraph}{Unconstrained parameterization}{33}{section*.19}
+\contentsline {section}{\numberline {4}Adaptive estimation}{35}{section.4}
+\contentsline {paragraph}{Some practical considerations}{37}{section*.20}
 \contentsline {section}{\numberline {5}Simulations}{38}{section.5}
 \contentsline {subsection}{\numberline {5.1}Methods}{38}{subsection.5.1}
 \contentsline {paragraph}{Prior distributions}{38}{section*.21}

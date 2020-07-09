@@ -79,9 +79,9 @@ text(8, 0.8, "S = 4", cex = 1.2)
 \label{fig:SDT}
 \end{figure}
 
-Signal level divided by the standard deviation of evidence is called $d'$, usually interpreted as \textit{discriminability} \citep[Chapter 6]{kingdomprins2010} or \textit{signal-to-noise ratio} \citep{kontsevichtyler1999}. Standardized in this way, the standard deviation of evidence is always one, and the mean of the evidence distribution is $d'$.
+Signal level divided by the standard deviation of evidence is called $d'$, usually interpreted as \textit{discriminability} \citep[Chapter 6]{kingdomprins2010} or \textit{signal-to-noise ratio} \citep{kontsevichtyler1999}. Standardized in this way, the standard deviation of evidence distribution is always one, and the mean is $d'$, which is convenient. This is why usually the relationship between signal strength and $d'$ is modelled. 
 
-Relationship between $d'$ and $S$ is not necessarily linear. Theoretically this kind of non-linearity could  arise e.g. from changes in the variance of the evidence distribution. However, the non-linearity is often interpreted as being the result of non-linearity in signal transduction, i.e. the change of physical signal into internal.\footnote{Familiar example of non-linear transduction is how pitch is experienced in large scale: in order to move one octave up on the psychological scale of pitch, one has to move increasingly fast on the physical frequency, see \citet[Chapter 5]{zwickerfastl}.}
+The relationship between $d'$ and $S$ is not necessarily linear. Theoretically this kind of non-linearity could  arise e.g. from changes in the variance of the evidence distribution. However, the non-linearity is often interpreted as being the result of non-linearity in signal transduction, i.e. the change of physical signal into internal.\footnote{Familiar example of non-linear transduction is how pitch is experienced in large scale: in order to move one octave up on the psychological scale of pitch, one has to move increasingly fast on the physical frequency, see \citet[Chapter 5]{zwickerfastl}.}
 
 The functional relationship between physical signal strength and $d'$ has been quantified in many different ways in the psychophysical literature (for a selection, see \citet[Appendix A]{lesmes2015}). The functional form used here is based on the widely used \textit{power law} model of signal transduction (see e.g. \citet{kontsevichtyler1999, dai2011, lesmes2015}):
 
@@ -136,13 +136,13 @@ The preceding discussion about relating $S$-values to $d'$-values is just one ha
 \label{fig:YesNoAfc}
 \end{figure}
 
-In the Yes/No task (panel \textit{a)} of Figure \ref{fig:YesNoAfc}) the participant's task is to indicate if they detected the signal. The name of the task is quite literal as the participants provide \textit{Yes} and \textit{No} answers. As shown in the figure, the participant is first presented with the stimulus after which they are expected to give their answer.
+In the Yes/No task (panel \textit{a} of Figure \ref{fig:YesNoAfc}) the participant's task is to indicate if they detected the signal. The name of the task is quite literal as the participants provide \textit{Yes} and \textit{No} answers. As shown in the figure, the participant is first presented with the stimulus after which they are expected to give their answer.
 
-In contrast to this, in the 2I-2AFC task the participant is presented with two \textit{observation intervals}, interval referring here to a temporal interval as can be seen from panel \textit{b)} of Figure \ref{fig:YesNoAfc}. During each interval the participant is presented with a stimulus, one containing only noise and the other containing the signal. The participant's task is then to indicate which interval they thought contained the signal. Again, the name is quite literal: the participant is presented with two \textit{intervals} and they have to choose their response among two \textit{alternatives}.
+In contrast to this, in the 2I-2AFC task the participant is presented with two \textit{observation intervals}, interval referring here to a temporal interval as can be seen from panel \textit{b} of Figure \ref{fig:YesNoAfc}. During each interval the participant is presented with a stimulus, one containing only noise and the other containing the signal. The participant's task is then to indicate which interval they thought contained the signal. Again, the name is quite literal: the participant is presented with two \textit{intervals} and they have to choose their response among two \textit{alternatives}.
 
 \paragraph{Responses in the Yes/No task}
 
-Decisional processing in the Yes/No task is modelled by assuming that the participant has an internal criterion for the evidence. When evidence is below this criterion the participant will respond negatively and when evidence exceeds the criterion they will respond  positively.
+Decisional processing in the Yes/No task is modelled by assuming that the participant has an internal criterion for the evidence: when evidence is below this criterion the participant will respond negatively and when evidence exceeds the criterion they will respond  positively.
 
 When the participant is presented with a signal stimulus, positive responses are called \textit{hits}; when they  are presented with a noise stimulus, positive responses are called \textit{false alarms}. \citep{wickens2002, kingdomprins2010}. 
 
@@ -197,26 +197,26 @@ P(R = 1) = \int_{c}^{\infty} N(d', 1)
 
 where $N$ is the normal distribution function with parameters $\mu$ (mean) and $\sigma$ (standard deviation), $d'$ is the signal-to-noise ratio as calculated in Equation \ref{eq:dprimefunc} and $c$, the lower bound of the integral, is the decisional criterion. 
 
-The integral in this equation is usually written in terms of the cumulative standard normal distribution function, $\phi$. The resulting function, denoted with the Greek letter $\psi$, is called the \textit{psychometric function}. \cite[Chapter 4]{kingdomprins2010}
+The integral in this equation is usually written in terms of the cumulative standard normal distribution function, $\phi(u) = \int_{-\infty}^{u} N(0, 1)$. The resulting function, denoted with the Greek letter $\psi$, is called the \textit{psychometric function}. \cite[Chapter 4]{kingdomprins2010}
 
 Usually only the positive response is considered, since the probability of a negative response is simply the complement of it, but it is more principled to show the probabilities for both the positive and negative responses:
 
 \begin{align*}
 \begin{split}
-\psi(S; \Theta)_{\text{Yes}} &= \phi(-c + d') \\
-\psi(S; \Theta)_{\text{No}} &=  1 - \phi(-c + d')
+\psi(S; \theta)_{\text{Yes}} &= \phi(-c + d') \\
+\psi(S; \theta)_{\text{No}} &=  1 - \phi(-c + d')
 \end{split}
 \end{align*}
 
-Here $\Theta$ is a vector containing the parameters of the psychometric function ($\sigma$, $c$ and $\beta$), and $S$ is the physical signal level. Given vectors of observed signals and responses ($S$ and $R$), one can find the best fitting values for the parameters, which then would taken as the Signal Detection Theoretical interpretation of the observer's performance. In this interpretation the performance is divided into sensory (parameters $\sigma$ and $\beta$) and decisional (parameter $c$) factors.
+Here $\theta$ is a vector containing the parameters of the psychometric function ($\sigma$, $c$ and $\beta$), and $S$ is the physical signal level. Given vectors of observed signals and responses ($S$ and $R$), one can find the best fitting values for the parameters, which then would taken as the Signal Detection Theoretical interpretation of the observer's performance. In this interpretation the performance is divided into sensory (parameters $\sigma$ and $\beta$) and decisional (parameter $c$) factors.
 
-Since sensory and decisional processes are separate in the model, keeping the parameters that model sensory processing constant while varying the criterion will result in different predicted proportions of \textit{Yes} and \textit{No} responses and as a consequence hits and false alarms. That is to say that the perceptual processing capabilities can be exactly the same for two participants, but the observed amounts of hits and false alarms can be different, if one participant has a more lax criterion. This is shown in the left panel of Figure \ref{fig:critchange}. Here, the parameters relating to sensory factors are kept constant while the criterion is varied.
+Since sensory and decisional processes are separate in the model, keeping the parameters that model sensory processing constant while varying the criterion will result in different predicted proportions of \textit{Yes} and \textit{No} responses and as a consequence hits and false alarms. That is to say that the perceptual processing capabilities can be exactly the same for two participants, but the observed amounts of hits and false alarms can be different, if one participant has different criterion. This is demonstrated in the left panel of Figure \ref{fig:critchange}: in the figure, parameters relating to sensory factors are kept constant while the criterion is varied. The psychometric function drawn with a solid line represents response probabilities for an observer with more lax criterion in relation to the dashed function.
 
 It is also important to notice that hits and false alarms are coupled. If the participant wants to avoid false alarms, they will have to adopt a stricter criterion for the evidence, and  as a consequence they  will inevitably also make less hits. This is because the aim of SDT is to model situation in which there is a non-zero probability of confusing signal with noise. 
 
-The coupling between hits and false alarms is demonstrated in the form the a \textit{receiver operating characteristic} (ROC) curve \cite[161]{kingdomprins2010} in the right panel of Figure \ref{fig:critchange}. When the participant adopts stricter criterion, they move left on the ROC curve. When the signal is stronger ($d'$-value is higher), the participant is able to score more hits. 
+The coupling between hits and false alarms is demonstrated in the form the a \textit{receiver operating characteristic} (ROC) curve \cite[161]{kingdomprins2010} in the right panel of Figure \ref{fig:critchange}. The lines are drawn from two $d'$ values, dashed line representing a stronger signal relative to the solid line. When the participant adopts stricter criterion, they move left on the ROC curves: indicating not only higher proportion of hits but also false alarms. Conversely stricter criterion leads to less false alarms but also less hits.
 
-Note that if the participant aims to avoid false alarms altogether, they will have to adopt a criterion that, theoretically, would also result in zero hits; the criterion has to be relaxed a bit in order for the participant to perform in the task in any meaningful way, resulting in some false alarms and hits, as just discussed. Generally, the participant is free to "set their own criterion", however it is possible to calculate the optimal value of the decisional criterion. 
+The result is that if the participant aims to avoid false alarms altogether, they will have to adopt a criterion that, theoretically, would also result in zero hits; the criterion has to be relaxed a bit in order for the participant to perform in the task in any meaningful way, resulting in some false alarms and hits, as just discussed. Generally, the participant is free to "set their own criterion", however it is possible to calculate the optimal value of the decisional criterion. 
 
 \begin{figure}[!htb]
 \begin{center}
@@ -324,7 +324,7 @@ text(-2, 0.1, "P(False alarm)")
 
 In the upper panel the zero-centred distribution represents evidence from the noise-only interval while the distribution centred on 1.5 represents evidence from the signal interval. Irregardless of whether the signal is in the first or second interval, the signal interval will be shifted $d'$ amount. Since the probability of making the correct decision is the proportion of the decision variable distribution that exceeds 0, shifting the signal distribution to the right will increase this probability--as one would expect.
 
-What is important to note is that the decision variable is the difference of two normally distributed random variables, both with standard  deviation of one, since they represent the standardized quantity $d'$. It follows from the additivity of variances, and from the fact that standard deviation is the square root of variance, that the standard deviation of the decision variable is $\sqrt{2}$--remember, that the $d'$ values are standardized  so that the standard deviations of the individual evidence distributions are always one, so the total standard deviation here is $\sqrt{1^2 + 1^2} = \sqrt{2}$. It follows then that the $d'$ values in the psychometric function have to be divided by this constant:
+What is important to note is that the decision variable is the difference of two normally distributed random variables, both with standard  deviation of one, since they represent the standardized quantity $d'$. It follows from the additivity of variances, and from the fact that standard deviation is the square root of variance, that the standard deviation of the decision variable is $\sqrt{1^2 + 1^2} = \sqrt{2}$. It follows then that the $d'$ values in the psychometric function have to be divided by this constant:
 
 \begin{align*}
 \begin{split}

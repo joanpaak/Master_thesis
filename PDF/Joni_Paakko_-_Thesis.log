@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.14159265-2.6-0.99996 (MiKTeX 2.9 64-bit) (preloaded format=xelatex 2016.10.10)  8 JUL 2020 17:25
+This is XeTeX, Version 3.14159265-2.6-0.99996 (MiKTeX 2.9 64-bit) (preloaded format=xelatex 2016.10.10)  9 JUL 2020 18:21
 entering extended mode
 **./Joni_Paakko_-_Thesis.tex
 (Joni_Paakko_-_Thesis.tex
@@ -1007,58 +1007,66 @@ File: figure/unnamed-chunk-8-1.pdf Graphic file (type QTm)
 Package xcolor Warning: Incompatible color definition on input line 447.
 
 File: figure/unnamed-chunk-9-1.pdf Graphic file (type QTm)
-<use  "figure/unnamed-chunk-9-1.pdf" > [14]
+<use  "figure/unnamed-chunk-9-1.pdf" > [14] [15]
 
 Package xcolor Warning: Incompatible color definition on input line 483.
 
 File: figure/unnamed-chunk-10-1.pdf Graphic file (type QTm)
-<use  "figure/unnamed-chunk-10-1.pdf" > [15] [16] [17] [18]
-Underfull \hbox (badness 10000) in paragraph at lines 577--577
+<use  "figure/unnamed-chunk-10-1.pdf" > [16] [17] [18]
+Underfull \hbox (badness 10000) in paragraph at lines 574--574
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 577--577
+Underfull \hbox (badness 10000) in paragraph at lines 574--574
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 578--578
+Underfull \hbox (badness 10000) in paragraph at lines 575--575
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 578--578
+Underfull \hbox (badness 10000) in paragraph at lines 575--575
 
  []
 
+[19]
 
-Package xcolor Warning: Incompatible color definition on input line 598.
+Package xcolor Warning: Incompatible color definition on input line 595.
 
 File: figure/unnamed-chunk-11-1.pdf Graphic file (type QTm)
-<use  "figure/unnamed-chunk-11-1.pdf" > [19] [20]
+<use  "figure/unnamed-chunk-11-1.pdf" > [20]
 File: ./figures/Process_model.png Graphic file (type QTm)
 
 <use  "./figures/Process_model.png" > [21] [22] [23] [24]
-Overfull \hbox (31.99167pt too wide) in paragraph at lines 698--699
+Overfull \hbox (31.99167pt too wide) in paragraph at lines 697--698
 []\T1/cmr/m/n/10 Note that usu-ally the log-a-rith-mic like-li-hood func-tion i
 s used of nu-mer-i-cal sta-bil-ity, $[][] \OML/cmm/m/it/10 ln\OT1/cmr/m/n/10 (\
 OML/cmm/b/it/10 R[]\OML/cmm/m/it/10 ; \OML/cmm/b/it/10 S[]\OT1/cmr/m/n/10 ; \OM
 L/cmm/m/it/10 ^^R; M\OT1/cmr/m/n/10 )$\T1/cmr/m/n/10 ,
  []
 
-[25]
 
-Package xcolor Warning: Incompatible color definition on input line 705.
+Overfull \hbox (3.25015pt too wide) in paragraph at lines 701--702
+\T1/cmr/m/n/10 rep-re-sented by the dashed line in Fig-ure [][]14[][], which th
+en re-sults in the pos-te-rior dis-tri-bu-tion $\OML/cmm/m/it/10 P\OT1/cmr/m/n/
+10 (\OML/cmm/m/it/10 ^^R\OMS/cmsy/m/n/10 j\OML/cmm/m/it/10 Data\OT1/cmr/m/n/10 
+)$\T1/cmr/m/n/10 ,
+ []
+
+
+Package xcolor Warning: Incompatible color definition on input line 706.
 
 File: figure/unnamed-chunk-12-1.pdf Graphic file (type QTm)
-<use  "figure/unnamed-chunk-12-1.pdf" >
+<use  "figure/unnamed-chunk-12-1.pdf" > [25]
 
-Package xcolor Warning: Incompatible color definition on input line 720.
+Package xcolor Warning: Incompatible color definition on input line 729.
 
 File: figure/unnamed-chunk-13-1.pdf Graphic file (type QTm)
 <use  "figure/unnamed-chunk-13-1.pdf" >
-Underfull \hbox (badness 1199) in paragraph at lines 731--731
+Underfull \hbox (badness 1199) in paragraph at lines 740--740
 [][][]\T1/cmr/m/n/8 Andrew Gel-man has col-lected a bunch of dif-fer-ent names 
 for hi-er-ar-chi-cal mod-els in to a blog post:
  []
@@ -1070,20 +1078,20 @@ File: ./figures/Basic_hierarchical_mixture_model.png Graphic file (type QTm)
 
 <use  "./figures/Basic_hierarchical_mixture_model.png" > [28] [29]
 Package hyperref Info: bookmark level for unknown algorithm defaults to 0 on in
-put line 802.
+put line 811.
 
 
-Package xcolor Warning: Incompatible color definition on input line 821.
+Package xcolor Warning: Incompatible color definition on input line 830.
 
 File: figure/degeneracy-1.pdf Graphic file (type QTm)
-<use  "figure/degeneracy-1.pdf" > [30] [31] [32] [33]
+<use  "figure/degeneracy-1.pdf" > [30] [31] [32] [33] [34]
 
-Package xcolor Warning: Incompatible color definition on input line 912.
+Package xcolor Warning: Incompatible color definition on input line 951.
 
 File: figure/unnamed-chunk-14-1.pdf Graphic file (type QTm)
-<use  "figure/unnamed-chunk-14-1.pdf" > [34] [35] [36] [37]
+<use  "figure/unnamed-chunk-14-1.pdf" > [35] [36] [37]
 
-Package xcolor Warning: Incompatible color definition on input line 1025.
+Package xcolor Warning: Incompatible color definition on input line 1042.
 
 File: figure/unnamed-chunk-15-1.pdf Graphic file (type QTm)
 <use  "figure/unnamed-chunk-15-1.pdf" > [38]
@@ -1127,7 +1135,7 @@ File: ./figures/qs_AFC_sq_error.png Graphic file (type QTm)
  <use  "./figures/qs_AFC_sq_error.png" >
 [46] [47]
 
-Package xcolor Warning: Incompatible color definition on input line 1235.
+Package xcolor Warning: Incompatible color definition on input line 1252.
 
 File: figure/unnamed-chunk-16-1.pdf Graphic file (type QTm)
 <use  "figure/unnamed-chunk-16-1.pdf" > [48] [49] [50]
@@ -1177,23 +1185,23 @@ m)
 <use  "./figures/Analysis_of_Human_Data/JP_YN_AFC_Both.png" > [62] [63]
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 1443.
+(hyperref)                removing `math shift' on input line 1460.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\kappa' on input line 1443.
+(hyperref)                removing `\kappa' on input line 1460.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `subscript' on input line 1443.
+(hyperref)                removing `subscript' on input line 1460.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\sigma' on input line 1443.
+(hyperref)                removing `\sigma' on input line 1460.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 1443.
+(hyperref)                removing `math shift' on input line 1460.
 
 File: ./figures/Analysis_of_Human_Data/JP_YN_AFC_Both_T.png Graphic file (type 
 QTm)
@@ -1205,7 +1213,7 @@ file (type QTm)
 [65] [66]
 
 LaTeX Warning: Reference `fig:fig:JP_YN_post_pred' on page 67 undefined on inpu
-t line 1502.
+t line 1519.
 
 [67] [68] [69] [70] (Joni_Paakko_-_Thesis.bbl
 Missing character: There is no – in font ecrm1000!
@@ -1213,28 +1221,12 @@ Missing character: There is no – in font ecrm1000!
 
 ]
 Missing character: There is no – in font ecrm1000!
-LaTeX Font Info:    Try loading font information for T1+cmtt on input line 683.
+LaTeX Font Info:    Try loading font information for T1+cmtt on input line 712.
 
 
 ("C:\Program Files\MiKTeX 2.9\tex\latex\base\t1cmtt.fd"
 File: t1cmtt.fd 2014/09/29 v2.5h Standard LaTeX font definitions
 ) [72] [73]) [74]
-
-Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 1569.
-
-
-Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\phi' on input line 1569.
-
-
-Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `subscript' on input line 1569.
-
-
-Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 1569.
-
 (../Stan/bivariate_cdf.stan [75]
 Overfull \hbox (82.25797pt too wide) in paragraph at lines 47--48
 [][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][
@@ -1246,22 +1238,22 @@ Overfull \hbox (82.25797pt too wide) in paragraph at lines 47--48
 (../Stan/mdlYN_both_truncated.stan [81] [82]) [83] (../Stan/mdlAFC.stan
 [84]) (../Stan/mdlAFC_FL.stan [85]) (../Stan/mdlAFC_varshift_FL.stan [86])
 (../Stan/mdlAFC_both.stan [87]) [88]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 1609.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 1609.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 1626.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 1626.
  (Joni_Paakko_-_Thesis.aux)
-Package atveryend Info: Empty hook `AtVeryEndDocument' on input line 1609.
-Package atveryend Info: Empty hook `AtEndAfterFileList' on input line 1609.
+Package atveryend Info: Empty hook `AtVeryEndDocument' on input line 1626.
+Package atveryend Info: Empty hook `AtEndAfterFileList' on input line 1626.
 
 
 LaTeX Warning: There were undefined references.
 
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 1609.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 1626.
  ) 
 Here is how much of TeX's memory you used:
- 23374 strings out of 428408
- 390499 string characters out of 3160623
- 491273 words of memory out of 3000000
- 26297 multiletter control sequences out of 15000+200000
+ 23399 strings out of 428408
+ 391030 string characters out of 3160623
+ 491449 words of memory out of 3000000
+ 26322 multiletter control sequences out of 15000+200000
  27321 words of font info for 72 fonts, out of 3000000 for 9000
  1328 hyphenation exceptions out of 8191
  53i,17n,73p,1218b,1616s stack positions out of 5000i,500n,10000p,200000b,50000s

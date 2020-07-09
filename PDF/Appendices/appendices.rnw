@@ -3,7 +3,7 @@
 \appendix
 \cftaddtitleline{toc}{section}{Appendices}{}
 
-\section{Algorithm for calculating $\phi_2$}
+\section{Algorithm for calculating \texorpdfstring{$\phi_2$}{bivariate CDF}}
 
 The algorithm is based on \citet{boys1989} and \citet{pan2017}.
 
