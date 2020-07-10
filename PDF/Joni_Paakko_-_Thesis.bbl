@@ -793,8 +793,8 @@ Keller, M.%
 \newblock
 \APACrefYearMonthDay{2018}{}{}.
 \newblock
-{\BBOQ}\APACrefatitle {Bayesian model selection and averating via mixture model
-  estimation} {Bayesian model selection and averating via mixture model
+{\BBOQ}\APACrefatitle {Bayesian model selection and averaging via mixture model
+  estimation} {Bayesian model selection and averaging via mixture model
   estimation}.{\BBCQ}
 \newblock
 \APAChowpublished {arxiv:1711.1006v2}.
@@ -1081,6 +1081,31 @@ Lesmes, L.%
   yes-no and forced-choice tasks}.{\BBCQ}
 \newblock
 \APACjournalVolNumPages{Frontiers in Psychology}{6}{1070}{}.
+\PrintBackRefs{\CurrentBib}
+
+\bibitem [\protect \citeauthoryear {%
+Oron%
+}{%
+Oron%
+}{%
+{\protect \APACyear {2007}}%
+}]{%
+oron2007}
+\APACinsertmetastar {%
+oron2007}%
+\begin{APACrefauthors}%
+Oron, A\BPBI P.%
+\end{APACrefauthors}%
+\unskip\
+\newblock
+\APACrefYear{2007}.
+\unskip\
+\newblock
+\APACrefbtitle {Up-and-down and the percentile-finding problem} {Up-and-down
+  and the percentile-finding problem}\ \APACtypeAddressSchool {\BUPhD}{}{}.
+\unskip\
+\newblock
+\APACaddressSchool {}{University of Washington}.
 \PrintBackRefs{\CurrentBib}
 
 \bibitem [\protect \citeauthoryear {%
@@ -1636,6 +1661,29 @@ Townsend, J.%
   interdependencies as a function of energy and payoffs}.{\BBCQ}
 \newblock
 \APACjournalVolNumPages{Perception \& Psychophysics}{43}{}{575 - 591}.
+\PrintBackRefs{\CurrentBib}
+
+\bibitem [\protect \citeauthoryear {%
+Treuwein%
+}{%
+Treuwein%
+}{%
+{\protect \APACyear {1995}}%
+}]{%
+treutwein1995}
+\APACinsertmetastar {%
+treutwein1995}%
+\begin{APACrefauthors}%
+Treuwein, B.%
+\end{APACrefauthors}%
+\unskip\
+\newblock
+\APACrefYearMonthDay{1995}{}{}.
+\newblock
+{\BBOQ}\APACrefatitle {Adaptive Psychophysical Procedures} {Adaptive
+  psychophysical procedures}.{\BBCQ}
+\newblock
+\APACjournalVolNumPages{Vision Research}{35}{17}{250 - 2522}.
 \PrintBackRefs{\CurrentBib}
 
 \bibitem [\protect \citeauthoryear {%

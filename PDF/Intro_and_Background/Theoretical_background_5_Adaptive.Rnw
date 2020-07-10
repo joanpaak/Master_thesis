@@ -7,9 +7,13 @@ The motivation behind adaptive psychophysical testing can be traced to intuitive
 
 A popular subclass of adaptive methods are based on Bayesian statistics. \cite{watson1983} introduced the \textit{QUEST} procedure which was influential in its use of Bayesian statistics in determining which stimuli to choose. The QUEST procedure was used only for estimating one parameter, threshold (analogous to the parameter $\sigma$ in this thesis),  and it was later expanded by \citet{king_smith1997} in their ZEST algorithm for estimating the threshold and slope of the psychometric function (analogous to the parameters $\sigma$ and $\beta$ in this thesis). 
 
-However, it wasn't until the work by \citet{kontsevichtyler1999} that Bayesian Adaptive Estimation as how it would be known today would emerge. The aforementioned QUEST and ZEST procedures used \textit{ad hoc} heuristics for determining the placement of the stimuli: in the QUEST procedure stimuli are placed near the threshold, in the ZEST procedure, in order to estimate the slope of the psychometric function, stimuli are placed above and below the threshold. 
+However, it wasn't until the work by \citet{kontsevichtyler1999} that Bayesian Adaptive Estimation as how it would be known today would emerge. The aforementioned QUEST and ZEST procedures used \textit{ad hoc} heuristics for determining the placement of the stimuli: in the QUEST procedure stimuli are placed near the threshold, in the ZEST procedure, in order to estimate the slope of the psychometric function, stimuli are placed above and below the threshold. A symptom of such \textit{ad hoc} methods is that \citet{treutwein1995} lists 22 adaptive procedures in his Table 1--and this does not include procedures for two-dimensional stimuli.
 
-In the procedure used by \citet{kontsevichtyler1999} stimuli that minimize the \textit{expected entropy} of the posterior distribution are chosen. In simple terms, entropy refers to the evenness of a probability distribution \citep[p. 365]{kruschke2015}. This is demonstrated in Figure \ref{fig:entropy}. The figure depicts two multinomial distributions, in which the categories refer to the possible responses for two-dimensional stimuli (see Section \ref{sec:grt_mdls} \textit{\nameref{sec:grt_mdls}}. The distribution on the left is maximally even, while the distribution on the right side has more probability assigned to the responses (0,0) and (1,1). Consequently, the distribution on the right has less entropy.
+In \citet{kontsevichtyler1999} the stimulus selection heuristic is entirely based on principles of Bayesian statistics, and by that virtue entirely abstract and thus generalizable. Indeed, this principle has been applied widely in psychophysics, also to estimation of multidimensional psychometric functions. However, the approach I use differs from previous work on adaptive methods with multidimensional signals. 
+
+In the approaches by \citet{dimattina2015}, \citet{lesmes2006}, \citet{shen2013, shen2014} and \citet{kujalalukka2006} Bernoulli distributed responses are modelled, that is, only two response categories are used. In the QUEST+ procedure introduced by \citet{watson2017} it is possible to use multinomial distribution as a model of the responses, but the approach is quite different, e.g. the correlation is not modelled and the approach is not based on GRT.
+
+The algorithm in \citet{kontsevichtyler1999} chooses stimuli that minimize the \textit{expected entropy} of the posterior distribution are chosen. In simple terms, entropy refers to the evenness of a probability distribution \citep[p. 365]{kruschke2015}. This is demonstrated in Figure \ref{fig:entropy}. The figure depicts two multinomial distributions, in which the categories refer to the possible responses for two-dimensional stimuli (see Section \ref{sec:grt_mdls} \textit{\nameref{sec:grt_mdls}}. The distribution on the left is maximally even, while the distribution on the right side has more probability assigned to the responses (0,0) and (1,1). Consequently, the distribution on the right has less entropy.
 
 \begin{figure}
 \begin{center}
@@ -58,11 +62,7 @@ in which $h$ is the entropy of a discrete distribution, in this case, a distribu
 h(p) = -\sum_{i = 1}^{N} p_i ln p_i
 \end{equation}
 
-On each trial the stimulus that maximizes Equation \ref{eq:infgain} is chosen. 
-
-The allure of this method lies in that the stimulus selection heuristic is entirely based on principles of Bayesian statistics, and by that virtue entirely abstract and thus generalizable. Indeed, this principle has been applied widely in psychophysics, also to estimation of multidimensional psychometric functions. However, the approach I use differs from previous work on adaptive methods with multidimensional signals. 
-
-In the approaches by \citet{dimattina2015}, \citet{lesmes2006}, \citet{shen2013, shen2014} and \citet{kujalalukka2006} Bernoulli distributed responses are modelled, that is, only two response categories are used. In the QUEST+ procedure introduced by \citet{watson2017} it is possible to use multinomial distribution as a model of the responses, but the approach is quite different, e.g. the correlation is not modelled and the approach is not based on GRT. 
+On each trial the stimulus that maximizes Equation \ref{eq:infgain} is chosen.  
 
 \paragraph{Some practical considerations}
 \label{sec:practical_considerations}

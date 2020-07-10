@@ -3,9 +3,7 @@
 \section{Psychophysical experiments}
 \label{sec:pp_exp}
 
-I conducted a psychophysical experiment with two participants to test the model. The most important prediction is that estimates from both tasks should be similar, since as was already discussed, the only difference should be that the sensitivity (parameter $\sigma$) in the 2I-4AFC task is reduced by $\sqrt{2}$. This prediction has been often used to test Signal Detection Theory models, see for example \citet{wickens2002}.  
-
-During the experimental run the model with $\kappa_{\mu}$ (Model 1) was used to determine the stimulus choices for two reasons. First, it's the most widely used model in the GRT related literature (or, the classic model that is analogous to it, see Section \ref{sec:grt_criticism} \textit{\nameref{sec:grt_criticism}}: The models used e.g. in the 2x2 categorization experiments commonly model interactions as interaction between means of the distributions. Second, there are some results suggesting timbre affects the pitch of signal \citep{allen2014, platt1985}, a phenomenon that would most naturally be modelled as shift in the mean of the evidence distribution; on the other hand, according to \cite{silbert2009} the main source of interaction between pitch and timbre arises from correlated noise, which again is included in the model as the parameter $\rho$.
+I conducted a psychophysical experiment with two participants to test the model. During the experimental run the model with $\kappa_{\mu}$ (Model 1) was used to determine the stimulus choices for the same reasons mentioned in Section \ref{sec:simulations} \textit{\nameref{sec:simulations}}.
 
 There were three main questions: 
 
@@ -14,6 +12,10 @@ There were three main questions:
   \item Are there differences in parameter estimates from the two tasks (Yes/No and 2I-4AFC)?
   \item What inferences can be made about the processing of pitch and timbre?
 \end{enumerate}
+
+What is meant by \textit{sufficient} is that the model should be reasonably well-behaved, that is all of the parameters should be identifiable, and capture relevant features of the data. The second question follows from the prediction that the only difference should be that the sensitivity (parameter $\sigma$) in the 2I-4AFC task is reduced by $\sqrt{2}$. This prediction has been often used to test Signal Detection Theory models, see for example \citet{wickens2002}.
+
+The last question is of more general interest: since the motivation behind GRT is to gain information about the processing of multidimensional signals, in this case ones that vary in their pitch and timbre, can we learn anything from the data that was collected. 
  
 \subsection{Methods}
 

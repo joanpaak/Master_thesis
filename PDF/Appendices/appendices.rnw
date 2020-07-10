@@ -28,7 +28,7 @@ The algorithm is based on \citet{boys1989} and \citet{pan2017}.
 \lstinputlisting{../Stan/mdlYN_both_truncated.stan}
 
 \newpage
-\section{Code for model for the 2I-4AFC task}
+\section{Code for models for the 2I-4AFC task}
 
 \subsection{Model 1}
 \lstinputlisting{../Stan/mdlAFC.stan}
