@@ -4,6 +4,7 @@
 \usepackage{booktabs}
 \linespread{1.25}
 
+
 %% Luk_pohja.tex-tiedostosta
 %% Oma sivukoko
 \setlength{\textheight}{9in}
@@ -25,6 +26,13 @@
 \usepackage{appendix}
 \usepackage{tocloft}
 
+% Fixes the tilde sign in lstinputlisting environment used 
+% in the appendices
+
+\lstset{
+    literate={~} {$\sim$}{1}
+}
+
 \usepackage{amsthm}
 \usepackage{adjustbox}
 
@@ -44,7 +52,6 @@
 
 \usepackage[T1]{fontenc}
 \usepackage[finnish, english]{babel}
-
 
 \onehalfspacing
 \usepackage[natbibapa, nodoi]{apacite}
