@@ -4,7 +4,7 @@ That's the current title of my thesis. It's subject to a lot of change in the co
 
 ## Current stage
 
-The first version is complete soon; there's now text in every section, but I'm afraid there's lot of problems. 
+The first version is complete, however, there are bound to be lots of problems.  
 
 Download the latest PDF via this link (right click on it and save it, opening it in GitHub is slow): [the latest pdf](https://github.com/joanpaak/Master_thesis/raw/master/PDF/Joni_Paakko_-_Thesis.pdf).
 
