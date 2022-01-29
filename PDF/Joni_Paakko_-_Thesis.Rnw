@@ -4,6 +4,9 @@
 \usepackage{booktabs}
 \linespread{1.25}
 
+% Will prevent footnotes from being split:
+\interfootnotelinepenalty=10000
+
 
 %% Luk_pohja.tex-tiedostosta
 %% Oma sivukoko
@@ -63,7 +66,8 @@
 <<setup, include=FALSE, cache=FALSE, echo=FALSE>>=
 opts_knit$set(self.contained=FALSE)
 encoding = 'UTF-8'
-setwd("C:/Users/Joni/Documents/GitHub/Master_thesis/PDF")
+setwd("~/Documents/GitHub_keskeneräisiä_paljon/Master_thesis/PDF")
+# setwd("C:/Users/Joni/Documents/GitHub/Master_thesis/PDF")
 @
 
 <<echo=F>>=
@@ -109,6 +113,7 @@ drawBivarDistr = function(mu, sigma = 1, poly = F){
 @
 
 \begin{document}
+% \SweaveOpts{concordance=TRUE}
 
 \thispagestyle{empty}
 
@@ -167,8 +172,9 @@ Data from the psychophysical experiments indicate that non-sensory factors play 
 <<background_GRT_3, child='Intro_and_Background/Theoretical_background_3_GRT_discussion.Rnw'>>=
 @
 
+
 \newpage
-<<background_Bayes, child='Intro_and_Background/Theoretical_background_4_Bayes.Rnw'>>=
+<<background_Bayes, child='Intro_and_Background/Theoretical_background_4_Bayes_old.Rnw'>>=
 @
 
 \newpage
@@ -195,7 +201,7 @@ Data from the psychophysical experiments indicate that non-sensory factors play 
 \bibliographystyle{apacite}
 
 \newpage
-<<conclusion, child='Appendices/appendices.rnw'>>=
+<<conclusion, child='Appendices/appendices.Rnw'>>=
 @
 
 

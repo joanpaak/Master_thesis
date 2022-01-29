@@ -4,6 +4,9 @@
 \usepackage{booktabs}
 \linespread{1.25}
 
+% Will prevent footnotes from being split:
+\interfootnotelinepenalty=10000
+
 
 %% Luk_pohja.tex-tiedostosta
 %% Oma sivukoko
@@ -66,6 +69,7 @@
 
 \IfFileExists{upquote.sty}{\usepackage{upquote}}{}
 \begin{document}
+% \SweaveOpts{concordance=TRUE}
 
 \thispagestyle{empty}
 
@@ -116,29 +120,63 @@ Data from the psychophysical experiments indicate that non-sensory factors play 
 
 \section{Introduction}
 
+\paragraph{Multidimensionality of perception}
+
 Perception can be thought of as being multidimensional. For example, a single tone played with a guitar could be said to consist of pitch, length and timbre, which are some of the dimensions of an auditory signal, in this case, a musical tone. Another way in which perception is multidimensional is when it is \textit{multimodal}: in many situations we combine information from different sensory modalities, for example haptic and auditory information when pressing a key on the keyboard, or visual and auditory information when watching someone's lips as they speak.
 
-How we perceive such multidimensional signals is a fundamental psychological question: during perception, are the dimensions processed independently, or do they interfere with each other? Is the perception of auditory signals influenced by visual or other signals, and if so, in what situations? Do the physical dimensions, such as amplitude, correspond to the psychological (in this case loudness) or do we perceive them as combinations (do e.g. high pitches sound louder)?
+How we perceive such multidimensional signals is a fundamental psychological question: during perception, are the dimensions processed independently, or do they interfere with each other? Is the perception of auditory signals influenced by visual or other signals, and if so, in what situations? Do the physical dimensions, such as amplitude, correspond to the psychological (in the case of amplitude loudness) or do we perceive them as combinations (do e.g. higher pitches sound louder)?
 
-A popular approach for modelling multidimensional perception is the General Recognition Theory (GRT), which is a multidimensional generalization of Signal Detection Theory (SDT) (\citealp{wickens2002,ashby1986, ashby2015}). SDT is a much-studied mathematical framework describing--among other things--the detection of signals in the presence of noise and for dissociating perceptual and decisional processes. 
+In the context of the empirical part of this work (see Section \ref{sec:pp_exp} \textit{\nameref{sec:pp_exp}}) the coupling of pitch and timbre is the most relevant. These present a special case in which the features belong to the same modality: both are features of  audition. 
 
-Most experiments employing GRT use preselected stimuli, i.e. use a paradigm called \textit{method of constant stimuli} (MOCS).  However, it is known that using methods that can adapt the stimulus values to the behaviour of the subject can make the testing more efficient (\citealp{kontsevichtyler1999}). These kinds of methods are usually simply referred to as \textit{adaptive} methods.
+What does coupling or interaction mean? This is an important question, especially since pitch and timbre below to the same modality. 
 
-The main focus of this thesis is in applying Bayesian adaptive estimation to General Recognition Theory (GRT). However, this is a multifaceted problem, and it's useful to break it down into a few separate topics. I will present the reader with a brief roadmap into these topics, and where they are discussed in more detail. However, one should also be aware that all of these issues are closely interrelated.
+Concretely, for example in an experiment in which the participants have to detect changes in pitch and timbre, there could be a loud noise that occurs on random trials. This loud noise, of course, affects the detection of the auditory stimulus as a whole: detection thresholds for both pitch and timbre would be affected by the noise. This would make it seem like those dimensions are connected, and of course they are, since they are both features of an auditory stimulus, but usually the focus is on perceptual or cognitive interactions.
 
-First, the "classic" GRT models could be described as non-parametric in the sense that they don't parameterize the relationship between the signal strength and the probability of a response; response probabilities are calculated only for stimulus categories. However, in order to meaningfully implement the adaptive method, one should be able to calculate response probabilities for arbitrary stimuli. In order to achieve just this, I will be integrating psychophysical functions--functions that relate continuous stimulus levels to response probabilities \citep[Chapter 4]{kingdomprins2010}-- into the theory of GRT. This constitutes the main part of Section \ref{sec:GRT} \textit{\nameref{sec:GRT}}.  
+As a visual example consider the optical illusion presented in Figure \ref{fig:opt_illusion}. The sides of the box should appear ever-so-slightly concave. The circles affect how the straight lines that constitute the box are \textit{experience} on a perceptual/cognitive level.
+
+\begin{figure}[!htb]
+	\centering
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
+\includegraphics[width=\maxwidth]{figure/unnamed-chunk-2-1} 
+\end{knitrout}
+	\caption{The sides of the box should appear slightly concave. Note that there is individual variability in whether this illusion works or not.}
+	\label{fig:opt_illusion}
+\end{figure} 
+
+It is this kind of interaction that is of interest; an interaction which affects the \textit{appearance} of the stimuli, or their constituent dimensions.
+
+On possible approach for modelling multidimensional perception is the General Recognition Theory (GRT), which is a multidimensional generalization of Signal Detection Theory (SDT) (\citealp{wickens2002,ashby1986, ashby2015}). SDT is a much-studied mathematical framework on one hand describing the detection of signals in the presence of noise and on the other hand for dissociating perceptual and decisional processes. In Signal Detection Theory--as will be discussed in more detail later--participant's tendency to report that they detected a signal is modelled separately from their sensory processes.
+
+\paragraph{Adaptive estimation and Bayesian statistics}
+
+Most experiments employing GRT use preselected stimuli, i.e. use a paradigm called \textit{method of constant stimuli} (MOCS). However, it is known that using methods that adapt the stimulus values to the observed behaviour of the subject can make the testing more efficient (\citealp{kontsevichtyler1999}). These kinds of methods are usually simply referred to as \textit{adaptive} methods.
+
+There are many adaptive methods that employ either \textit{ad hoc} or common sense principles such as "\textit{If the subject correctly identifies the signal twice in a row, reduce its level, otherwise increase its level}", which could be a useful heuristic for finding e.g. the hearing threshold. In Bayesian Adaptive estimation the heuristic for choosing the stimuli is based on, as the name implies, Bayesian statistics. 
+
+In Bayesian statistics uncertainty about the parameters of a statistical model is represented as a joint probability distribution over them. For example when modelling hearing threshold in broadband noise, one could use a normal distribution for quantifying their prior uncertainty by saying that they expect the hearing threshold to be around 40 decibels with a standard deviation of 20 decibels. 
+
+When data is collected, it informs the experimenter through the statistical model which parameter values are more likely; or conversely what parameter values are \textit{less} likely: if the subject is not able to detect 40 decibel signals correctly, this makes it less likely that values below are their hearing threshold, those values can be ruled out. This "ruling out" of parts of the parameter space can be said to reduce our uncertainty about plausible values for hearing threshold. 
+
+It should also be clear that other data points reduce information more than others: if the subject is always presented with signals over 60 decibels and they always detect them, this does not inform the experimenter if 30 decibels is more likely than 40 decibels as the hearing threshold. In Bayesian adaptive estimation one simply tries to pick the test signals in such a way that the uncertainty about the parameters is minimized on each trial, or in other words, as many possibilities as possible can be ruled out. 
+
+\paragraph{Structure of this thesis}
+
+The main focus of this thesis is in applying Bayesian adaptive estimation to General Recognition Theory (GRT). However, this is a multifaceted problem, and it's useful to break it down into a few separate topics--which on the other hand are interrelated.
+
+First, the "classic" GRT models could be described as non-parametric in the sense that they don't parameterize the relationship between the signal strength and the probability of a response; response probabilities are estimated only for stimulus categories. However, in order to meaningfully implement the adaptive method, one should be able to calculate response probabilities for arbitrary stimuli. In order to achieve just this, I will be integrating psychophysical functions--functions that relate continuous stimulus levels to response probabilities \citep[Chapter 4]{kingdomprins2010}-- into the theory of GRT. This constitutes the main part of Section \ref{sec:GRT} \textit{\nameref{sec:GRT}}.  
 
 Second, when such functional relationships are implemented, the question of \textit{how} or what kind of functional relationships between stimuli and responses should be modelled becomes an issue. There are many different kinds of functions one can choose from, and many kinds of interactions that one could incorporate into the model. This issue will be touched upon in Section \ref{sec:GRT} when different kinds of interactions are discussed. Practical ramifications of this are discussed when analysing the data from the psychophysical experiments. 
 
-Related to this, I will be criticizing the implementation of the classic 2X2 identification experiment in the context of auditory psychophysics and, instead arguing for a model based on auditory discrimination. The main gist is that in a psychophysical experiment, in which the stimulus levels are extremely low, it is likely that participants base their decisions based on differences between the stimuli.
+Related to this, I will be criticizing the implementation of the widely used 2X2 identification experiment in the context of auditory psychophysics and will instead argue for modelling discrimination. The core of the criticism is that in a psychophysical experiment, in which the stimulus levels are extremely low, it is likely that participants base their decisions on perceived differences between the stimuli rather than their absolute levels (Section \ref{sec:grt_classic} \textit{\nameref{sec:grt_classic}}).
 
-Third, Bayesian statistical inference is different from the usual frequentist methods used when analysing GRT models. This is most apparent in how the concept of \textit{interaction} is not dependent on statistical significance, but rather the posterior probability densities for the coefficients that model interactions. This is, of course, closely related to the earlier point, since the choice of the model determines how those coefficients are to be interpreted. 
+Third, Bayesian statistical inference is different from the usual frequentist methods used when analysing GRT models. This is most apparent in how the concept of \textit{interaction} is not dependent on statistical significance, but rather the posterior probability densities for the coefficients that model interactions. This is, of course, closely related to the second point, since the choice of the model determines how those coefficients are to be interpreted. (Section \ref{sec:bayes_in_grt} \textit{\nameref{sec:bayes_in_grt}})
 
-Fourth, Bayesian adaptive estimation requires, as its name already implies, the calculation of prior and posterior probability densities. This is mainly a computational problem: since the aim of adaptive estimation is to select optimal stimuli in "real time", the algorithms used have to be relatively lightweight. The posterior probability densities are not analytically calculable, so approximations based on Monte Carlo methods (random sampling) are used. This issue is discussed in Section \ref{sec:posterior_approx} \textit{\nameref{sec:posterior_approx}}.
+Fourth, Bayesian adaptive estimation requires, as its name already implies, the calculation of prior and posterior probability distributions. These distributions lack analytical solutions,  so approximations based on Monte Carlo methods (random sampling) are used. This issue is discussed in Section \ref{sec:posterior_approx} \textit{\nameref{sec:posterior_approx}}. This is mainly a computational problem: since the aim of adaptive estimation is to select optimal stimuli in "real time", the algorithms used have to be relatively lightweight.
 
-Related to all of the above angles are multiple practical problems, such as how to maximize the function that describes the optimality of stimuli, how many random samples one should use when approximating the posterior probability densities, what kind of parameterization of the likelihood function to use, what is the most comfortable way of inputting responses for participants and so on. 
+Related to all of the above angles are multiple practical problems, such as how to maximize the function that describes the optimality of stimuli, how many random samples one should use when approximating the posterior probability densities, what kind of parameterization of the likelihood function (the statistical model) to use, what is the most comfortable way of inputting responses for participants and so on. These questions will be addressed as they rise.
 
-The reader should be aware that what is being evaluated here is the intersection of all the factors just mentioned, and changing any of these would change the results. This limits the generalizability of the results, which is a common problem with studies like this. The main contribution of this thesis, then, is to explore the application of Bayesian (adaptive) methods to GRT and map some of the problems associated with this.
+The reader should be aware that what is being evaluated here is the intersection of all the factors just mentioned, and changing any of these would change the results. This limits the generalizability of the results, which is a common problem with simulation studies. The main contribution of this thesis, then, is to explore the application of Bayesian (adaptive) methods to GRT and map some of the problems associated with this.
 
 This thesis is divided into three main parts: The first part describes GRT, beginning from Signal Detection Theory and gradually exposing the reader to the models used in this thesis (Section \ref{sec:GRT} \textit{\nameref{sec:GRT}}); Second part describes Bayesian statistics and the adaptive algorithm (Sections \ref{sec:bayes} \textit{\nameref{sec:bayes}} and \ref{sec:adaptive} \textit{\nameref{sec:adaptive}}); the final part consists of simulations and psychophysical experiments which are used to evaluate the models (Sections \ref{sec:simulations} \textit{\nameref{sec:simulations}} and \ref{sec:pp_exp} \textit{\nameref{sec:pp_exp}}).
 
@@ -149,9 +187,9 @@ This thesis is divided into three main parts: The first part describes GRT, begi
 \section{Theories of Detection}
 \label{sec:GRT}
 
-The central theoretical concept in this work is General Recognition Theory (GRT), which is essentially a generalization of Signal Detection Theory (SDT) to multiple dimensions, with a focus on modelling interactions between them. Due to this hierarchy, I will first introduce the reader to SDT, before discussing GRT.
+The central theoretical concept in this thesis is General Recognition Theory (GRT), which is essentially a generalization of Signal Detection Theory (SDT) to multiple dimensions, with a focus on modelling interactions between them. Due to this hierarchy, I will first introduce the reader to SDT, before discussing GRT.
 
-Both SDT and GRT are discussed in the context of a \textit{discrimination task}. In such a task a single stimulus consists of two components: the \textit{reference tone} and the \textit{test tone}, as shown schematically  in Figure \ref{fig:discrtask}. If for example the dimension of interest is pitch, the reference tone would always be the same, e.g. 150 Hz, and the test tone would either be the same or a higher pitch. The participant would then have to determine if there was a difference between the test and reference tones.
+Both SDT and GRT are discussed in the context of a \textit{discrimination task}. In such a task a single stimulus consists of two components: the \textit{reference tone} and the \textit{test tone}, as shown schematically in Figure \ref{fig:discrtask}. If for example the dimension of interest is pitch, the reference tone would always be the same, e.g. 150 Hz, and the test tone would either be the same or a higher pitch. The participant would then have to determine if there was a difference between the test and reference tones.
 
 \begin{figure}[!htb]
 \centering
@@ -164,40 +202,41 @@ A stimulus in which the difference between reference and test tones is zero is c
 
 \subsection{Signal Detection Theory}
 
-Continuing the example of a  pitch discrimination task, during such experiment it is not rare to observe the participant sometimes give a negative and sometimes a positive response to the same stimulus on different presentations. The view that SDT takes is that the responses are not based directly on the physical signals, but rather some latent (unobserved) internal quantity, sometimes referred to as \textit{evidence} \citep{wickens2002} or \textit{judgments} \cite{stigler2003}, I will be using the term \textit{evidence} from here on. It is thought that the latent amount of evidence for e.g. the test tone being higher than the reference tone is subject to random variation, which in turn leads to variation in responses (\citet[p. 154]{kingdomprins2010}, \citet[p. 11]{wickens2002}). These random perturbations to the amount of evidence are commonly thought to arise primarily from sensory sources, but I will discuss this issue later in greater detail.
+Continuing the example of a  pitch discrimination task, during such experiment it is not rare to observe the participant sometimes give a negative and sometimes a positive response to the same stimulus on different presentations,  that is, sometimes the participant will report hearing a difference and sometimes not even though the difference between the reference and test tone is the same. 
 
-Some assumptions about the nature of the perturbations are usually made, for example that small perturbations are more common than large ones, and that the average amount of error is zero. A popular choice for modelling the distribution of the perturbations is the normal distribution with mean 0 and unknown variance. This is also the assumption that I will be making in this thesis. By making this assumption about the distribution of the perturbations, one can calculate the predicted response probabilities for different stimuli, and consequently make statistical inferences about the sensory processes of interest. Rest of the discussion will deal with the minutiae of these calculations. 
+The view that SDT takes is that the responses are not based directly on the physical signals, but rather some latent (unobserved) internal quantity, sometimes referred to as \textit{evidence} \citep{wickens2002} or \textit{judgments} \cite{stigler2003}, I will be using the term \textit{evidence} from here on. It is thought that the latent amount of evidence for e.g. the test tone being higher than the reference tone is subject to random variation, which in turn leads to variation in responses (\citealt[p. 154]{kingdomprins2010}; \citealt[p. 11]{wickens2002}). These random perturbations to the amount of evidence are commonly thought to arise primarily from sensory sources, but I will discuss the issue of how to interpret these latent quantities later in greater detail.
+
+Some assumptions about the nature of the perturbations have to be made, for example that smaller ones are more common than large, and that the average amount of error is zero. A popular choice for modelling the distribution of the perturbations is the normal distribution with mean 0 and unknown variance. By making this assumption about the distribution of the perturbations, one can calculate the predicted response probabilities for different stimuli, and consequently make statistical inferences about the sensory processes of interest. 
 
 \subsubsection{Relationship between stimulus and $d'$}
 
-Since the amount of evidence is assumed to be random, it can be represented as probability distributions as in Figure \ref{fig:SDT}. In the figure $S$ stands for physical signal level, for example the difference in frequencies between the reference and test tones. As was discussed in the previous section, normal distribution is used to model the distribution of evidence. 
+Since the amount of evidence is assumed to be random, it can be represented as probability distributions as in Figure \ref{fig:SDT}. In the figure, $S$ stands for physical signal level, for example the difference in frequencies between the reference and test tones. As already stated, normal distribution is used to model the distribution of evidence, however, in the context of lapses (accidental responses) I will discuss mixtures of distributions.
 
-If the subject is presented with a noise stimulus (one in which $S = 0$), the amount of evidence on any single trial is assumed to be a random sample from the zero-centred distribution in Figure \ref{fig:SDT}; in the context of the pitch discrimination task this would correspond with stimulus in which the test and reference pitches are identical. As $S$ is increased, the distribution from which the evidence is assumed to be sampled from shifts rightward, farther from zero, as is shown for $S = 2$ and $S = 4$.
+If the subject is presented with a noise stimulus (in which $S = 0$), the amount of evidence on any single trial is assumed to be a random sample from the zero-centred distribution in Figure \ref{fig:SDT}; in the context of the pitch discrimination task this would correspond with stimulus in which the test and reference pitches are identical. As $S$ is increased, the distribution from which the evidence is assumed to be sampled from shifts rightward, farther from zero, as is shown for $S = 2$ and $S = 4$.
 
 \begin{figure}[!htb]
 \begin{center}
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
-\includegraphics[width=\maxwidth]{figure/unnamed-chunk-2-1} 
-
+\includegraphics[width=\maxwidth]{figure/unnamed-chunk-3-1} 
 \end{knitrout}
 \end{center}
 \caption{Evidence, according to SDT, is a random  variable. It can be assumed to be normally distributed, with monotonically increasing $\mu$ as a function of signal strength, $S$, and constant variance, $\sigma$.}
 \label{fig:SDT}
 \end{figure}
 
-Signal level divided by the standard deviation of evidence is called $d'$, usually interpreted as \textit{discriminability} \citep[Chapter 6]{kingdomprins2010} or \textit{signal-to-noise ratio} \citep{kontsevichtyler1999}. Standardized in this way, the standard deviation of evidence distribution is always one, and the mean is $d'$, which is convenient. This is why usually the relationship between signal strength and $d'$ is modelled. 
+Signal level divided by the standard deviation of evidence is called $d'$, usually interpreted as \textit{discriminability} \citep[Chapter 6]{kingdomprins2010} or \textit{signal-to-noise ratio} \citep{kontsevichtyler1999}. Standardized in this way, the standard deviation of evidence distribution is always one, and the mean is $d'$, which is most conveniently interpreted indeed as signal-to-noise ratio.
 
-The relationship between $d'$ and $S$ is not necessarily linear. Theoretically this kind of non-linearity could  arise e.g. from changes in the variance of the evidence distribution. However, the non-linearity is often interpreted as being the result of non-linearity in signal transduction, i.e. the change of physical signal into internal.\footnote{Familiar example of non-linear transduction is how pitch is experienced in large scale: in order to move one octave up on the psychological scale of pitch, one has to move increasingly fast on the physical frequency, see \citet[Chapter 5]{zwickerfastl}.}
+The relationship between $d'$ and $S$ is not necessarily linear. Theoretically this kind of non-linearity could  arise e.g. from changes in the variance of the evidence distribution, however, the non-linearity is often interpreted as being the result of non-linearity in signal transduction, i.e. the change of physical signal into internal.\footnote{Familiar example of non-linear transduction is how pitch is experienced in large scale: in order to move one octave up on the psychological scale of pitch, one has to move increasingly fast on the physical frequency, see \citet[Chapter 5]{zwickerfastl}.}
 
-The functional relationship between physical signal strength and $d'$ has been quantified in many different ways in the psychophysical literature (for a selection, see \citet[Appendix A]{lesmes2015}). The functional form used here is based on the widely used \textit{power law} model of signal transduction (see e.g. \citet{kontsevichtyler1999, dai2011, lesmes2015}):
+The functional relationship between physical signal strength and $d'$ has been quantified in many different ways in the psychophysical literature (for a selection of functions, see \citet[Appendix A]{lesmes2015}). The functional form used here is based on the widely used \textit{power law} model of signal transduction (see e.g. \citet{kontsevichtyler1999, dai2011, lesmes2015}):
 
 \begin{equation}
 d' = (\frac{S}{\sigma})^\beta
 \label{eq:dprimefunc}
 \end{equation}
 
-Here $S$ is again the physical signal strength, $\sigma$ corresponds to the standard deviation of evidence and $\beta$ models non-linearity between signal level and signal-to-noise ratio. Note that often the letter $\alpha$ is used for the standard deviation of evidence (e.g. in \cite{dai2011, kontsevichtyler1999, kingdomprins2010}), but since this parameter is directly related to the standard deviation of the evidence distribution, I feel $\sigma$ is more appropriate. 
+Here $S$ is again the physical signal strength, $\sigma$ corresponds to the standard deviation of the evidence distribution and $\beta$ models non-linearity between signal level and signal-to-noise ratio. Note that often the letter $\alpha$ is used for the standard deviation of evidence (e.g. in \cite{dai2011, kontsevichtyler1999, kingdomprins2010}), but since this parameter is directly related to the standard deviation of the evidence distribution, I believe $\sigma$ is more appropriate. 
 
 The effects of changing these parameters are shown in Figure \ref{fig:dprimefunc}. The smaller $\sigma$ is, the faster $d'$ increases. $\beta$ parameter affects the linearity of the function: when $\beta < 1$ the function increases faster than the linear case before the point at which $d' = 1$ and slower after that; the opposite happens when $\beta > 1$. 
 
@@ -205,8 +244,7 @@ The effects of changing these parameters are shown in Figure \ref{fig:dprimefunc
 \begin{center}
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
-\includegraphics[width=\maxwidth]{figure/unnamed-chunk-3-1} 
-
+\includegraphics[width=\maxwidth]{figure/unnamed-chunk-4-1} 
 \end{knitrout}
 \end{center}
 \caption{ The effect of $\sigma$ and $\beta$ parameters on the $d'$ function. Left panel shows the effect of changing $\sigma$ parameter while keeping $\beta$ constant ($\beta = 1$) and the right panel shows the effect of changing $\beta$ parameter while keeping $\sigma$ constant ($\sigma = 2$).}
@@ -215,7 +253,7 @@ The effects of changing these parameters are shown in Figure \ref{fig:dprimefunc
 
 \subsubsection{Modelling responses: relationship between $d'$ and response}
 
-The preceding discussion about relating $S$-values to $d'$-values is just one half of SDT, there has to be a way of relating the $d'$-values to responses, $R$. Usually categorical decisions are required from the participant, and the specific response categories depend on what kind of task they are performing. I will be considering a Yes/No and a 2-interval 2-alternative forced choice (2I-2AFC) tasks. These are shown schematically in Figure \ref{fig:YesNoAfc}.
+The preceding discussion about relating $S$-values to $d'$-values is just one half of SDT, there has to be a way of relating the $d'$-values to responses, $R$. Usually categorical decisions are required from the participant, and the specific response categories depend on what kind of task they are performing. I will discuss a Yes/No and a 2-interval 2-alternative forced choice (2I-2AFC) tasks. Structure of these tasks is shown schematically in Figure \ref{fig:YesNoAfc}.
 
 \begin{figure}[!htb]
 \centering
@@ -226,7 +264,7 @@ The preceding discussion about relating $S$-values to $d'$-values is just one ha
 
 In the Yes/No task (panel \textit{a} of Figure \ref{fig:YesNoAfc}) the participant's task is to indicate if they detected the signal. The name of the task is quite literal as the participants provide \textit{Yes} and \textit{No} answers. As shown in the figure, the participant is first presented with the stimulus after which they are expected to give their answer.
 
-In contrast to this, in the 2I-2AFC task the participant is presented with two \textit{observation intervals}, interval referring here to a temporal interval as can be seen from panel \textit{b} of Figure \ref{fig:YesNoAfc}. During each interval the participant is presented with a stimulus, one containing only noise and the other containing the signal. The participant's task is then to indicate which interval they thought contained the signal. Again, the name is quite literal: the participant is presented with two \textit{intervals} and they have to choose their response among two \textit{alternatives}.
+In contrast to this, in the 2I-2AFC task the participant is presented with two \textit{observation intervals}, interval referring here to a temporal interval as can be seen from panel \textit{b} of Figure \ref{fig:YesNoAfc}. During each interval the participant is presented with a stimulus, one interval always contains only noise and the other contains the signal. The participant's task is then to indicate which interval they thought contained the signal. Again, the name is quite literal: the participant is presented with two \textit{intervals} and they have to--they are \textit{forced} to--choose their response among two \textit{alternatives}.
 
 \paragraph{Responses in the Yes/No task}
 
@@ -240,8 +278,7 @@ Criterion is represented by the red dashed vertical lines in Figure \ref{fig:yes
 \centering
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
-\includegraphics[width=\maxwidth]{figure/unnamed-chunk-4-1} 
-
+\includegraphics[width=\maxwidth]{figure/unnamed-chunk-5-1} 
 \end{knitrout}
 \caption{Binary decisions in the YesNo-paradigm. The distribution of evidence is divided into response regions.}
 \label{fig:yesno}
@@ -254,7 +291,7 @@ The probability of evidence exceeding the decisional criterion on any trial can 
 P(R = 1) = \int_{c}^{\infty} N(d', 1)
 \end{equation}
 
-where $N$ is the normal distribution function with parameters $\mu$ (mean) and $\sigma$ (standard deviation), $d'$ is the signal-to-noise ratio as calculated in Equation \ref{eq:dprimefunc} and $c$, the lower bound of the integral, is the decisional criterion. 
+where $N$ is the normal distribution function with parameters $\mu$ (mean) and $\sigma$ (standard deviation). The mean of the distribution is $d'$, which is the signal-to-noise ratio as calculated in Equation \ref{eq:dprimefunc}; $c$, the lower bound of the integral, is the decisional criterion. 
 
 The integral in this equation is usually written in terms of the cumulative standard normal distribution function, $\phi(u) = \int_{-\infty}^{u} N(0, 1)$. The resulting function, denoted with the Greek letter $\psi$, is called the \textit{psychometric function}. \cite[Chapter 4]{kingdomprins2010}
 
@@ -281,8 +318,7 @@ The result is that if the participant aims to avoid false alarms altogether, the
 \begin{center}
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
-\includegraphics[width=\maxwidth]{figure/unnamed-chunk-5-1} 
-
+\includegraphics[width=\maxwidth]{figure/unnamed-chunk-6-1} 
 \end{knitrout}
 \end{center}
 \caption{ Decisional processing in Signal Detection Theory. Left panel: The effect of differing criteria on the predicted amounts of false alarms and hits while the parameters describing the sensory processing are kept constant. \textit{Higher} criterion value implies stricter criterion--that the participant is less willing to respond \textit{yes}--while a \textit{lower} value implies more lax criterion. Right panel: Receiver operating characteristic (ROC) curve for two fixed $d'$-values, showing that the proportions of hits and false alarms are coupled.}
@@ -301,14 +337,13 @@ dv = [N(d', 1) - N(0, 1)] I
 
 Here $I$ is an indicator variable which  is $-1$ when the signal is in the first interval and $1$ when the signal is in the second interval. Consequently the decision rule is to respond \textit{Interval 1} when the decision variable $dv$ is negative and \textit{Interval 2} when it's positive. 
 
-It is usually more practical, however, to think about the responses in terms of hits and false alarms, similar to the Yes/No task. This makes it possible to drop the the indicator variable from the equation, since we are only interested in the difference between the signal and noise distributions. This basic structure of the 2AFC model is demonstrated in Figure \ref{fig:2AFC}. 
+It is easier to think about the responses in terms of hits and false alarms, similar to the Yes/No task. This makes it possible to drop the the indicator variable from the equation, since we are only interested in the difference between the signal and noise distributions--this determines the probability of the participant choosing the correct interval. This basic structure of the 2AFC model is demonstrated in Figure \ref{fig:2AFC}. 
 
 \begin{figure}[!htb]
 \centering
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
-\includegraphics[width=\maxwidth]{figure/unnamed-chunk-6-1} 
-
+\includegraphics[width=\maxwidth]{figure/unnamed-chunk-7-1} 
 \end{knitrout}
 \caption{How responses are generated in the forced choice task. In the upper panel, the shaded distribution shows distribution of evidence from the signal interval while the non-shaded distribution shows evidence from the noise interval. The lower panel shows the distribution of the decision variable. }
 \label{fig:2AFC}
@@ -316,7 +351,7 @@ It is usually more practical, however, to think about the responses in terms of 
 
 In the upper panel the zero-centred distribution represents evidence from the noise-only interval while the distribution centred on 1.5 represents evidence from the signal interval. Irregardless of whether the signal is in the first or second interval, the signal interval will be shifted $d'$ amount. Since the probability of making the correct decision is the proportion of the decision variable distribution that exceeds 0, shifting the signal distribution to the right will increase this probability--as one would expect.
 
-What is important to note is that the decision variable is the difference of two normally distributed random variables, both with standard  deviation of one, since they represent the standardized quantity $d'$. It follows from the additivity of variances, and from the fact that standard deviation is the square root of variance, that the standard deviation of the decision variable is $\sqrt{1^2 + 1^2} = \sqrt{2}$. It follows then that the $d'$ values in the psychometric function have to be divided by this constant:
+What is important to note is that the decision variable is the difference of two normally distributed random variables, both with standard  deviation of one, since they represent the standardized quantity $d'$. It follows from the additivity of variances, and from the fact that standard deviation is the square root of variance, that the standard deviation of the decision variable is $\sqrt{1^2 + 1^2} = \sqrt{2}$. For this reason $d'$ values in the psychometric function have to be divided by this constant:
 
 \begin{align*}
 \begin{split}
@@ -333,18 +368,17 @@ The term $c$ is dropped since it is assumed that, on average, the observer isn't
 \subsection{General Recognition Theory}
 \label{sec:grt_mdls}
 
-So far I have covered the case in which the participant has to make a single decision, e.g. if the pitch of the stimulus changed. In the two-dimensional case the participant has to observe two things at once. For example did the pitch change \textit{and} did the timbre change. The question of primary interest is if there are any \textit{interactions} between the dimensions: does changing timbre also change response probabilities to pitch changes.
+So far I have covered the case in which the participant has to make a single decision, e.g. if the pitch of the stimulus changed. In the two-dimensional case the participant has to observe two things at once. For example did pitch \textit{and} did timbre change. The question of primary interest is if there are any \textit{interactions} between the dimensions: does changing timbre also change response probabilities to pitch changes.
 
-A widely used theoretical framework for generalizing SDT into multiple dimensions is the General Recognition Theory. As in SDT, also in GRT randomness in the responses is thought to arise from the evidence having a probabilistic nature \citep{ashby1986, ashby2015, kadlec1992}. 
+As in SDT, also in GRT randomness in the responses is thought to arise from the evidence having a probabilistic nature \citep{ashby1986, ashby2015, kadlec1992}. 
 
-In the two-dimensional case also the evidence distribution is two dimensional. Following the assumption made earlier that evidence is distributed normally, it is possible to represent evidence in two dimensions by a bivariate normal distribution. A bivariate normal distribution can be defined by two means, which correspond to its location on each dimension, and a correlation coefficient, which corresponds to the shape of the distribution. A bivariate normal distribution with positive correlation is shown graphically in Figure \ref{fig:2dimnorm}. Left panel shows a projection of the 3-dimensional shape of the bivariate density; right panel shows the same distribution from above, as a contour. Rest of the figures in this thesis will represent bivariate distributions as contours similar to the one in the right panel.
+In the two-dimensional case also the evidence distribution is two-dimensional. Following the assumption made earlier that evidence is distributed normally, it is possible to represent evidence in two dimensions by a bivariate normal distribution. A bivariate normal distribution can be defined by two means, which correspond to its location on each dimension, and a correlation coefficient, which corresponds to the shape of the distribution. A bivariate normal distribution with positive correlation is shown graphically in Figure \ref{fig:2dimnorm}. Left panel shows a projection of the 3-dimensional shape of the bivariate density; right panel shows the same distribution from above, as a contour. Rest of the figures in this thesis will represent bivariate distributions as contours similar to the one in the right panel.
 
 \begin{figure}
 \centering
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
-\includegraphics[width=\maxwidth]{figure/unnamed-chunk-7-1} 
-
+\includegraphics[width=\maxwidth]{figure/unnamed-chunk-8-1} 
 \end{knitrout}
 \caption{Two projections of a two-dimensional normal distribution with the parameters $\mu = [1.0, 2.0]$, $\rho = 0.6$.} 
 \label{fig:2dimnorm}
@@ -352,7 +386,7 @@ In the two-dimensional case also the evidence distribution is two dimensional. F
 
 \subsubsection{Calculating $d'$ in two dimensions}
 
-For two-dimensional stimuli, two $d'$ values have to be calculated, on for each dimension. Similar to SDT, the $d'$ values are the location of the evidence distribution, but now the location has to be determined in the two-dimensional space on the $x$ and $y$ axes separately: for example, how much evidence there is for a difference in pitch AND how much is there evidence for a difference in timbre. This implies that now there are two $d'$ functions, and consequently, two of each parameter: 
+For two-dimensional stimuli, two $d'$ values have to be calculated, on for each dimension. Similar to SDT, the $d'$ values are the location of the evidence distribution, but now the location has to be determined in the two-dimensional space on the $x$ and $y$ axes separately: for example, how much evidence there is for a difference in pitch AND how much is there evidence for a difference in timbre. This implies that now there are two $d'$ functions for which the parameters have to be estimated separately: 
 
 \begin{align}
 \label{eq:twodimdprime}
@@ -362,12 +396,14 @@ d'_y &= (\frac{S_y}{\sigma_y})^{\beta_y}
 \end{split}
 \end{align}
 
-However, since the main motivation in GRT is to model interactions between the dimensions, this would be rather incomplete. I will first discuss how response probabilities are found in GRT, and then discuss the types of interference included in the models in this thesis.
+However, since the main motivation in GRT is to model interactions between the dimensions, this would be incomplete: these functions have to be coupled. I will first discuss how response probabilities are found in GRT, and then discuss the types of interference included in the models in this thesis.
 
 \subsubsection{Modelling responses in two dimensions}
 \label{sec:modelling_responses}
 
 Whereas in SDT the participant is usually required to make a single decision on a single axis, in GRT the participant is required to make one decision per axis; in the two-dimensional case two decisions: did the signal level change on $x$ axis and did the signal level change on $y$ axis (a similar approach has been used also by \cite{wickens1992}). 
+
+As before, I will first discuss the Yes/No task before discussing the forced-choice task.
 
 \paragraph{Yes/No task in two dimensions}
 
@@ -375,8 +411,7 @@ Whereas in SDT the participant is usually required to make a single decision on 
 \begin{center}
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
-\includegraphics[width=\maxwidth]{figure/unnamed-chunk-8-1} 
-
+\includegraphics[width=\maxwidth]{figure/unnamed-chunk-9-1} 
 \end{knitrout}
 \end{center}
 \caption{In two dimensions, the evidence distribution--when binary responses are required--is separated into four response regions.}
@@ -429,7 +464,7 @@ Then, if responses are coded with $\text{No} = -1$ and $ \text{Yes} = 1$, inputs
 \end{split}
 \end{align*}
 
-This process can be defined generally with the equation:
+This can be defined generally with the equation:
 
 \begin{equation}
 \psi_2(\bm{S}; \theta)_{\bm{R}} = \phi_2([-c_x + d'_x]r_x, [-c_y + d'_y] r_y, \rho [r_x r_y])
@@ -452,8 +487,7 @@ As before, the participant is thought to base their decision on a decision varia
 \centering
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
-\includegraphics[width=\maxwidth]{figure/unnamed-chunk-9-1} 
-
+\includegraphics[width=\maxwidth]{figure/unnamed-chunk-10-1} 
 \end{knitrout}
 \caption{In the 21-4AFC task, the participant is assumed to base their responses on the difference in the evidence from signal and noise distributions (left panel). Variance of the distribution of differences is th sum of the variances of the individual distributions (right panel).}
 \label{fig:2I4AFC}
@@ -488,8 +522,7 @@ Two kinds of couplings are modelled. These are demonstrated graphically  in Figu
 \begin{center}
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
-\includegraphics[width=\maxwidth]{figure/unnamed-chunk-10-1} 
-
+\includegraphics[width=\maxwidth]{figure/unnamed-chunk-11-1} 
 \end{knitrout}
 \end{center}
 \caption{The two kinds of couplings in the model. The contours in the top row depict bivariate normal distributions. Dashed lines indicate the shape and location of the distribution in the absence of interaction; the solid lines depict them in the case that interaction is present. Curves in the lower row are psychometric functions for a single dimension.}
@@ -548,7 +581,7 @@ The couplings, $\kappa_{\mu}$ and $\kappa_{\sigma}$, are sometimes called \texti
 
 It is possible that during a psychophysical task, people sometimes \textit{lapse}. That is, for some reason the response they give doesn't reflect the cognitive process of interest. This might be due to e.g. lapse in attention, a coding error in the program, or a slip of a finger. In the classic GRT models, lapsing behaviour has not been taken into account, even though in the unidimensional case lapses have been shown to be able to exert considerable bias on the parameter estimates of the psychometric function \citep{wichmannhill2001}. 
 
-Estimating lapsing rate from data can be problematic (\cite{wichmannhill2001, treutwein1999}), and this problem can be worse for adaptive procedures \citep{prins2012}. Since the values of the psychometric function that are closer to zero are affected both the lapses and the decision criterion (in the Yes/No task), most of the information gained about lapsing behaviour comes from lapses happening at high intensities. What makes matters worse is that the lapsing response doesn't necessarily differ from what the participant would've answered otherwise, so the distinction between lapses and genuine response is ambiguous (for further discussion on these problems, see \cite{prins2012}). For these reasons I fixed the values of $\lambda$ and $\gamma$ during the adaptive estimation phase. However, during the analysis of the psychophysical data I estimated the parameter $\lambda$ from the data, a decision, which will be discussed in more detail in the analysis section.
+Estimating lapsing rate from data can be problematic (\cite{wichmannhill2001, treutwein1999}), and this problem can be worse for adaptive procedures, at least for trying to adaptively estimate the lapsing rate \citep{prins2012}. Since the values of the psychometric function that are closer to zero are affected both the lapses and the decision criterion (in the Yes/No task), most of the information gained about lapsing behaviour comes from lapses happening at high intensities. What makes matters worse is that the lapsing response doesn't necessarily differ from what the participant would've answered otherwise, so the distinction between lapses and genuine response is ambiguous (for further discussion on these problems, see \cite{prins2012}). For these reasons I fixed the values of $\lambda$ and $\gamma$ during the adaptive estimation phase. However, during the analysis of the psychophysical data I estimated the parameter $\lambda$ from the data, a decision, which will be discussed in more detail in the analysis section.
 
 I model lapsing behaviour by using a (hierarchical) mixture model (see \citet{zeigenfuse2010}), which will be discussed in Section \ref{sec:hierarchical_models} \textit{\nameref{sec:hierarchical_models}}.
 
@@ -559,6 +592,7 @@ I model lapsing behaviour by using a (hierarchical) mixture model (see \citet{ze
 \label{sec:grt_criticism}
 
 \subsubsection{Relationship to other models}
+\label{sec:grt_classic}
 
 \paragraph{Classic GRT}
 
@@ -588,9 +622,9 @@ The logic in this kind of task differs from that of discrimination task. Instead
 
 Categorization is sensible in the case of clear differences, e.g. categorizing extremely different pitches such as 100 Hz and 5000 Hz. However, in the case of minute differences that are close to the detection threshold, it is more likely that the subject bases their decisions on perceived \textit{differences} between consecutive stimuli. One of the assumptions of the model is that single responses are statistically independent (see e.g. \citet[p. 218]{wickens1992}), but if indeed the responses are based on perceived differences between consecutive stimuli, this assumption is gravely violated.
 
-Another difficulty is that the participant would have to hold accurate representations of the stimuli in their memory. Again this is simple when categorizing apples and oranges, but much more difficult in a psychophysical experiment in which the levels are to begin with selected in such a way that they are easily confusable. 
+Another difficulty is that the participant would have to hold accurate representations of the stimuli in their memory. Again this is simple when categorizing apples and oranges, but much more difficult in a psychophysical experiment in which the levels are to begin with selected in such a way that they are easily confusable. As already discussed, Signal Detection Theory is used specifically in a situation in which there's a high probability for confusing the stimuli. 
 
-Of course all kinds of assumptions are always violated, since any statistical model is a simplification of the real and complex cognitive processes, but I feel it is better to use tasks that don't correspond with what can be realistically expected from the participant. It is for these reasons that I've opted to base the model presented here explicitly on discrimination instead of categorization or identification.
+Of course all kinds of assumptions are always violated, since any statistical model is a simplification of the real and complex cognitive processes, but this is not an excuse to \textit{not} use procedures that are more in line with what is known \textit{a prior}. It is for these reasons that I've opted to base the model presented here explicitly on discrimination instead of categorization or identification.
 
 As per the second modification, the addition of functional relationships, in the classic GRT model each stimulus is represented by its own bivariate  normal distribution (see e.g. \cite{ashby2015}). For example, in the aforementioned 2X2 categorization task parameters for four bivariate normal distributions would be estimated. If more stimuli are used also more decision boundaries are needed in the categorization task: a separate set of decision boundaries between each category is required. 
 
@@ -600,8 +634,7 @@ This can lead to difficulties when trying to interpret the model. Consider for e
 \centering
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
-\includegraphics[width=\maxwidth]{figure/unnamed-chunk-11-1} 
-
+\includegraphics[width=\maxwidth]{figure/unnamed-chunk-12-1} 
 \end{knitrout}
 \caption{An example of a classic GRT model fitted to a 2X2 categorization data. Each of the stimuli are fitted with their own bivariate normal distribution.}
 \label{fig:classicGRT}
@@ -632,11 +665,11 @@ Generalized Linear Models (GLM's) are widely implemented in statistical analysis
  
 \cite{decarlo1998} describes the unidimensional SDT model as a generalized linear model. In the case of normally distributed noise, a \textit{probit model}, which is how already Gustav Fechner--who is sometimes regarded as the founder of psychophysics--modelled categorical judgments in the 19th century (discussed in \citealt[Chapter 7]{stigler2003}). 
 
-The models--with the caveat mentioned at the end of this section--used in this thesis can be thought of as a \textit{non-linear multinomial} probit model. Non-linear \citep[p. 379]{box2005} since the relationship between $S$ and $d'$ included the term $\beta$; multinomoal, since in a binary choice probit model the responses are assumed to follow the binomial distribution, but in the multidimensional model, since there are more than two choices, the responses are assumed to follow the multinomial distribution \cite[p. ERROR]{skrondahl2004}. 
+The models--with the caveat mentioned at the end of this section--used in this thesis can be thought of as a \textit{non-linear multinomial} probit model. Non-linear \citep[p. 379]{box2005} since the relationship between $S$ and $d'$ included the term $\beta$; multinomoal, since in a binary choice probit model the responses are assumed to follow the binomial distribution, but in the multidimensional model, since there are more than two choices, the responses are assumed to follow the multinomial distribution \cite{skrondahl2004}. 
 
 As Generalized Linear Models in general, also the model here can in theory use any distribution as the model for the errors (the use of other than normal distributions in GRT has already been discussed in \citet{ashby1986}, but to my knowledge, other distributions besides normal have \textit{never} been used). The main limitation is mathematical and computational: how to effectively calculate the two-dimensional integrals needed for the response probabilities. There can also be other issues, e.g. for the  typical multinomial logistic model, no correlation is usually modelled \citep{skrondahl2004}, which can prove to be a too limiting assumption.
 
-In the context of GLM's, the modelling of lapses is can be called \textit{robust regression} \citep[p. 635]{kruschke2015} since it relaxes the distributional assumptions somewhat, and isn't so prone to estimation errors due to outliers. However it should be noted that this requires the lapsing parameters to be fixed \citep[p. ERROR]{skrondahl2004}. This is not true for all of the models used in this thesis.
+In the context of GLM's, the modelling of lapses is can be called \textit{robust regression} \citep[p. 635]{kruschke2015} since it relaxes the distributional assumptions somewhat, and isn't so prone to estimation errors due to outliers. However it should be noted that this requires the lapsing parameters to be fixed \cite{skrondahl2004}. This is not true for all of the models used in this thesis.
 
 \subsubsection{Nonidentifiabilities and other limitations of the model}
 
@@ -660,7 +693,7 @@ Conceptualization of the latent variables affects the way interactions are under
 
 Criterial noise can be defined as random variation in the criteria around some central value, in the present context the central value would most naturally be thought of as the parameter $c$ in the model. If this variation is assumed to be Gaussian, it is not identifiable from other sources. This issue has been discussed in SDT literature already by \cite{wickelgren1968}\footnote{\cite{wickelgren1968} talks about \textit{unidimensional strength theory}, but the discussion is directly applicable to the present situation.}; in the context of GRT \citet{ashby2000} has discussed the role of criterial noise. In the context of SDT there have been proposals for identifying the magnitude of criterial noise using experimental manipulations (see e.g. \citealt{kellen2012, benjamin2009, cabrera2015}), but the application of these methodologies to GRT will not be considered further here. 
 
-In practice, any criterial noise will be included in the $\sigma$ estimates, since, as already discussed, these represent to sum total of all variation. With regard to GRT the problem is if the criterial noise between the dimensions is correlated: this will be included in the $\rho$ estimates. Another possibility is that criterial changes--e.g. between sessions or during a long session--would also affect the $\kappa$ estimates. To my knowledge, no systematic exploration of this possibility exists; in my own non-systematic simulations I have noticed that indeed in some cases such criterial shifts can affect the the parameter estimates and lead to erroneous inferences. 
+In practice, any criterial noise will be included in the $\sigma$ estimates, since, as already discussed, these represent to sum total of all variation. With regard to GRT the problem is if the criterial noise between the dimensions is correlated: this will be included in the $\rho$ estimates. Another possibility is that criterial changes--e.g. between sessions or during a long session--would also affect the $\kappa$ estimates. To my knowledge, no systematic exploration of this possibility exists; in my own non-systematic simulations I have noticed that indeed in some cases such criterial shifts can affect the the parameter estimates and lead to erroneous inferences, however, this will not be explored any further in this thesis. 
 
 \paragraph{Non-orthogonality of decisional boundaries}
 
@@ -671,6 +704,14 @@ In the present paper the focus is on orthogonal decisional boundaries. Non-ortho
 Another problem is the identifiability of non-orthogonal decisional boundaries: \cite{soto2015} claim that their model makes decisional separability identifiable--contrary to the classic model \citep{silbert2013}--but their result has been refuted on mathematical grounds by \cite{silbert2016}: any non-orthogonal boundaries can be thought of as a transformation of the space to one in which the boundaries are orthogonal and correlation is non-zero. 
 
 It follows that, in the models with orthogonal decisional boundaries, any non-orthogonality would be seen as non-zero values of the $\rho$ parameter, which should be taken into account when interpreting this parameter.
+
+
+
+ 
+
+
+
+
 
 \newpage
 
@@ -697,11 +738,11 @@ In this equation $P(\theta | Data)$ is the posterior distribution, $P(\theta)$ i
 The likelihood function determines \textit{how} the observed data updates the prior information. In practice, this means that there needs to be a model which determines how observed data translates into probabilities about parameter values, or how the model learns from observed data. Here, the likelihood is defined by any of the models (M in Equation \ref{eq:likelihood}) introduced earlier in this thesis. Consequently the likelihood for a particular $\theta$ is simply the product of the probabilities of the observed responses given the $\theta$ (and the model)\footnote{Remembering that multiplying probabilities corresponds to the logical operand \textit{and}, this means the we are interested in finding out the probability of the response on the first trial AND the response on the second trial and on the third trial and so on, depending on how many responses there are.}:
 
 \begin{equation}
-\prod_{t=1}^n (\bm{R}^t, \bm{S}^t; \theta, M)
+\prod_{t=1}^n \psi_2(\bm{R}^t, \bm{S}^t; \theta, M)
 \label{eq:likelihood}
 \end{equation}
 
-Note that usually the logarithmic likelihood function is used of numerical stability, $\sum_{t=1}^n ln (\bm{R}^t, \bm{S}^t; \theta, M)$, which is how the likelihood is defined in all of the R and Stan programs. Stan programs can be found from the appendices. 
+Note that usually the logarithmic likelihood function is used of numerical stability, $\sum_{t=1}^n ln \psi_2(\bm{R}^t, \bm{S}^t; \theta, M)$, which is how the likelihood is defined in all of the R and Stan programs. Stan programs can be found from the appendices. 
 
 Updating prior information is demonstrated for a single parameter in Figure \ref{fig:priorpost}. The shaded region represents the prior distribution $P(\theta)$, which in this case, is a log-normal distribution. The prior distribution is centred around $\sigma = 2$, indicating that values close to $2$ are seen as most probable prior to observing any data. 
 
@@ -711,8 +752,7 @@ After some data has been observed the prior distribution is updated with evidenc
 \centering
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
-\includegraphics[width=\maxwidth]{figure/unnamed-chunk-12-1} 
-
+\includegraphics[width=\maxwidth]{figure/unnamed-chunk-13-1} 
 \end{knitrout}
 \caption{A simplified example of the basic concepts of Bayesian inference. The shaded area represents prior knowledge about the parameter $\sigma$. Dashed line is $P(Data | \theta)$ and the solid line is the posterior probability density, $P(\theta | Data)$}
 \label{fig:priorpost}
@@ -734,8 +774,7 @@ Often it is useful to summarize multidimensional posterior density as its margin
 \centering
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
-\includegraphics[width=\maxwidth]{figure/unnamed-chunk-13-1} 
-
+\includegraphics[width=\maxwidth]{figure/unnamed-chunk-14-1} 
 \end{knitrout}
 \caption{A two-dimensional posterior probability density and its marginals. }
 \label{fig:marginals}
@@ -804,15 +843,44 @@ The vector $\Theta_{\text{cognitive + lapses}}$ contains all of the parameters f
 \subsection{Approximating the Posterior Probability Densities}
 \label{sec:posterior_approx}
 
-One issues in doing Bayesian inference is how to calculate the posterior probability densities. Unfortunately analytical solutions are not available even for the simpler cases--e.g. one-dimensional psychometric functions--and no such solution will be developed in this thesis. \citet{kontsevichtyler1999} used \textit{grid approximation} which is based on dividing the effective range of the posterior distribution into equally spaced intervals and then calculating posterior probability density at each point (see \citealt[p.144]{kruschke2015}). The downside is that this method becomes computationally costly when dealing with high dimensional posterior distributions. E.g. if one has a 9-dimensional posterior distribution--like in the present case--and wishes to represent it with even 25 discrete points per dimension, one would need to calculate $25^9$ values, which is infeasible even given the computing capabilities of modern computers.
+Unfortunately posterior probability distributions usually lack closed-form solutions, and they can only be approximated. A problem specific to Bayesian adaptive testing is that selecting the optimal stimulus on each trial requires one to have an approximation not only of the current posterior distribution but also for the possible posteriors given potential stimulus values (this will be elaborated in Section). This means that the approximations have to be quick. 
 
-To circumvent this problem, three approximation methods were used in different parts of this thesis. For fitting models to already collected data, the models implemented in Stan programming language. For the adaptive algorithm to work, on each trial one needs approximate the current posterior probability density in (close to) real time, for this reason Resample-Move algorithm and Laplace approximation were used there. I will describe the Resample-Move algorithm and Laplace approximation in more detail, since they have direct consequences on the implementation of the adaptive algorithm; sampling methods used by Stan are taken \textit{as is}. It suffices to say that similar to the Resample-Move algorithm to be described shortly, Stan uses random numbers to approximate the posterior distribution and these random numbers are generated by Markov Chain Monte Carlo methods (\citet[Chapters 15 \& 16]{stan_manual_new}; for the general principle of approximating posterior distributions with random sampling see \citet[Chapter 7]{kruschke2015}).
+This problem has been solved in a few different ways. \citet{kontsevichtyler1999} used \textit{grid approximation} which is based on dividing the posterior distribution into equally spaced intervals and then calculating posterior probability density at each point\footnote{For a general description of this method see \citealt[p.144]{kruschke2015})}. In essence, this is similar to approximating a function by drawing its graph by calculating its value at some finite number of points. Thus, grid approximation is simple, but its downside is that it becomes computationally costly when dealing with high dimensional posterior distributions. E.g. if one has a 9-dimensional posterior distribution and wishes to represent it with 25 discrete points per dimension, one would need to calculate $25^9$ values, which is infeasible even given the computing capabilities of modern computers. The dimensionality of the cognitive models presented in this thesis range from seven to twelve.
+
+For faster computation with higher dimensional posteriors in the context of Bayesian adaptive testing, e.g. \citet{kujalalukka2006} and \citet{dimattina2015} have proposed the use of random sampling to build fast approximations of the posteriors. This is the main methodology I also used. 
+
+But how can a distribution be approximated by drawing random samples from it? 
+
+As an example, let us say that the distribution we are interested in approximating is a Gamma(3, 1) distribution. We might be interested for example it's expected value  
+
+\begin{equation}
+E[Gamma(3, 1)] = \int_{0}^{\infty} x Gamma(x | 3, 1)
+\end{equation}
+
+and if we did not have access to a closed-form solution, we could draw random samples from it and use those to evaluate that integral. Figure \ref{fig:mcapprox} shows the idea behind this. The rightmost panel shows the target distribution and the center panel shows the samples drawn from it. You can see that there are more samples where the density of the target distribution is higher (around where $x$ is between 2 and 4). In the leftmost panel a histogram of the samples from the center panel is superimposed on the target density. 
+
+\begin{figure}[!htb]
+	\begin{center}
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
+\includegraphics[width=\maxwidth]{figure/mcapprox-1} 
+\end{knitrout}
+	\end{center}
+	\caption{Using random samples to approximate a Gamma(3,1) distribution. Right panel: the target distribution. Center panel: random samples drawn from that distribution. }
+	\label{fig:mcapprox}
+\end{figure}
+
+In practice, however, we are usually not able to draw samples from the posterior distribution directly. For this reason different kinds of algorithms have been developed for drawing random samples from arbitrary distributions. In this work I used two different algorithms for drawing random samples from the posteriors. For the final posterior analyses (e.g. when analyzing data from the psychophysical experiments) the models were programmed in Stan language, which uses a No-U-Turn-Sampler (\citet[Chapters 15 \& 16]{stan_manual_new}). Stan is easy to use, it generally produces accurate approximations of the posteriors-- consequently approximations build using Stan are used as a ground truth. The downside is that it's too slow for implementing it during an experiment.
+
+For this reason, during both the simulated and real experiments, a resample-move algorithm was used for quick approximations of the posterior distributions.
+
+Stan's sampling method is taken here as a black-box method, and won't be discussed in further detail, however I will describe the Resample-Move algorithm since they it has direct consequences on the implementation of the adaptive algorithm. I will also provide short discussion on Laplace approximation, which is based on approximating posterior distributions as multivariate normal distributions, since it was used as a practical back-up method for the adaptive algorithm.
 
 \subsubsection{Resample-Move algorithm}
 
 The Resample-Move algorithm, as described by \citet{chopin2002} involves using \textit{sequential importance sampling} and the occasional \textit{rejuvenation} step (see Algorithm \ref{alg:resamplemove}).  
 
-Central idea is to represent the posterior distribution as \textit{random samples} from it. This is demonstrated in the left panel of Figure \ref{fig:degeneracy}, in which a one-dimensional normal distribution, as represented by the solid line, is approximated with a set of uniformly sampled values along the $x$-axis, called particles. The heights of the particles (the dashed lines) correspond to the weights of the particles (proportionally; the weights should always sum to unity). One can use the values and weights to estimate e.g. the mean and variance of the underlying distribution, using standard formulae for discrete random variables.
+Central idea is to represent the posterior distribution as weighted \textit{random samples}. This is demonstrated in the left panel of Figure \ref{fig:degeneracy}, in which a one-dimensional normal distribution, as represented by the solid line, is approximated with a set of uniformly sampled values along the $x$-axis, called particles. The heights of the particles (the dashed lines) correspond to the weights of the particles (proportionally; the weights should always sum to unity). One can use the locations of the particles and their weights to estimate e.g. the mean and variance of the underlying distribution, using standard formulae for discrete random variables.
 
 \begin{algorithm}
 \caption{Sequential importance sampling with rejuvenation}
@@ -836,7 +904,6 @@ Central idea is to represent the posterior distribution as \textit{random sample
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
 \includegraphics[width=\maxwidth]{figure/degeneracy-1} 
-
 \end{knitrout}
 \end{center}
 \caption{ Demonstration of sequential importance sampling and particle degeneracy. When the posterior probability becomes more concentrated, after some data is observed, less particles have weights that differ significantly from zero. }
@@ -882,11 +949,25 @@ Particle methods have been used in adaptive estimation for example by \citet{dim
 
 \subsubsection{Laplace Approximation}
 
-In Laplace approximation one finds the maximum of the posterior distribution, and by calculating the second derivatives at that point estimates it's marginal standard deviations and correlations--called the Hessian matrix. The posterior distribution can then be represented by a multivariate normal distribution whose mean is the maximum and covariance matrix is calculated from the Hessian matrix. For example citet{shen2013} uses Laplace approximation for adaptively estimating auditory filters.
+Laplace approximation can be conceptualized as a two-step process: 1) find the mode of the posterior, and 2) find the second derivatives of the posterior at the mode. The matrix of the second derivatives at the mode is known as the \textit{Hessian} matrix. Since derivatives are related to the rate of change, the Hessian matrix can be used to construct the covariance matrix for the (multivariate) normal distribution at the mode. Figure \ref{fig:lapapp} shows two univariate implementations, in both panels the solid lines represent the target distributions (which are to be approximated) and the dashed lines show the approximation. In the left panel the target distribution is a t-distribution ($df = 1$), and in the right panel a Gamma distribution ($\alpha = 3$, $beta = 1$). 
 
-Given the reparametrisation at the end of this section, this could possibly be a reasonable way of approximating the  posterior, however in my experience the posterior distribution does sometimes have markedly non-linear dependencies among the parameters, and these are not captured well by Laplace approximation. For this reason Laplace approximation was used in this thesis just as a backup--see \ref{sec:practical_considerations} \textit{\nameref{sec:practical_considerations}}.
+\begin{figure}[!htb]
+	\begin{center}
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
+\includegraphics[width=\maxwidth]{figure/lapapp-1} 
+\end{knitrout}
+	\end{center}
+	\caption{ Laplace approximations of two univariate distributions: t-distribution (left panel) and a shifted Gamma-distribution (right panel). Solid lines show the target distributions while the dashed lines show the approximations. }
+	\label{fig:lapapp}
+\end{figure}
+
+There are two things to note: 1) the farther the target distribution is from normal, the worse the approximation will be; 2) the approximation might extend beyond the support of the target distribution. The second point is evident in how the approximation for the Gamma distribution extends to negative numbers, even though the target distribution's support is constrained to positive real numbers. 
+
+Even though Laplace approximation has been used in the context of Bayesian adaptive estimation (\citet{shen2013} apply it to the adaptive estimation of auditory filters) I use it here as just a backup: for details see Section see \ref{sec:practical_considerations} \textit{\nameref{sec:practical_considerations}}. Even though the models used here can be reparametrised in a way that all dimensions have support on the real number line (this will be discussed shortly), in my experience correlations between the dimensions can be non-linear, which is something that can't be approximated well with a multivariate normal distribution.
 
 \subsection{Bayesian inference in the General Recognition Theory}
+\label{sec:bayes_in_grt}
 
 In this work Bayesian approach is also used during the analysis of the data. Classic GRT studies have been dominated by frequentist methods, and e.g. definitions of interactions have relied on testing for the statistical significance of the parameter values associated with them (e.g. \cite{ashby2015, wickens1992}), to my knowledge, \cite{silbert2010} is the only GRT related work using Bayesian analysis framework. Contrary to the majority of studies, I won't be doing any explicit significance tests, nor am I using the usual \textit{Type I/II} error framework \citep[pp. 470 - 471]{christensen1997}, since there are many problems associated with this.
 
@@ -896,9 +977,9 @@ This shift should not be seen only as a trivial data analytical decision: it sho
 
 \paragraph{Posterior predictive checks}
 
-An important part of Bayesian work flow is \textit{model critique}. The starting point is the boxian philosophy that \textit{"All models are wrong . . ."} \citep{box2005}: since we can be a priori certain that all models are wrong to a degree, it becomes important to check the model against the data to see \textit{how} it is wrong, and if the mismatch is significant. This kind of \textit{model criticism} is an integral part of Bayesian workflow, as described e.g. in \citet[Part II]{bda}.
+An important part of Bayesian work flow is \textit{model critique} \citep[Part II]{bda}. The starting point is the Boxian philosophy that \textit{"All models are wrong . . ."} \citep{box2005}: since we can be a prior certain that all models are wrong to a degree, it becomes important to check the model against the data to see \textit{how} it is wrong, and if the mismatch is significant.
 
-In the classical GRT models, model checking has usually been limited to comparing the predicted response probabilities with the observed probabilities (see for example \citet[Figure 4]{silbert2009}).  However this suffers from the fact that, as discussed earlier in Section \ref{sec:grt_criticism} \textit{\nameref{sec:grt_criticism}}, the classic GRT models are prone to over-fitting, which means that the predicted response probabilities will \textit{always} be fairly close to the observed probabilities. This not evidence for the theoretical assumptions behind the model, but rather just an artefact of the flexibility of the model.
+In the classical GRT models, model checking has usually been limited to comparing the predicted and observed response probabilities  (see for example \citet[Figure 4]{silbert2009}).  However this suffers from the fact that, as discussed earlier in Section \ref{sec:grt_criticism} \textit{\nameref{sec:grt_criticism}}, the classic GRT models are prone to over-fitting, which means that the predicted and observed response probabilities will \textit{always} be fairly close to each other. This not evidence for the validity theoretical assumptions behind the model, but rather just an artifact of the flexibility of the model.
 
 In Bayesian setting, \textit{posterior predictive checks} can be used to assess the fit of the model to the data. The idea is to use the posterior distribution to predict new data. The distribution of predicted data can be thought of has what the model "thinks" about the data. If there's large discrepancies between what the model thinks and data, this is a clear indication that the model does not sufficiently capture all relevant features of the data. \citep[Chapter 7]{bda}.
 
@@ -906,35 +987,43 @@ Developing good posterior predictive checks can be difficult, and there is not a
 
 \paragraph{Unconstrained parameterization}
 
-By their very nature, $\sigma$ parameters are bound to be positive, since they represent standard deviations. The $\beta$ terms don't have to be positive, but since the psychometric functions are assumed to be monotonically increasing, I restricted the $\beta$ parameters to be positive too. The correlation parameter, $\rho$, is bound between -1 and 1. 
+By their very nature, $\sigma$ parameters are constrained to positive real numbers, since they represent standard deviations. Such hard constraints don't exist for the $\beta$ terms, but since the psychometric functions are assumed to be monotonically increasing, I also constrained the $\beta$ parameters to positive real numbers too. The correlation parameter, $\rho$, is bound between -1 and 1. 
 
-As already mentioned, these bounds have to be taken into account when deciding what distributions to use as prior distributions for the parameters. One solution is to choose distributions with matching supports, i.e. for example log-normal distributions for the parameters bound to positive real numbers. Another possibility is to \textit{reparametrise} the model in such a way that some convenient distributions can be used. The latter approach is taken here. 
+As already mentioned, these bounds have to be taken into account when deciding what distributions to use as priors for the parameters. One solution is to choose distributions with matching supports, i.e. for example log-normal distributions for the parameters bound to positive real numbers. Another possibility is to \textit{reparametrise} the model in such a way that all of the parameters have support on the real number line. The latter approach is taken here. 
 
-Priors for $\sigma$ and $\beta$--and as a consequence the parameters themselves--are defined on the logarithmic scale. Prior for $\rho$ is defined on the inverse hyperbolic tangent scale. Both of these are widely used transformations in statistics for these kinds of situations (see \citet[Chapter 22]{stan_manual}). In practice this means  that the \textit{inverse} transformations have to be implemented in the likelihood calculations.
+Priors for $\sigma$ and $\beta$--and as a consequence the parameters themselves--are defined on the logarithmic scale. Prior for $\rho$ is defined on the inverse hyperbolic tangent scale. In other words
+
+\begin{align}
+	\begin{split}
+		\sigma' &= log(\sigma) \\
+		\beta' &= log(\beta)   \\
+		\rho' &= atanh(\rho)
+	\end{split}
+\end{align}
+
+
+Both of these are widely used transformations in statistics for parameters with this kinds of constraints (see \citet[Chapter 22]{stan_manual}). In practice this means that the \textit{inverse} transformations have to be implemented in the likelihood calculations: since e.g. since $\beta'$ is on the natural log scale, we recover the original parameter by using the exponential function: $\beta = exp(\beta')$. 
 
 For the $d'$ calculations this implies that Equation \ref{eq:twodimdprime} becomes
 
 \begin{align}
 \begin{split}
-d'_x &= (\frac{S_x}{exp(\sigma_x)})^{exp(\beta_x)} + \kappa_x S_y \\
-d'_y &= (\frac{S_y}{exp(\sigma_y)})^{exp(\beta_y)} + \kappa_y S_x
+d'_x &= (\frac{S_x}{exp(\sigma_{x}')})^{exp(\beta_{x}')} + \kappa_x S_y \\
+d'_y &= (\frac{S_y}{exp(\sigma_{y}')})^{exp(\beta_{y}')} + \kappa_y S_x
 \end{split}
 \end{align}
 
 and for the psychometric function (compare this with Equation \ref{eq:generalPfun}):
 
 \begin{equation}
-\psi_2(\bm{S}; \theta)_{(R_x, R_y)} = \phi_2([-c_x + d'_x]r_x, [-c_y + d'_y] r_y, \text{tanh}(\rho) [r_x r_y])
+\psi_2(\bm{S}; \theta)_{(R_x, R_y)} = \phi_2([-c_x + d'_x]r_x, [-c_y + d'_y] r_y, \text{tanh}(\rho') [r_x r_y])
 \end{equation}
 
 A similar transformation would be applied also to Equation \ref{eq:generalPfun2}.
 
-An important aspect of this process to note is that since the priors are normal on the \textit{transformed scale}--i.e. $log\sigma \sim N(\mu, \sigma)$--, they are not normal on the \textit{original scale} (see \citealt[pp. 729 - 732]{kruschke2015}). Indeed, the current parameterization implies that for  example the prior for $\sigma$ is a log-normal distribution.
+An important aspect of this process to note is that since the priors are normal on the \textit{transformed scale}--i.e. $log\sigma \sim N(\mu, \sigma)$--, they are not normal on the \textit{original scale} (see \citealt[pp. 729 - 732]{kruschke2015}). Indeed, the current parameterisation implies that for  example the prior for $\sigma$ is a log-normal distribution.
 
-Another consequence of reparametrisation is that it makes the rejuvenation step of the particle filter slightly simpler. During the rejuvenation step new proposal particles have to be generated from some distribution. It is possible to choose an asymmetric distribution, such as the log-normal distribution, but this leads to two additional complexities: the acceptance probability is now dependent also on the proposal distribution (see ERROR) and the moments calculated from the particle set (mean and standard deviations of the particles) have to be transformed to the parameters of the non-symmetric distribution. 
-
-On the other hand using an unbounded proposal distribution on the bounded space can lead to many proposals  being  outside the support of the distribution, reducing the efficiency of the rejuvenation step.
-
+Since the parameters in this reparameterised version have support on the real number line, this means that symmetric proposal distributions can be used more readily during the move-step of the Resample-Move algorithm. Remember that new values for the parameters are proposed during the move-step. If the parameters have constraints, and a symmetric proposal distribution is used, the proposals may lay outside the constraints, which means that they are automatically rejected\footnote{Another possibility would be to use a non-symmetric distribution, but this would make the move-step somewhat more complicated, and this possibility is not explored in this thesis.}. 
 
 
 \newpage
@@ -944,7 +1033,7 @@ On the other hand using an unbounded proposal distribution on the bounded space 
 \section{Adaptive estimation}
 \label{sec:adaptive}
 
-The motivation behind adaptive psychophysical testing can be traced to intuitive enough starting point. Suppose that the researcher is interested in finding out what is the faintest possible sound that the subject is able to detect. It wouldn't make sense to waste time presenting them with stimuli that they can always detect, rather, if the subject has very low threshold for detection, it would make sense to reduce the level of the stimuli until the subject starts making errors, which is how adaptive \textit{staircase methods work} (c.f. \citet[Chapter 5]{kingdomprins2010}).
+The motivation behind adaptive psychophysical testing can be traced to intuitive enough starting point. Suppose that the researcher is interested in finding out what is the faintest possible sound that the subject is able to detect. It wouldn't make sense to waste time presenting them with stimuli that they can always detect, rather, if the subject has very low threshold for detection, it would make sense to reduce the level of the stimuli until the subject starts making errors, which is how adaptive \textit{staircase} methods work (c.f. \citep[Chapter 5]{kingdomprins2010}).
 
 A popular subclass of adaptive methods are based on Bayesian statistics. \cite{watson1983} introduced the \textit{QUEST} procedure which was influential in its use of Bayesian statistics in determining which stimuli to choose. The QUEST procedure was used only for estimating one parameter, threshold (analogous to the parameter $\sigma$ in this thesis),  and it was later expanded by \citet{king_smith1997} in their ZEST algorithm for estimating the threshold and slope of the psychometric function (analogous to the parameters $\sigma$ and $\beta$ in this thesis). 
 
@@ -960,8 +1049,7 @@ The algorithm in \citet{kontsevichtyler1999} chooses stimuli that minimize the \
 \begin{center}
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
-\includegraphics[width=\maxwidth]{figure/unnamed-chunk-14-1} 
-
+\includegraphics[width=\maxwidth]{figure/unnamed-chunk-15-1} 
 \end{knitrout}
 \end{center}
 \caption{Two multinomial distributions that represent the probabilities for the possible response categories in the model. The distribution on the right is less even, and as a consequence has less entropy.}
@@ -1018,9 +1106,9 @@ Fourth, to ensure that the particle approximation is accurate, three parallel pa
 \section{Simulations}
 \label{sec:simulations}
 
-In this context simulation refers to using simulated observers as participants. A set of parameter values--$\sigma$, $\beta$, $\kappa_{\mu}$ and so on--are chosen for the simulated observer, and they are used to generate simulated responses. This results in simulated data sets that otherwise function similarly to datasets generated by human observers, but since the generating parameters are chosen by the experimenter the ground truth is known. 
+In the simulated experiments, the performance of the model was evaluated using simulated observers. A set of parameter values--$\sigma$, $\beta$, $\kappa_{\mu}$ and so on--wer chosen for the simulated observer, and then used to generate simulated responses. This results in simulated data sets that otherwise function similarly to datasets generated by human observers, but since the generating parameters are chosen by the experimenter the ground truth is known. This is useful for 1) diagnosing problems with the model and 2) observing how sample size affects parameter estimates and their standard errors.
 
-Evaluating models by simulating data is used in Bayesian statistics in general \citep[Chapter 10]{bda} and in psychophysics for studying the performance of the models (e.g. in the presence of lapsing trials in \citet{prins2012}) or adaptive algorithms (e.g. by \citet{kontsevichtyler1999}). \citet{oron2007} has criticized simulation studies as a substitute for thorough analytical solutions: the results of simulations--as I mentioned in the Introduction--are contingent on several \textit{ad hoc} assumptions, and as such it is not always clear if the results are generalizable beyond the initial study. However this can also be seen as the strength of simulation studies: it's possible to easily test models and assumptions that escape analytical solutions.
+Evaluating models by simulating data is used in Bayesian statistics in general \citep[Chapter 10]{bda} and in psychophysics for studying the performance of the models (e.g. in the presence of lapsing trials in \citet{prins2012}) or adaptive algorithms (e.g. by \citet{kontsevichtyler1999}). \citet{oron2007} has criticized simulation studies as a substitute for thorough analytical solutions: the results of simulations--as I mentioned in the Introduction--are contingent on several \textit{ad hoc} assumptions, and as such it is not always clear if the results are generalizable beyond the initial study. However this can also be seen as the strength of simulation studies: it's possible to easily test models and assumptions that escape analytical solutions. In this case, no analytical solutions exist, so simulation is the only tool at use.
 
 I am using simulations to answer  two main questions: 
 
@@ -1041,7 +1129,7 @@ During the simulations the model with $\kappa_{\mu}$ (which will be labelled \te
 
 \subsection{Methods}
 
-The general method was the following: first a set of generating parameters for the simulated observer were drawn randomly, and then either of the algorithms (adaptive/non-adaptive) described earlier were run. This was done for both the Yes/No and 21-4AFC procedure, resulting in four different conditions. I have chosen the number 800 fairly arbitrarily; it represents a number of trials that, I think, could still be administered relatively continuously to a participant, without taking into account non-stationarities induced by a multi-session design\footnote{This was the number of trials completed by both participants during one session of the psychophysical experiment conducted for this thesis, see Section \ref{sec:pp_exp} \textit{\nameref{sec:pp_exp}}}. 
+The general method was the following: first a set of generating parameters for the simulated observer was drawn randomly, and then either the adaptive or the non-adaptive algorithm was run (the simulated responses were generated during this part, since in the case of the adaptive algorithm, the chosen stimuli depend on the responses given, so the stimuli can't be generated in advance). This was done for both the Yes/No and 21-4AFC procedures, resulting in four different conditions. I have chosen the number 800 for the total number of trials fairly arbitrarily; it represents a number of trials that, I think, could still be administered relatively continuously to a participant, without taking into account non-stationarities induced by a multi-session design\footnote{800 was also the number of trials completed by both participants during one session of the psychophysical experiment conducted for this thesis, see Section \ref{sec:pp_exp} \textit{\nameref{sec:pp_exp}}}: as stated in Section \ref{sec:grt_criticism} \textit{\nameref{sec:grt_criticism}}, these models assume that there are no shifts in, say, the response strategy or detection thresholds during the experiment. Longer experimental runs, or those that may span multiple days, almost certainly violate this assumption, and thus, I believe shorter experiments to--ironically--provide more accurate information. 
 
 \paragraph{Prior distributions}
 
@@ -1057,8 +1145,7 @@ Generating parameters for the simulations were drawn from bimodal distributions.
 \centering
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
-\includegraphics[width=\maxwidth]{figure/unnamed-chunk-15-1} 
-
+\includegraphics[width=\maxwidth]{figure/unnamed-chunk-16-1} 
 \end{knitrout}
 
 \caption{Prior distributions for the parameters of the model (solid black lines) and distributions for generating parameters for the simulations (regions shaded with red). Note that all of the densities are normalized to have maximum value of 1.0.}
@@ -1233,27 +1320,30 @@ With regard to the interaction terms, squared errors and marginal standard devia
 \section{Psychophysical experiments}
 \label{sec:pp_exp}
 
-I conducted a psychophysical experiment with two participants to test the model. During the experimental run the model with $\kappa_{\mu}$ (Model 1) was used to determine the stimulus choices for the same reasons mentioned in Section \ref{sec:simulations} \textit{\nameref{sec:simulations}}.
+In order to test the model in practice, I conducted a small scale psychophysical experiment (N = 2). Obviously, given the small sample size, the goal wasn't to generalize the results to a population, but to see if, even in this small preliminary sample, obvious problems would arise. The same model as in the simulations was used: the model with coupled means ($\kappa_{\mu}$, which will be later called \textit{Model 1}), reasons for this were detailed in Section \ref{sec:simulations} \textit{\nameref{sec:simulations}}.
 
-There were three main questions: 
+The stated goal can further be divided into two parts:
 
 \begin{enumerate}
-  \item Is the model used sufficient? 
+  \item How well does the model behave? 
   \item Are there differences in parameter estimates from the two tasks (Yes/No and 2I-4AFC)?
-  \item What inferences can be made about the processing of pitch and timbre?
 \end{enumerate}
 
-What is meant by \textit{sufficient} is that the model should be reasonably well-behaved, that is all of the parameters should be identifiable, and capture relevant features of the data. The second question follows from the prediction that the only difference should be that the sensitivity (parameter $\sigma$) in the 2I-4AFC task is reduced by $\sqrt{2}$. This prediction has been often used to test Signal Detection Theory models, see for example \citet{wickens2002}.
+What I mean by the model being \textit{well-behaved} is that all of the parameters should be identifiable, and capture relevant features of the data. Furthermore, by the parameters being \textit{identifiable} I mean that there shouldn't be strong posterior correlations between parameters, or the joint-posterior probability density should not be multimodal. 
 
-The last question is of more general interest: since the motivation behind GRT is to gain information about the processing of multidimensional signals, in this case ones that vary in their pitch and timbre, can we learn anything from the data that was collected. 
+If there are strong posterior correlations between the parameters, this means that inferences about one parameter, to a degree, depend on the other. Multimodality can mean, for example in the case of the interaction parameters, that both positive and negative values would be supported by the data, which is obviously problematic. 
+
+\textit{Capturing relevant features} is related to posterior predictive capabilities of the model: as a simple but artificial example consider a data set in which the conditional expectation follows second degree polynomial. If one would fit a linear model to that data set, and compare predicted data against observed data, it would be clear that the model doesn't capture the parabolic nature of the expected value. This question is slightly more complicated when it comes to the cognitive models in this thesis, but it will be discussed in greater detail in conjunction with the analyses from the psychophysical experiment.
+
+The second question follows from the prediction that the only difference between the Yes/No and 2I-4AFC tasks should be that the sensitivity (parameter $\sigma$) in the 2I-4AFC task is reduced by $\sqrt{2}$. This prediction has been often used to test Signal Detection Theory models, see for example \citet{wickens2002}. As such this question is also related to the validity of the model: deviations from this prediction would indicate that some of the assumptions are incorrect.  
  
 \subsection{Methods}
 
 \paragraph{Procedure}
 
-The experiments were programmed and run in R \citep{r_language}. Both participants completed 400 trials for both tasks and completed both them during the same session.  Before each trial participants were prompted to press enter to hear the stimulus, and feedback was provided after each trial.
+The experiments were programmed and run in R \citep{r_language}. Both participants completed 400 trials for both tasks during the same session.  Before each trial participants were prompted to press enter to hear the stimulus, and feedback was provided after each trial.
 
-The participants responded separately to both pitch and timbre. In both tasks the first input always corresponded with pitch and the second with timbre. In the Yes/No task the participant would type 0 for \textit{No} and 1 for \textit{Yes}. For example, if they thought that pitch didn't change but timbre changed, they typed the string "01". In the 2I-4AFC task the participant would type the intervals in which they thought the dimensions changed. For example, if they thought pitch changed in the second interval and timbre in the first interval, they typed the string "21". 
+The participants responded separately to both pitch and timbre: two inputs were required after each trial. In both tasks the first input always corresponded with pitch and the second with timbre. In the Yes/No task the participant would type 0 for \textit{No} and 1 for \textit{Yes}. For example, if they thought that pitch didn't change but timbre changed, they typed the string "01". In the 2I-4AFC task the participant would type the intervals in which they thought the dimensions changed. For example, if they thought pitch changed in the second interval and timbre in the first interval, they typed the string "21". 
 
 \paragraph{Stimuli}
 
@@ -1261,16 +1351,15 @@ A single stimulus consisted of a reference tone and a test tone, as shown schema
 
 Similar to \citet{silbert2009} the individual tones consisted of 13 components that were integer multiples of the first component: pitch was manipulated by changing the frequency of the first component and timbre by filtering the harmonics with a Gaussian filter ($\sigma = 150Hz$).
 
-Reference level (pitch of the first component) for pitch was 150Hz; reference level ($\mu$ of the Gaussian filter) for spectral prominence was 850Hz .
+Reference level (pitch of the first component) for pitch was 150Hz; reference level for spectral prominence ($\mu$ of the Gaussian filter) was 850Hz .
 
-Reference and test tones were 300ms in length, with a 100ms gap in between. In the 2I-4AFC task the intervals were divided by a 300ms gap.
+Both reference and test tones were 300ms in length, with a 100ms gap in between. In the 2I-4AFC task the intervals were divided by a 300ms gap.
 
 \begin{figure}
 \centering
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
-\includegraphics[width=\maxwidth]{figure/unnamed-chunk-16-1} 
-
+\includegraphics[width=\maxwidth]{figure/unnamed-chunk-17-1} 
 \end{knitrout}
 
 \caption{Examples of stimuli used in the psychophysical experiment. In both panels $F_1 = 150\text{Hz}$. Spectral prominence in upper panel is 850Hz and in lower panel 1300Hz, making the stimulus in the lower panel brighter in timbre.}
@@ -1282,11 +1371,11 @@ Reference and test tones were 300ms in length, with a 100ms gap in between. In t
 
 \subsection{Results} 
 
-Some model development was inevitable in order to fit the psychophysical data. All of the models are presented  in Table \ref{tab:models}. Note that the models for the Yes/No and 2I-4AFC tasks are identical save for the AFC models lacking the criterion parameters. 
+The initial model (model with only $\kappa_{\mu}$) did not fit the experimental data very well. To alleviate this problem, I developed the alternative models, which did provide better fit to the observed data. All of the models that I will discuss in this section are presented in Table \ref{tab:models}. 
 
-Model fits for both participants are presented separately. Analysis for both participants is divided into two stages, the first describing models 1 to 3 and the second a model in which both kinds of interactions are present. I've also included short discussions of the models alongside the results, to act as a roadmap through the model fitting/development process; general discussion about the main questions is reserved for later. 
+Model fits for both participants are presented separately. Furthermore, the analyses are divided into two parts: in the first part I describe fits for models from 1 to 3; in the second the model in which both kinds of interactions are present is discussed (this model is labelled \textit{Both} in Table \ref{tab:models}). 
 
-I will also present the reader with some introspective remarks, to act as qualitative model criticism.  
+After I've discussed the model development and model fits, I will discuss introspective remarks collected from the participants. This is intended as qualitative model criticism, in contrast to the quantitative model development that I will go through first. 
 
 \begin{table}
 \caption{All of the models fitted to the psychophysical data. If other information is not present, an X indicates that the parameter(s) are free in the model. }
@@ -1322,11 +1411,11 @@ I will also present the reader with some introspective remarks, to act as qualit
 \label{tab:models}
 \end{table}
 
-Models one to three present the initial stage of model development: Model 1 is the same as the one used in simulations. For models 2 and 3 the parameter $\lambda$ was estimated from the data, to accomodate the (presumably) higher proportion of lapsing trials than assumed a prior; also the prior for the criterion was widened, again, to better accomodate smaller false alarm probabilities. Model 3 uses the $\kappa_{sigma}$ style model of interference. 
+Models one to three present the initial stage of model development: Model 1 is the same as the one used in simulations. For models 2 and 3 the lapsing rate parameter $\lambda$ was estimated from the data, to accommodate the (presumably) higher proportion of lapsing trials than assumed a prior. Also the prior for the criterion was widened: the original prior turned out to be weight larger false alarm probabilities than what was intended. In Model 3 the variances of the evidence distributions were coupled, it uses the $\kappa_{sigma}$ style model of interference. 
 
-The model labelled \textit{Both} has, as the name implies, both kinds of interferences in it. The last model, \textit{Both (Truncated)} is otherwise identical to the previous model, but the $\kappa{sigma}$ is bound to positive values. For these models also the parameter $\rho$ was bound between -0.8 and 0.8 to improve computational stability: for the model with normal prior on tanh transformed scale the chains of the MCMC sampler sometimes get stuck to extreme values of correlation.
+The model labeled \textit{Both} has, as the name implies, both kinds of couplings in it. The last model, \textit{Both (Truncated)} is otherwise identical to the previous model, but the $\kappa{sigma}$ parameter is constrained to positive values. For these models also the parameter $\rho$ was constrained between -0.8 and 0.8 to improve computational stability: it seemed that for the model with normal prior on tanh transformed scale the chains (of the MCMC sampler) sometimes get stuck to extreme values of correlation.
 
-All of the models are included in the appendix, the naming convention follows the one established in this section. 
+Stan code for all of the models are included in the appendix. 
 
 \subsubsection{Posterior predictive plots}
 
@@ -1405,7 +1494,7 @@ From looking at the observed responses (Figure \ref{fig:OK_YN_post_pred}) it is 
 
 Due to this, model with coupled standard deviations (Model 3) was fit to the data. It is clear from the posterior predictive plots (Figure \ref{fig:OK_YN_post_pred}, right panel) that this has the closest match to the observed data.
 
-The observed false alarm rates were lower than what I had anticipated \textit{a prior}. To alleviate this problem I widened the prior for the criterion for all of the models besides Model 1, which is the original model.
+The prior used for the criterion proved to be too tight: the data set provided less information about the false alarm probabilities than I expected \textit{a prior}. This lead to poor posterior predictive performance. To alleviate this problem I widened the prior for the criterion for all of the models besides Model 1, which is the original model.
 
 The same set of models was fit to the data from the 2I-4AFC task. However there is much less to be said; none of the models seem to do significantly worse than the others (Figures \ref{fig:OK_AFC_Basic_models} and \ref{fig:OK_AFC_post_pred}).
 
@@ -1474,7 +1563,7 @@ Yes/No: In contrast to participant OK, here Model 3 (Figure \ref{fig:JP_YN_Basic
 
 \paragraph{Participant JP, Model with both interactions: Discussion}
 
-As can be seen from the parameter estimates (Figure \ref{fig:JP_YN_AFC_Both}) the $\kappa_{\sigma}$ in the Yes/No task is not identifiable here either. To alleviate this problem, I constrained $\kappa_{sigma}$ to positive values. This seemed reasonable, since the parameter was identified as positive in the 2I-4AFC model, and on the grounds that pitch and timbre are usually thought to interfere negatively. 
+As can be seen from the parameter estimates (Figure \ref{fig:JP_YN_AFC_Both}) the sign of $\kappa_{\sigma}$ in the Yes/No task is not identifiable here either. To alleviate this problem, I constrained $\kappa_{sigma}$ to positive values. This seemed reasonable, since the parameter was identified as positive in the 2I-4AFC model, and on the grounds that pitch and timbre are usually thought to "draw" the signal level in the same direction, that is, higher timbre results in slightly higher pitch estimates \citep{platt1985}.
 
 \subsubsection{Participant JP, Model with both interactions, $\kappa_{\sigma} > 0$}
 
@@ -1499,7 +1588,9 @@ The posterior distributions don't exhibit obvious problems with the model (Figur
 \subsection{Some introspective remarks}
 \label{sec:introspec}
 
-While posterior predictive checking acts as a quantitative way to check (some) aspects of the models, I will be also incorporating more qualitative model critique in the form of introspective remarks. I've compiled and edited ones that I feel are most important regarding violations of the assumptions of the model in this section. 
+While posterior predictive checking acts as a quantitative way to check (some) aspects of the models, I will be also incorporating more qualitative model critique in the form of introspective remarks. This is done in the spirit of Newell's adage that \textit{"Know the method your subject is using to perform the experimental task"}\citep{newell1973}. Of course, this kind of introspection was already present in the earlier discussion about the pitfalls of an identification task (vs. discrimination). 
+
+I've compiled and edited some of them that I feel are most important regarding violations of the assumptions of the model in this section. 
 
 I've chosen not to include the information about from which participant each remark is for three reasons: first, these are highly subjective and contingent on how each participant verbalizes their internal processes; second, some of the remarks can be conflicting, reflecting dynamic changes strategies or attention; and third, since there were only two participants, no inferences about the generalizability can be made anyway. However, these provide important information about the limitations of the models and tasks as implemented here; which ones are important and how they are to be remedied are questions left for future work. 
 
@@ -1520,7 +1611,7 @@ Stimuli were attended sequentially: one of the dimensions was primary, and the d
 \end{remark}
 
 \begin{remark}
-In the 2I-4AFC task easily discriminable stimuli terminated attention to that dimension. E.g. if there was a clear change in timbre in the first interval, there was no need to listen to it on the second interval; instead, all attention could be diverted to listening for changes in pitch. 
+In the 2I-4AFC task easily discriminable stimuli terminated attention to that dimension. E.g. if there was a clear change in timbre during first interval, there was no need to listen to it on the second interval; instead, all attention could be diverted to listening for changes in pitch. 
 \end{remark}
 
 \begin{remark}
@@ -1563,7 +1654,7 @@ In the AFC task $\kappa^{\mu}_\text{timbre}$ is mostly on the positive side, whi
 
 \paragraph{Conclusions from introspection}
 
-It is clear from the introspective remarks that many of the (implicit) assumptions of the models were violated. The remarks indicate for example non-stationarity, serial processing of the dimensions and autocorrelation between subsequent stimuli. Especially the 2I-4AFC task proved to be problematic due to the more complicated response scheme and complex stimuli.  To better diagnose these--and other--problems, more methods for posterior predictive checking should be developed, to increase the coverage of model criticism. 
+It is clear from the introspective remarks that many of the (implicit) assumptions of the models were violated. The remarks indicate for example non-stationarity, serial processing of the dimensions and correlation between subsequent stimuli. Especially the 2I-4AFC task proved to be problematic due to the more complicated response scheme and complex stimuli.  To better diagnose these--and other--problems, more methods for posterior predictive checking should be developed, to increase the coverage of model criticism. 
 
 \newpage
 
@@ -1571,11 +1662,11 @@ It is clear from the introspective remarks that many of the (implicit) assumptio
 
 \section{Conclusions}
 
-The main theoretical contribution of this thesis is to add psychometric functions to GRT and define interactions through the coupling of these functions. Primary reason for this was to model response probabilities as a function of continuous stimulus values; the classic GRT models are used for categorial stimuli. This adds some structural assumptions to the model, such as, how to parameterize the relationship between physical signals and $d'$ values and how to couple the psychometric functions. The additional structural constraints help make more focused predictions, that--when they violate observed data--can be diagnostic of problems with the models, which in turn is important for model development. The classic categorical models suffer from over-fitting, which can mask such problems.
+The main theoretical contribution of this thesis is to add psychometric functions to GRT and define interactions through the coupling of these functions. Primary reason for this was to model response probabilities as a function of continuous stimulus values; the classic GRT models are used for categorical stimuli. This adds some structural assumptions to the model, such as how to parameterize the relationship between physical signals and $d'$ values and how to couple the psychometric functions. The additional structural constraints help make more focused predictions, that--when they violate observed data--can be used to diagnose problems with the models, which in turn is important for model development. The classic categorical models suffer from over-fitting, which can mask such problems.
 
 I used simple posterior predictive checks based on binning the data using orthogonal boundaries and binning stimuli with zero signal strength as their own categories. This resulted in uneven bin sizes, however, even this simple method was effective in doing some preliminary comparisons between the models and observed data. Developing effective posterior predictive checks should be taken as a goal in itself, since, as already mentioned, this is crucial for model criticism and, consequently, for developing more realistic models.  
 
-Another important difference to classic GRT is that instead of identification I modelled discrimination. Since the perception of faint stimuli is more often based on the differences between stimuli, I believe models of (auditory) perception should take this into account, as it is a rather simple thing to do--although this does limit the selection of experimental tasks.  
+Another important difference to classic GRT is that instead of identification I modelled discrimination. Since the perception of faint stimuli is more often based on the differences between stimuli, I believe models of (auditory) perception should take this into account, as it is a rather simple thing to do--although this does limit the selection of experimental tasks. 
 
 As shown by  the simulations,  the adaptive method, unsurprisingly, was able to achieve better performance on average, however, the difference was rather small and was engulfed in a lot of variability. This suggests that adaptive sampling of stimuli offers little in terms of precision in parameter estimates. What I would believe to be sufficient would be to estimate psychometric functions for each dimension in the absence of interactions and adapt stimuli to these functions, separately for each dimension; similar to how adaptation was implemented for one-dimensional stimuli in \citet{kontsevichtyler1999}. 
 
@@ -1583,13 +1674,17 @@ There's a lot of variability in how well the generating parameters of the simula
  
 Data from the psychophysical experiments indicated rather poor fit of the initial model (Model 1), especially for observer OK. For this observer the data indicated that the main source of interaction between the dimensions was in how they influenced the standard deviations of the evidence distributions. For both observers I ended up using a model that included coefficients for both coupled means and standard deviations, however differences were less clear in the 2I-4AFC task.
 
-The challenge that adaptive methods are facing when it comes to GRT related models is not necessarily how to minimize the entropy of the posterior distribution--as was done here--but rather how to make reliable inferences about the structural aspects of the models, and how to deal with e.g. the kind of non-identifiabilities that were discussed during the analysis of psychophysical data: for observer JP the sign of the parameter $\kappa_{\sigma}$ was not identifiable which required me to constrain the parameter to positive values. This suggests that strong prior information might be needed to identify the models completely--at least for some data sets. At the minimum this implies that on should use posterior approximation methods that can deal with multimodal distributions. 
+The challenge that adaptive methods are facing when it comes to GRT related models is not necessarily how to minimize the entropy of the posterior distribution--as was done here--but rather how to make reliable inferences about the structural aspects of the models, and how to deal with e.g. the kind of non-identifiabilities that were discussed during the analysis of psychophysical data: for observer JP the sign of the parameter $\kappa_{\sigma}$ was not identifiable which required me to constrain the parameter to positive values; on the other hand the parameter $\kappa_{\mu}$ was problematic for the observer OK. This suggests that strong prior information might be needed to identify the models completely--at least for some data sets. At the minimum this implies that on should use posterior approximation methods that can deal with multimodal distributions. 
 
 The response input mechanism for the 2I-4AFC task proved to be problematic. I do believe that it is useful to compare parameter estimates from different tasks, since these provide  simple tests of  some predictions of the models, but the 2I-4AFC task, as it was implemented  here, was lacking and thus severely limits its applicability. More intuitive methods for inputting responses should be developed. 
 
 In addition to this I made the assumption that the observer isn't significantly biased in the 2I-4AFC task. Due to the coding scheme (responses were coded as \textit{hits} and \textit{false alarms}), and not recording the actual intervals testing this assumption was not possible. The effects of bias on the parameter estimates should be explored more thoroughly in future work.
 
-Despite these problems, the sensory ($\sigma$ and $\beta$) parameters from the both tasks were fairly similar, suggesting some agreement with the theoretical predictions, however there were significant differences in the interaction parameters. This indicates strong influence from non-sensory sources to interactions. Identifying sensory and non-sensory sources of variability has been proven problematic even in SDT, as was discussed in Section \ref{sec:GRT} \textit{\nameref{sec:GRT}}, and it would seem, based on these data, that the problem might be even worse in GRT. 
+Despite these problems, the sensory ($\sigma$ and $\beta$) parameters from the both tasks were fairly similar, suggesting some agreement with the theoretical predictions, however there were significant differences in the interaction parameters. This indicates strong influence from non-sensory sources to interactions, given the assumption that the interactions, if they arise from sensory sources, should not be affected by the task structure. Identifying sensory and non-sensory sources of variability has been proven problematic even in SDT, as was discussed in Section \ref{sec:GRT} \textit{\nameref{sec:GRT}}, and it would seem, based on these data, that the problem might be even worse in GRT. 
+
+The assumption that task structure should not affect sensory interactions needs some further clarification. The stimuli in the Yes/No and 2I-4AFC tasks are similar only in an abstract sense: concretely the stimuli are different. During the introspection it was brought up that this difference in the concrete appearance in the stimuli lead to somewhat differing ways of attending to the stimuli. Whether this means that the stimuli are different to the observers is of course a more complicated issue. The assumption that the level at which perception operates are the atomic stimuli themselves, that is the single sound bytes (reference and test tones), has to be made. Indeed, under that assumption it shouldn't matter what the configuration in which the stimuli are presented in is. However, if perception is more holistic and instead operates on larger scale units such as the intervals as wholes, then we should not be surprised if the results are different. 
+
+One theme that I will bring up once more is the theoretical meaning given to the latent distributions. I have been talking about sensory and non-sensory sources of interaction. However, if we take the view that the latent distributions do not model sensory effects but instead evidence, the question is not if the estimated parameters model sensory interactions: they absoutely do NOT model sensory sources, they model evidence, which is a higher level concept and more obviously modulated by for example attention.
 
 \citet{garner1974} defined dimensional interactions as a set of \textit{converging operations}, that is from an array of different tasks, some of which required the participant to attend to both dimensions and some to just one (for a review see \citet{burns2014}). Indeed, this research by Garner greatly influenced the seminal paper on GRT (that is \citet{ashby1986}) in which one of the motivations was to unify these concepts under one theory. Since then, the task in which the participant is required to attend to both dimensions simultaneously has dominated the field--indeed, such task was also used in the psychophysical tasks in this thesis. Insights from the introspection point towards this assumption of simultaneous attention being problematic, and perhaps being one factor in why the interaction estimates from the two tasks diverged. For greater unification a model of what \textit{mode of attention} (that is, are they attending to the dimensions sequentially, is one of the primary, or are they attending to the wholes as a unity etc.) the participant is using in the task might be needed.
 

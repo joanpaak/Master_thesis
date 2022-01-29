@@ -1,41 +1,16 @@
-%Rnw root = "../Joni_Paakko_-_Thesis.Rnw"
+%!Rnw root = ../Joni_Paakko_-_Thesis.Rnw
 
-\section{Bayesian statistics}
-\label{sec:bayes}
+As already briefly mentioned in the introduction, in Bayesian statistics uncertainty about parameters of a statistical model is represented by a joint probability distribution over them. Also, usually \textit{prior} and \textit{posterior} probability distributions (the terms \textit{prior} and \textit{posterior} are usually used as a shorthand) are considered separately.
 
-Bayesian statistics is at the core of this thesis: the adaptive algorithm to be used is based on the idea of representing uncertainty about parameters as probability distributions over them. Bayesian statistics will also be used for making inferences about data, and Bayesian philosophy will guide the model development process. In this section I will provide a short introduction to the central concepts that are needed for understanding the adaptive algorithm and, later, inferences made about the data. 
+Broadly speaking, the prior represents the state of knowledge \textit{before data has been observed} while the posterior represents prior knowledge plus information learned from the data, or \textit{what is know after the data has been observed}, however as will be soon discussed, these concepts are related.
 
-\subsection{Basics of Bayesian statistics}
-
-The core idea of Bayesian statistics is the updating of prior information with observed data to arrive at a synthesis of them. This synthesis is called the posterior probability distribution, which brings me to another idiosyncrasy of Bayesian statistics: whereas in "classical" statistics one would calculate point estimates, that is for example the average difference between conditions, in Bayesian statistics the goal is evaluate how well \textit{any} plausible value fits (I use the word \textit{fit} colloquially) the observed difference resulting, indeed,  in a probability \textit{distribution} which is taken as the estimate. This can be taken as an intuitive quantification of uncertainty: if wide range of values fit the data almost as well, this indicates that there's more uncertainty about what can be said for example about the difference between the conditions, in contrast to situation in which only a narrow range of values fit the data.
-
-Both the prior information and the posterior distribution are represented as probability distributions over the parameters, $\theta$. Usually some common probability densities with simple functional forms are used, for example normal distributions. Equation \ref{eq:bayesprop} represents updating prior information mathematically \citep{kruschke2015}:
-
-\begin{equation}
-P(\theta | Data) \propto P(\theta) P(Data | \theta)
-\label{eq:bayesprop}
-\end{equation} 
-
-In this equation $P(\theta | Data)$ is the posterior distribution, $P(\theta)$ is the prior distribution and $P(Data | \theta)$ is the likelihood function, i.e. the probability of observing the data given the parameter values.\footnote{In the full Bayes' theorem the posterior distribution is normalized with the integral over the possible observed values, $P(Data)$, assuring that it always integrates to one and is a proper probability distribution: $P(\theta | Data) = (P(\theta) P(Data | \theta)) / P(Data)$ \citep{kruschke2015}, but I think the equation without the normalizing constant captures the main idea more clearly. This is why the symbol $\propto$ ("proportional to") is used in Equation \ref{eq:bayesprop}.} $Data$ refers to observations collected during a psychophysical experiment, that is, pairs of stimuli and responses, and $\theta$ are the parameters of any model in this thesis. 
-
-The likelihood function determines \textit{how} the observed data updates the prior information. In practice, this means that there needs to be a model which determines how observed data translates into probabilities about parameter values, or how the model learns from observed data. Here, the likelihood is defined by any of the models (M in Equation \ref{eq:likelihood}) introduced earlier in this thesis. Consequently the likelihood for a particular $\theta$ is simply the product of the probabilities of the observed responses given the $\theta$ (and the model)\footnote{Remembering that multiplying probabilities corresponds to the logical operand \textit{and}, this means the we are interested in finding out the probability of the response on the first trial AND the response on the second trial and on the third trial and so on, depending on how many responses there are.}:
-
-\begin{equation}
-\prod_{t=1}^n (\bm{R}^t, \bm{S}^t; \theta, M)
-\label{eq:likelihood}
-\end{equation}
-
-Note that usually the logarithmic likelihood function is used of numerical stability, $\sum_{t=1}^n ln (\bm{R}^t, \bm{S}^t; \theta, M)$, which is how the likelihood is defined in all of the R and Stan programs. Stan programs can be found from the appendices. 
-
-Updating prior information is demonstrated for a single parameter in Figure \ref{fig:priorpost}. The shaded region represents the prior distribution $P(\theta)$, which in this case, is a log-normal distribution. The prior distribution is centred around $\sigma = 2$, indicating that values close to $2$ are seen as most probable prior to observing any data. 
-
-After some data has been observed the prior distribution is updated with evidence, $P(Data | \theta)$, represented by the dashed line in Figure \ref{fig:priorpost}, which then results in the posterior distribution $P(\theta | Data)$, represented by the solid line. Observing data, in this particular case, has reduced our uncertainty about likely values for the parameter $\sigma$, which is evident in how the probability density has become more concentrated. In addition to this, the mode of the distribution has shifted, indicating shift in what values are found to be likely on average.
+Figure \ref{fig:priorpost} represents this process graphically for a one-dimensional posterior. In the figure the shaded area is the prior. Dashed line represents information learned from the data. Posterior  - solid line in the figure - represents compromise between prior knowledge and information from the data.
 
 \begin{figure}
 \centering
 <<fig=T,echo=F,fig.height = 3.5>>=
 plot(NULL, xlim = c(0, 10), ylim = c(0, 1.0),
-     ylab = "Density", xlab = expression(sigma), axes = F)
+ylab = "Density", xlab = expression(sigma), axes = F)
 
 axis(side = 1); axis(side = 2)
 
@@ -56,17 +31,32 @@ points(xcoords, ycoords_3, type = "l", lty = 1)
 \label{fig:priorpost}
 \end{figure}
 
-How the prior distribution is determined is a complex question. First of all, the prior distribution should take into account mathematical constraints, for example here the fact that $\sigma$ must always be positive, which is why I used the log-normal distribution in the example. Another aspect is that one can encode current knowledge in a meaningful way by choosing the prior appropriately. A \textit{weak} or \textit{non-informative} prior mostly acts as a way of regularizing the inferences and increasing computational stability, while a textit{strong} or \textit{informative} prior can encode specific subject-matter knowledge (for accessible discussion on priors and discussion on weak and strong priors see \citet{prior_choice_recommendations}). 
+This updating is formalized in the Bayes' formula \citep{kruschke2015}:
 
-For determining priors for psychometric functions \citet{lee2018} recommends informative priors, and using prior predictive distributions--that is, distributions of psychometric functions--as a way of checking that the priors make sense and lead to psychometric functions that are realistic. One problem with this approach is that usually priors that assume independence among the parameters are used (an issue that is also discussed in \citet{prior_choice_recommendations}), but it is likely that the parameters of the psychometric functions have strong correlations between them. 
+\begin{equation}
+P(\theta | Data) \propto P(\theta) P(Data | \theta)
+\label{eq:bayesprop}
+\end{equation} 
+
+The posterior ($P(\theta | Data)$) is \textit{proportional to} ($\propto$) the prior probability of parameter values ($P(\theta)$) multiplied by the likelihood of of those parameter values ($P(Data | \theta)$).
+
+Priors and posteriors are linked. Generally speaking this is true for all parametric Bayesian models, but I will clarify this in context of the psychophysical model(s) used in this thesis, since this is the most relevant context here.
+
+On each trial current prior knowledge is used to select the optimal stimulus. In practice, before any data is collected, we start from an \textit{initial prior}. After the participant gives their response to the selected stimulus, the initial prior can be updated to a posterior. This posterior in turn becomes the prior for the next trial. In this way what is prior and what is posterior is to a degree a question of perspective. The only deviation to this rule is the initial prior.   
+
+How the initial prior distribution is determined is a complex question. Usually mathematical convenience guides--in conjunction with prior knowledge--guides it's practical formulation, but some heuristics can be discussed. First of all, the prior distribution should take into account mathematical constraints, for example here the fact that $\sigma$ must always be positive, which is why I used the log-normal distribution in the example. Another aspect is that one can encode current knowledge in a meaningful way by choosing the prior appropriately. A \textit{weak} or \textit{non-informative} prior mostly acts as a way of regularizing the inferences and increasing computational stability, while a textit{strong} or \textit{informative} prior can encode specific subject-matter knowledge (for accessible discussion on priors and discussion on weak and strong priors see \citet{prior_choice_recommendations}). 
+
+For determining priors for psychometric functions \citet{lee2018} recommends informative priors, and using prior predictive distributions--that is, distributions of psychometric functions--as a way of checking that the priors make sense and lead to psychometric functions that are realistic. One problem with this approach is that usually priors that assume independence among the parameters are used (an issue that is also discussed in \citet{prior_choice_recommendations}), but it is likely that the parameters of the psychometric functions have strong correlations between them.
 
 For example psychometric functions with high values for $\sigma$ but low values for $\beta$ produce psychometric functions that can be unrealistically slow in reaching high performance levels, especially if values for $\kappa_{\mu}$ or $\kappa_{\sigma}$ parameters are significantly large. The issue of encoding such dependencies in the prior is left for future work, I will be using priors which are independent out of convenience, and choosing values that make sense for the parameters in isolation, which is admittedly not optimal.  
 
-Lastly, one particularly useful feature of priors is that it's easy to expand models into having a multilevel structure through them, which will be discussed in more detail in the next section.  
+Lastly, one particularly useful feature of priors is that it's easy to expand models into having a multilevel structure through them, which will be discussed in more detail shortly.  
+
+\subsection{Marginal distributions}
 
 Of course, in models of any complexity prior and posterior probability densities are defined over a multidimensional space, e.g. in this thesis the dimensionalities range from 7 to 27. This means that we are not interested in, for example, probabilities for values of $\sigma$ parameter alone but probabilities for combinations of parameter values, for example, that $\sigma = 2.0$ and $\beta = 0.7$ and $\kappa_{\mu} = 0.1$ and so on for all of the parameters of the specific model.
 
-Often it is useful to summarize multidimensional posterior density as its marginals. Most analyses done in this thesis will use the marginals of  the posterior probability densities somehow. Figure \ref{fig:marginals} demonstrates the relationship between a two-dimensional posterior probability density and its margins. The leftmost panel shows the two-dimensional distribution from above, and the two other figures show its marginals, which in this case correspond to viewing the two-dimensional "bump" from either axis. 
+Often it is useful to summarize multidimensional posterior density as its marginals. Most analyses done in this thesis will use the marginals of  the posterior probability densities somehow. Figure \ref{fig:marginals} demonstrates the relationship between a two-dimensional posterior probability density and its margins. The leftmost panel shows the two-dimensional distribution from above, and the two other figures show its marginals, which in this case correspond to flattening the two-dimensional bump along either axis. 
 
 \begin{figure}
 \centering
@@ -100,212 +90,9 @@ axis(side = 1); axis(side = 2)
 \label{fig:marginals}
 \end{figure}
 
-\subsection{Hierarchical models}
-\label{sec:hierarchical_models}
 
-The term \textit{hierarchical model} can refer to many different kinds of models\footnote{Andrew Gelman has collected a bunch of different names for hierarchical models in to a blog post: https://statmodeling.stat.columbia.edu/2019/09/18/all-the-names-for-hierarchical-and-multilevel-modeling/ -- a fact which highlights the multifacetedness of hierarchical models}. I will be using two kinds of hierarchical models: 1) Model in which the parameters are assigned distributions 2) Models embedded in a higher level mixture model. Both kinds of models will be discussed separately.
 
-\subsubsection*{Models in which parameters have distributions}
+ 
 
-Often these kinds of models are described as being models in which priors have (hyper)priors (e.g. \citet[p. 225]{kruschke2015} talks about \textit{". . . hierarchical chain of dependencies among parameters."}). However, I think it's clearer to think this as an extension of fitting e.g. separate linear models to different data sets: instead it is possible to the individual linear models together on a higher level, and assign the groups of parameters (e.g. all intercepts for all of the models) distributions. This is sometimes known has \textit{random effects modelling} in the frequentist setting.
-
-The general idea is demonstrated in Figure \ref{fig:hierarchical_model_for_groups}. The index $i$ is an index for the \textit{group} to which the observation $y_{ij}$ belongs to, $j$ indexes observations inside that group. Each observation is assumed to be drawn from a normal distribution, but each group gets a unique set of parameters of the linear model, i.e. there are as many $\alpha$ and $\beta$ as there are groups. Without the the hierarchical structure this would simply correspond to as many separate linear models as there are groups.  
-
-Here, however, these parameters are each assigned a distribution (prior), which in this case is the normal distribution, whose parameters are unknown and are inferred from the data. Note that for the $\sigma$ parameters the normal distributions are truncated at zero. At the highest level each parameter of these distributions gets a hyperprior, which in this case for each parameter is the standard normal distribution--taking into account again that $\sigma$ is truncated at zero.
-
-\begin{figure}[!htb]
-\includegraphics{Hierarchical_model_for_groups}
-\caption{A schematic illustration of a hierarchical linear model in which each of the parameters is given a distribution for which the parameters are inferred from the data. This creates a distinct multilevel structure to the model.}
-\label{fig:hierarchical_model_for_groups}
-\end{figure}
-
-In other words, there are--for example--separate $\alpha$ parameters for each group, but \textit{at the same time} as the values\footnote{To be precise, not \textit{values} but posterior distributions, as was discussed earlier.} for the individual $\alpha$ parameters are found, the parameters for the prior distribution from which they are assumed to be drawn from are also found; in this way the individual parameters depend on the priors, and  the parameters of the priors depend on the individual values.
-
-Since the parameters are related on a higher level, some information is shared between them. One feature is that all of the means are adjusted towards the common mean, which functions analogously to multiple comparisons adjustments in frequentist statistics \citep{gelman2012}, which is the main reason for including the hierarchical structure here. 
-
-\subsubsection*{Models embedded in a mixture model} 
-
-Often the same data set can be fit by multiple models, or there are many plausible candidates for models of for the cognitive processes of interest. These are often also called \textit{mixture} models, since the idea is to model observed data as a mixture of the different models (for the general statistical idea see \citet{keller2018}). Since the individual models are embedded in a larger scale structure that models the mixing proportions, this kind of model is naturally also thought of as a hierarchical model (see \citet[Chapter 10]{kruschke2015}).
-
-The simple two-level model I describe corresponds with how lapsing behaviour is often modelled in the psychophysical literature (see e.g. \citet{zeigenfuse2010} for a theoretical summary or e.g \citet{lesmes2015} for a practical implementation). The model is presented in figure \ref{fig:Basic_hierarchical_model}. At the lowest level, the figure shows two models, one labelled \textit{lapses} and the other \textit{cognitive}, embedded in the higher level model. Both of the lower level models aim to explain the same set of observations, $y_1, y_2 \dots y_i$, the $y$ terms, in this case, consisting of pairs of stimuli ($\bm{S} = [S_x, S_y]$) and responses ($\bm{R} = [R_x, R_y]$). 
-
-\begin{figure}[!htb]
-\begin{center}
-\includegraphics[scale=0.75]{Basic_hierarchical_mixture_model}
-\end{center}
-\caption{A simple hierarchical model, which shows how the two models, one modelling lapses and the other the cognitive processes of interest, are related on a higher level through the coefficient $\lambda$.}
-\label{fig:Basic_hierarchical_model}
-\end{figure}
-
-The cognitive model can be any of the models defined in Section \ref{sec:grt_mdls} \textit{\nameref{sec:grt_mdls}}. The lapsing model (which was discussed in general terms in Section \ref{sec:lapses_general} \textit{\nameref{sec:lapses_general}}) is defined by the single parameter $\gamma$, which is a multinomial distribution containing the response probabilities for the individual response categories. These probabilities do not depend on the signal levels, or in fact, on anything else outside them (see Section \ref{sec:modelling_responses} \textit{\nameref{sec:modelling_responses}} for how the responses are coded):
-
-\begin{equation}
-P(y_i)=
-\begin{cases}
-  \gamma_1, & \text{if } \bm{R} = [-1, -1]\\
-  \gamma_2, & \text{if } \bm{R} = [\phantom{-}1, -1]\\
-  \gamma_3, & \text{if } \bm{R} = [-1, \phantom{-}1]\\
-  \gamma_4, & \text{if } \bm{R} = [\phantom{-}1, \phantom{-}1]
-\end{cases}
-\end{equation}
-
-This simply says that if, for example, on a certain trial the response $[1,-1]$ is observed, the likelihood is incremented by $\gamma_2$. I will be assuming that all responses are as likely, i.e. $\gamma = [0.25, 0.25, 0.25, 0.25]$. This implies that the parameters of the lapsing model are not inferred from the data, partially due to the aforementioned (see Section \ref{sec:lapses_general} \textit{\nameref{sec:lapses_general}}) difficulty of inferring details of lapsing behaviour from psychophysical data. 
-
-The contributions of these two models are defined by the coefficient $\lambda$, which defines the weight of each model to the total likelihood:
-
-\begin{multline}
-\label{eq:lower_level_hiera}
-P(y_i |\Theta_{\text{cognitive + lapses}}, \text{Model}_{\text{cognitive + lapses}}) = \lambda P(y_i | \theta_{\text{lapsing}}, \text{Model}_{\text{lapsing}}) + \\ (1 - \lambda) P(y_i | \theta_{\text{cognitive}}, \text{Model}_{\text{cognitive}})
-\end{multline}
-
-The vector $\Theta_{\text{cognitive + lapses}}$ contains all of the parameters for the lower level models and $\lambda$: $\Theta_{\text{cognitive + lapses}} = [\lambda, \theta_{\text{lapsing}}, \theta_{\text{cognitive}}]$.
-
-\subsection{Approximating the Posterior Probability Densities}
-\label{sec:posterior_approx}
-
-One issues in doing Bayesian inference is how to calculate the posterior probability densities. Unfortunately analytical solutions are not available even for the simpler cases--e.g. one-dimensional psychometric functions--and no such solution will be developed in this thesis. \citet{kontsevichtyler1999} used \textit{grid approximation} which is based on dividing the effective range of the posterior distribution into equally spaced intervals and then calculating posterior probability density at each point (see \citealt[p.144]{kruschke2015}). The downside is that this method becomes computationally costly when dealing with high dimensional posterior distributions. E.g. if one has a 9-dimensional posterior distribution--like in the present case--and wishes to represent it with even 25 discrete points per dimension, one would need to calculate $25^9$ values, which is infeasible even given the computing capabilities of modern computers.
-
-To circumvent this problem, three approximation methods were used in different parts of this thesis. For fitting models to already collected data, the models implemented in Stan programming language. For the adaptive algorithm to work, on each trial one needs approximate the current posterior probability density in (close to) real time, for this reason Resample-Move algorithm and Laplace approximation were used there. I will describe the Resample-Move algorithm and Laplace approximation in more detail, since they have direct consequences on the implementation of the adaptive algorithm; sampling methods used by Stan are taken \textit{as is}. It suffices to say that similar to the Resample-Move algorithm to be described shortly, Stan uses random numbers to approximate the posterior distribution and these random numbers are generated by Markov Chain Monte Carlo methods (\citet[Chapters 15 \& 16]{stan_manual_new}; for the general principle of approximating posterior distributions with random sampling see \citet[Chapter 7]{kruschke2015}).
-
-\subsubsection{Resample-Move algorithm}
-
-The Resample-Move algorithm, as described by \citet{chopin2002} involves using \textit{sequential importance sampling} and the occasional \textit{rejuvenation} step (see Algorithm \ref{alg:resamplemove}).  
-
-Central idea is to represent the posterior distribution as \textit{random samples} from it. This is demonstrated in the left panel of Figure \ref{fig:degeneracy}, in which a one-dimensional normal distribution, as represented by the solid line, is approximated with a set of uniformly sampled values along the $x$-axis, called particles. The heights of the particles (the dashed lines) correspond to the weights of the particles (proportionally; the weights should always sum to unity). One can use the values and weights to estimate e.g. the mean and variance of the underlying distribution, using standard formulae for discrete random variables.
-
-\begin{algorithm}
-\caption{Sequential importance sampling with rejuvenation}
-\label{alg:resamplemove}
-\begin{algorithmic}[1]
-
-\State At the beginning of the experiment, draw $N$ particles from the prior distribution and set uniform weights.
-\State Observe a data point.
-\State Update the particle weights according to the observation.
-\If {$N_{\text{eff}} < N/4$}
-        \State Resample particles.
-        \State Move resampled particles.
-    \EndIf
-\State Return to step 2.
-
-\end{algorithmic}
-\end{algorithm}
-
-\begin{figure}[!htb]
-\begin{center}
-<<label=degeneracy, fig=TRUE, echo = FALSE, fig.height = 4>>=
-set.seed(1000)
-
-N = 20
-particles = runif(N, -2, 2)
-weights = dnorm(particles, 0, 1)
-
-par(mfrow = c(1, 2))
-
-curve(dnorm(x, 0, 1), -2, 2, ylab = "Density", xlab = "x")
-points(particles, weights, pch = 16)
-arrows(particles, rep(0.00, N), particles, weights, lty = 2, length = 0)
-
-weights = dnorm(particles, 0, 0.1)
-curve(dnorm(x, 0, 0.1), -2, 2, ylab = "Density", xlab = "x")
-points(particles, weights, pch = 16)
-arrows(particles, rep(0.00, N), particles, weights, lty = 2, length = 0)
-
-@
-\end{center}
-\caption{ Demonstration of sequential importance sampling and particle degeneracy. When the posterior probability becomes more concentrated, after some data is observed, less particles have weights that differ significantly from zero. }
-\label{fig:degeneracy}
-\end{figure}
-
-The complete particle sets thus is most conveniently thought of as a matrix with parameter values and their weights. Table \ref{table:particleSet} demonstrates this idea for the 2I-4AFC model. The particle set consists of randomly sampled values of the parameters, $\theta$. Each row corresponds with one set of parameter values and a weight, $w$. In Figure \ref{fig:degeneracy} weights were shown for a single parameter, here weights correspond with their "heights" in a 7-dimensional space. 
-
-\begin{table}[!htb]
-\centering
-\caption{An example of a particle set, which consists of sets of parameter values, $\theta$, and associated weights.}
-\vspace{0.5cm}
-\label{table:particleSet}
-\begin{tabular}{ccccccccc}
-\toprule
-
-& \multicolumn{7}{c}{$\theta$}    \\
-\cmidrule(lr){2-8}
-& $\sigma_x$  & $\sigma_y$  & $\beta_x$   & $\beta_y$   & $\kappa_x$ & $\kappa_y$ & $\rho$   & $w$  \\
-\midrule
-1    & 1.2  &  2.5 &  0.2 & 2.6 & -0.2 & 0.5 & -0.1 & 0.10 \\
-2    & 0.5  &  0.3 &  1.1 & 0.6 &  0.4 & 0.1 & 0.2 & 0.05 \\
-3    & 0.2  &  1.7 &  1.8 & 1.5 &  0.3 & -0.1 & 0.3 & 0.15 \\
-\vdots & \vdots  &  \vdots &  \vdots & \vdots & \vdots  & \vdots & \vdots  & \vdots  \\
-$N$  & 0.4  &  1.5 &  0.7 & 0.8 & -0.1 & -0.5& 0.75 & 0.20 \\
-\bottomrule
-\end{tabular}
-\end{table}
-
-As more data is observed, fewer and fewer particles have non-zero weights. This is natural, since usually at the beginning of an experiment there's more uncertainty about the specific values of the parameters, but as the experiment progresses, more and more particles can be singled out, or given smaller weights. When the underlying distribution becomes more concentrated, the weights of most particles approach zero, as is shown in Figure \ref{fig:degeneracy}). This is called \textit{particle degeneracy}. A simple way of quantifying it is the effective sample size \citep{speekenbrink2016}:
-
-\begin{equation}
-N_{\text{eff}} = 1 / \sum_{i}^{N} w_i^2
-\end{equation}
-
-When the particle set becomes too degenerated--here defined as the point when $N_{\text{eff}} < N/4$--it has to be rejuvenated. 
-
-Rejuvenation is done by first resampling the particles. Resampling means sampling new particles with replacement proportional to their weights. I used \textit{multinomial resampling}. This is similar to how a roulette wheel works, the difference being that in a roulette wheel each number has a uniform probability of being chosen; here the "sectors" for some particles are wider, and thus they have greater chance of being chosen. This results in particles with greater weights being replicated, and particles with lower weights being removed from the particle set. This does not effectively combat particle degeneracy which is why the algorithm has a \textit{move} step. \citep{chopin2002}
-
-During the move step proposed particles are drawn from what is called a \textit{proposal distribution}. As the proposal distribution I used a multivariate normal distribution with means and standard deviations corresponding to those of the current posterior distribution, as suggested by Chopin. These proposals are accepted with the probability: $p(\text{proposal}_i | y) / p(\text{old particle}_i | y)$, that is the ratio of the posterior probabilities of an old particle and a proposed particle. It is easy to see that for proposals, which have higher posterior probability than the old particles, the probability is greater than one, implying that they are always accepted. \citep{chopin2002}. 
-
-Particle methods have been used in adaptive estimation for example by \citet{dimattina2015}, although they did not implement the rejuvenation step, making their implementation unrealistic for the longer experimental runs used here, and by  \citet{kujalalukka2006} who use a more sophisticated  rejuvenation step, which, due to its increased computational cost, was also not realistic. 
-
-\subsubsection{Laplace Approximation}
-
-In Laplace approximation one finds the maximum of the posterior distribution, and by calculating the second derivatives at that point estimates it's marginal standard deviations and correlations--called the Hessian matrix. The posterior distribution can then be represented by a multivariate normal distribution whose mean is the maximum and covariance matrix is calculated from the Hessian matrix. For example citet{shen2013} uses Laplace approximation for adaptively estimating auditory filters.
-
-Given the reparametrisation at the end of this section, this could possibly be a reasonable way of approximating the  posterior, however in my experience the posterior distribution does sometimes have markedly non-linear dependencies among the parameters, and these are not captured well by Laplace approximation. For this reason Laplace approximation was used in this thesis just as a backup--see \ref{sec:practical_considerations} \textit{\nameref{sec:practical_considerations}}.
-
-\subsection{Bayesian inference in the General Recognition Theory}
-
-In this work Bayesian approach is also used during the analysis of the data. Classic GRT studies have been dominated by frequentist methods, and e.g. definitions of interactions have relied on testing for the statistical significance of the parameter values associated with them (e.g. \cite{ashby2015, wickens1992}), to my knowledge, \cite{silbert2010} is the only GRT related work using Bayesian analysis framework. Contrary to the majority of studies, I won't be doing any explicit significance tests, nor am I using the usual \textit{Type I/II} error framework \citep[pp. 470 - 471]{christensen1997}, since there are many problems associated with this.
-
-For example if interactions are selected based on their statistical significance, effect sizes are likely to be exaggerated \citep{gelman2018}; but the more damning criticism is that the $p$-value doesn't differentiate between \textit{effect} or \textit{no effect} (\cite{greenland2016}), i.e. between \textit{interaction} or \textit{no interaction}, and in general, there has been a substantial amounts of criticism targeted towards focusing on binary decisions based on \textit{p}-values and instead a push to instead focus on the effect sizes and uncertainties associated with them (see e.g. \citet{kline2004, greenland2016, steiger1997}). 
-
-This shift should not be seen only as a trivial data analytical decision: it should be seen as reflecting a wider push in the behavioural sciences to move away from binary decisions (see e.g. \citet{amrhein2017}), and--in the light of the topic--relating to the interpretation of interactions as being graded properties of the stimuli (as discussed in \citet{kemler1993}), instead of something that either is or isn't. On the other hand, in Null Hypothesis Testing (NHST, see \citet[Chapter 11]{kruschke2015}), as it is usually implemented, the main goal is to reject some uninteresting default model, while in Bayesian analysis--as it's defined in \citet{bda}--the explicit goal is to develop models that describe the data generating processes realistically. I find this goal to be much intuitively meaningful--rejecting an uninteresting default model only tells us that the specific model is bad, it does not tell us what models are good. In GRT this usually means rejecting some model that assumes no interactions between the dimensions--the important question of \textit{what kind} of interactions there then actually are can't be reliably answered by just using NHST.
-
-\paragraph{Posterior predictive checks}
-
-An important part of Bayesian work flow is \textit{model critique}. The starting point is the boxian philosophy that \textit{"All models are wrong . . ."} \citep{box2005}: since we can be a priori certain that all models are wrong to a degree, it becomes important to check the model against the data to see \textit{how} it is wrong, and if the mismatch is significant. This kind of \textit{model criticism} is an integral part of Bayesian workflow, as described e.g. in \citet[Part II]{bda}.
-
-In the classical GRT models, model checking has usually been limited to comparing the predicted response probabilities with the observed probabilities (see for example \citet[Figure 4]{silbert2009}).  However this suffers from the fact that, as discussed earlier in Section \ref{sec:grt_criticism} \textit{\nameref{sec:grt_criticism}}, the classic GRT models are prone to over-fitting, which means that the predicted response probabilities will \textit{always} be fairly close to the observed probabilities. This not evidence for the theoretical assumptions behind the model, but rather just an artefact of the flexibility of the model.
-
-In Bayesian setting, \textit{posterior predictive checks} can be used to assess the fit of the model to the data. The idea is to use the posterior distribution to predict new data. The distribution of predicted data can be thought of has what the model "thinks" about the data. If there's large discrepancies between what the model thinks and data, this is a clear indication that the model does not sufficiently capture all relevant features of the data. \citep[Chapter 7]{bda}.
-
-Developing good posterior predictive checks can be difficult, and there is not a set way to conduct them. In this thesis I will be using simple checks that are based on dividing the data into discrete categories and counting the number of positive responses in each category. This is not exhaustive, but, as will be seen in the analysis section, is sufficient for some making some preliminary observations. 
-
-\paragraph{Unconstrained parameterization}
-
-By their very nature, $\sigma$ parameters are bound to be positive, since they represent standard deviations. The $\beta$ terms don't have to be positive, but since the psychometric functions are assumed to be monotonically increasing, I restricted the $\beta$ parameters to be positive too. The correlation parameter, $\rho$, is bound between -1 and 1. 
-
-As already mentioned, these bounds have to be taken into account when deciding what distributions to use as prior distributions for the parameters. One solution is to choose distributions with matching supports, i.e. for example log-normal distributions for the parameters bound to positive real numbers. Another possibility is to \textit{reparametrise} the model in such a way that some convenient distributions can be used. The latter approach is taken here. 
-
-Priors for $\sigma$ and $\beta$--and as a consequence the parameters themselves--are defined on the logarithmic scale. Prior for $\rho$ is defined on the inverse hyperbolic tangent scale. Both of these are widely used transformations in statistics for these kinds of situations (see \citet[Chapter 22]{stan_manual}). In practice this means  that the \textit{inverse} transformations have to be implemented in the likelihood calculations.
-
-For the $d'$ calculations this implies that Equation \ref{eq:twodimdprime} becomes
-
-\begin{align}
-\begin{split}
-d'_x &= (\frac{S_x}{exp(\sigma_x)})^{exp(\beta_x)} + \kappa_x S_y \\
-d'_y &= (\frac{S_y}{exp(\sigma_y)})^{exp(\beta_y)} + \kappa_y S_x
-\end{split}
-\end{align}
-
-and for the psychometric function (compare this with Equation \ref{eq:generalPfun}):
-
-\begin{equation}
-\psi_2(\bm{S}; \theta)_{(R_x, R_y)} = \phi_2([-c_x + d'_x]r_x, [-c_y + d'_y] r_y, \text{tanh}(\rho) [r_x r_y])
-\end{equation}
-
-A similar transformation would be applied also to Equation \ref{eq:generalPfun2}.
-
-An important aspect of this process to note is that since the priors are normal on the \textit{transformed scale}--i.e. $log\sigma \sim N(\mu, \sigma)$--, they are not normal on the \textit{original scale} (see \citealt[pp. 729 - 732]{kruschke2015}). Indeed, the current parameterization implies that for  example the prior for $\sigma$ is a log-normal distribution.
-
-Another consequence of reparametrisation is that it makes the rejuvenation step of the particle filter slightly simpler. During the rejuvenation step new proposal particles have to be generated from some distribution. It is possible to choose an asymmetric distribution, such as the log-normal distribution, but this leads to two additional complexities: the acceptance probability is now dependent also on the proposal distribution (see ERROR) and the moments calculated from the particle set (mean and standard deviations of the particles) have to be transformed to the parameters of the non-symmetric distribution. 
-
-On the other hand using an unbounded proposal distribution on the bounded space can lead to many proposals  being  outside the support of the distribution, reducing the efficiency of the rejuvenation step.
 
 

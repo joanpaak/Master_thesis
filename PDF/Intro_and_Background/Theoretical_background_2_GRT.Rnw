@@ -3,11 +3,11 @@
 \subsection{General Recognition Theory}
 \label{sec:grt_mdls}
 
-So far I have covered the case in which the participant has to make a single decision, e.g. if the pitch of the stimulus changed. In the two-dimensional case the participant has to observe two things at once. For example did the pitch change \textit{and} did the timbre change. The question of primary interest is if there are any \textit{interactions} between the dimensions: does changing timbre also change response probabilities to pitch changes.
+So far I have covered the case in which the participant has to make a single decision, e.g. if the pitch of the stimulus changed. In the two-dimensional case the participant has to observe two things at once. For example did pitch \textit{and} did timbre change. The question of primary interest is if there are any \textit{interactions} between the dimensions: does changing timbre also change response probabilities to pitch changes.
 
-A widely used theoretical framework for generalizing SDT into multiple dimensions is the General Recognition Theory. As in SDT, also in GRT randomness in the responses is thought to arise from the evidence having a probabilistic nature \citep{ashby1986, ashby2015, kadlec1992}. 
+As in SDT, also in GRT randomness in the responses is thought to arise from the evidence having a probabilistic nature \citep{ashby1986, ashby2015, kadlec1992}. 
 
-In the two-dimensional case also the evidence distribution is two dimensional. Following the assumption made earlier that evidence is distributed normally, it is possible to represent evidence in two dimensions by a bivariate normal distribution. A bivariate normal distribution can be defined by two means, which correspond to its location on each dimension, and a correlation coefficient, which corresponds to the shape of the distribution. A bivariate normal distribution with positive correlation is shown graphically in Figure \ref{fig:2dimnorm}. Left panel shows a projection of the 3-dimensional shape of the bivariate density; right panel shows the same distribution from above, as a contour. Rest of the figures in this thesis will represent bivariate distributions as contours similar to the one in the right panel.
+In the two-dimensional case also the evidence distribution is two-dimensional. Following the assumption made earlier that evidence is distributed normally, it is possible to represent evidence in two dimensions by a bivariate normal distribution. A bivariate normal distribution can be defined by two means, which correspond to its location on each dimension, and a correlation coefficient, which corresponds to the shape of the distribution. A bivariate normal distribution with positive correlation is shown graphically in Figure \ref{fig:2dimnorm}. Left panel shows a projection of the 3-dimensional shape of the bivariate density; right panel shows the same distribution from above, as a contour. Rest of the figures in this thesis will represent bivariate distributions as contours similar to the one in the right panel.
 
 \begin{figure}
 \centering
@@ -50,7 +50,7 @@ lines(c(-2, 1), c(2, 2), lty = 2, lwd = lwd_global)
 
 \subsubsection{Calculating $d'$ in two dimensions}
 
-For two-dimensional stimuli, two $d'$ values have to be calculated, on for each dimension. Similar to SDT, the $d'$ values are the location of the evidence distribution, but now the location has to be determined in the two-dimensional space on the $x$ and $y$ axes separately: for example, how much evidence there is for a difference in pitch AND how much is there evidence for a difference in timbre. This implies that now there are two $d'$ functions, and consequently, two of each parameter: 
+For two-dimensional stimuli, two $d'$ values have to be calculated, on for each dimension. Similar to SDT, the $d'$ values are the location of the evidence distribution, but now the location has to be determined in the two-dimensional space on the $x$ and $y$ axes separately: for example, how much evidence there is for a difference in pitch AND how much is there evidence for a difference in timbre. This implies that now there are two $d'$ functions for which the parameters have to be estimated separately: 
 
 \begin{align}
 \label{eq:twodimdprime}
@@ -60,12 +60,14 @@ d'_y &= (\frac{S_y}{\sigma_y})^{\beta_y}
 \end{split}
 \end{align}
 
-However, since the main motivation in GRT is to model interactions between the dimensions, this would be rather incomplete. I will first discuss how response probabilities are found in GRT, and then discuss the types of interference included in the models in this thesis.
+However, since the main motivation in GRT is to model interactions between the dimensions, this would be incomplete: these functions have to be coupled. I will first discuss how response probabilities are found in GRT, and then discuss the types of interference included in the models in this thesis.
 
 \subsubsection{Modelling responses in two dimensions}
 \label{sec:modelling_responses}
 
 Whereas in SDT the participant is usually required to make a single decision on a single axis, in GRT the participant is required to make one decision per axis; in the two-dimensional case two decisions: did the signal level change on $x$ axis and did the signal level change on $y$ axis (a similar approach has been used also by \cite{wickens1992}). 
+
+As before, I will first discuss the Yes/No task before discussing the forced-choice task.
 
 \paragraph{Yes/No task in two dimensions}
 
@@ -148,7 +150,7 @@ Then, if responses are coded with $\text{No} = -1$ and $ \text{Yes} = 1$, inputs
 \end{split}
 \end{align*}
 
-This process can be defined generally with the equation:
+This can be defined generally with the equation:
 
 \begin{equation}
 \psi_2(\bm{S}; \theta)_{\bm{R}} = \phi_2([-c_x + d'_x]r_x, [-c_y + d'_y] r_y, \rho [r_x r_y])
@@ -337,6 +339,6 @@ The couplings, $\kappa_{\mu}$ and $\kappa_{\sigma}$, are sometimes called \texti
 
 It is possible that during a psychophysical task, people sometimes \textit{lapse}. That is, for some reason the response they give doesn't reflect the cognitive process of interest. This might be due to e.g. lapse in attention, a coding error in the program, or a slip of a finger. In the classic GRT models, lapsing behaviour has not been taken into account, even though in the unidimensional case lapses have been shown to be able to exert considerable bias on the parameter estimates of the psychometric function \citep{wichmannhill2001}. 
 
-Estimating lapsing rate from data can be problematic (\cite{wichmannhill2001, treutwein1999}), and this problem can be worse for adaptive procedures \citep{prins2012}. Since the values of the psychometric function that are closer to zero are affected both the lapses and the decision criterion (in the Yes/No task), most of the information gained about lapsing behaviour comes from lapses happening at high intensities. What makes matters worse is that the lapsing response doesn't necessarily differ from what the participant would've answered otherwise, so the distinction between lapses and genuine response is ambiguous (for further discussion on these problems, see \cite{prins2012}). For these reasons I fixed the values of $\lambda$ and $\gamma$ during the adaptive estimation phase. However, during the analysis of the psychophysical data I estimated the parameter $\lambda$ from the data, a decision, which will be discussed in more detail in the analysis section.
+Estimating lapsing rate from data can be problematic (\cite{wichmannhill2001, treutwein1999}), and this problem can be worse for adaptive procedures, at least for trying to adaptively estimate the lapsing rate \citep{prins2012}. Since the values of the psychometric function that are closer to zero are affected both the lapses and the decision criterion (in the Yes/No task), most of the information gained about lapsing behaviour comes from lapses happening at high intensities. What makes matters worse is that the lapsing response doesn't necessarily differ from what the participant would've answered otherwise, so the distinction between lapses and genuine response is ambiguous (for further discussion on these problems, see \cite{prins2012}). For these reasons I fixed the values of $\lambda$ and $\gamma$ during the adaptive estimation phase. However, during the analysis of the psychophysical data I estimated the parameter $\lambda$ from the data, a decision, which will be discussed in more detail in the analysis section.
 
 I model lapsing behaviour by using a (hierarchical) mixture model (see \citet{zeigenfuse2010}), which will be discussed in Section \ref{sec:hierarchical_models} \textit{\nameref{sec:hierarchical_models}}.

@@ -4,6 +4,7 @@
 \label{sec:grt_criticism}
 
 \subsubsection{Relationship to other models}
+\label{sec:grt_classic}
 
 \paragraph{Classic GRT}
 
@@ -33,9 +34,9 @@ The logic in this kind of task differs from that of discrimination task. Instead
 
 Categorization is sensible in the case of clear differences, e.g. categorizing extremely different pitches such as 100 Hz and 5000 Hz. However, in the case of minute differences that are close to the detection threshold, it is more likely that the subject bases their decisions on perceived \textit{differences} between consecutive stimuli. One of the assumptions of the model is that single responses are statistically independent (see e.g. \citet[p. 218]{wickens1992}), but if indeed the responses are based on perceived differences between consecutive stimuli, this assumption is gravely violated.
 
-Another difficulty is that the participant would have to hold accurate representations of the stimuli in their memory. Again this is simple when categorizing apples and oranges, but much more difficult in a psychophysical experiment in which the levels are to begin with selected in such a way that they are easily confusable. 
+Another difficulty is that the participant would have to hold accurate representations of the stimuli in their memory. Again this is simple when categorizing apples and oranges, but much more difficult in a psychophysical experiment in which the levels are to begin with selected in such a way that they are easily confusable. As already discussed, Signal Detection Theory is used specifically in a situation in which there's a high probability for confusing the stimuli. 
 
-Of course all kinds of assumptions are always violated, since any statistical model is a simplification of the real and complex cognitive processes, but I feel it is better to use tasks that don't correspond with what can be realistically expected from the participant. It is for these reasons that I've opted to base the model presented here explicitly on discrimination instead of categorization or identification.
+Of course all kinds of assumptions are always violated, since any statistical model is a simplification of the real and complex cognitive processes, but this is not an excuse to \textit{not} use procedures that are more in line with what is known \textit{a prior}. It is for these reasons that I've opted to base the model presented here explicitly on discrimination instead of categorization or identification.
 
 As per the second modification, the addition of functional relationships, in the classic GRT model each stimulus is represented by its own bivariate  normal distribution (see e.g. \cite{ashby2015}). For example, in the aforementioned 2X2 categorization task parameters for four bivariate normal distributions would be estimated. If more stimuli are used also more decision boundaries are needed in the categorization task: a separate set of decision boundaries between each category is required. 
 
@@ -90,11 +91,11 @@ Generalized Linear Models (GLM's) are widely implemented in statistical analysis
  
 \cite{decarlo1998} describes the unidimensional SDT model as a generalized linear model. In the case of normally distributed noise, a \textit{probit model}, which is how already Gustav Fechner--who is sometimes regarded as the founder of psychophysics--modelled categorical judgments in the 19th century (discussed in \citealt[Chapter 7]{stigler2003}). 
 
-The models--with the caveat mentioned at the end of this section--used in this thesis can be thought of as a \textit{non-linear multinomial} probit model. Non-linear \citep[p. 379]{box2005} since the relationship between $S$ and $d'$ included the term $\beta$; multinomoal, since in a binary choice probit model the responses are assumed to follow the binomial distribution, but in the multidimensional model, since there are more than two choices, the responses are assumed to follow the multinomial distribution \cite[p. ERROR]{skrondahl2004}. 
+The models--with the caveat mentioned at the end of this section--used in this thesis can be thought of as a \textit{non-linear multinomial} probit model. Non-linear \citep[p. 379]{box2005} since the relationship between $S$ and $d'$ included the term $\beta$; multinomoal, since in a binary choice probit model the responses are assumed to follow the binomial distribution, but in the multidimensional model, since there are more than two choices, the responses are assumed to follow the multinomial distribution \cite{skrondahl2004}. 
 
 As Generalized Linear Models in general, also the model here can in theory use any distribution as the model for the errors (the use of other than normal distributions in GRT has already been discussed in \citet{ashby1986}, but to my knowledge, other distributions besides normal have \textit{never} been used). The main limitation is mathematical and computational: how to effectively calculate the two-dimensional integrals needed for the response probabilities. There can also be other issues, e.g. for the  typical multinomial logistic model, no correlation is usually modelled \citep{skrondahl2004}, which can prove to be a too limiting assumption.
 
-In the context of GLM's, the modelling of lapses is can be called \textit{robust regression} \citep[p. 635]{kruschke2015} since it relaxes the distributional assumptions somewhat, and isn't so prone to estimation errors due to outliers. However it should be noted that this requires the lapsing parameters to be fixed \citep[p. ERROR]{skrondahl2004}. This is not true for all of the models used in this thesis.
+In the context of GLM's, the modelling of lapses is can be called \textit{robust regression} \citep[p. 635]{kruschke2015} since it relaxes the distributional assumptions somewhat, and isn't so prone to estimation errors due to outliers. However it should be noted that this requires the lapsing parameters to be fixed \cite{skrondahl2004}. This is not true for all of the models used in this thesis.
 
 \subsubsection{Nonidentifiabilities and other limitations of the model}
 
@@ -118,7 +119,7 @@ Conceptualization of the latent variables affects the way interactions are under
 
 Criterial noise can be defined as random variation in the criteria around some central value, in the present context the central value would most naturally be thought of as the parameter $c$ in the model. If this variation is assumed to be Gaussian, it is not identifiable from other sources. This issue has been discussed in SDT literature already by \cite{wickelgren1968}\footnote{\cite{wickelgren1968} talks about \textit{unidimensional strength theory}, but the discussion is directly applicable to the present situation.}; in the context of GRT \citet{ashby2000} has discussed the role of criterial noise. In the context of SDT there have been proposals for identifying the magnitude of criterial noise using experimental manipulations (see e.g. \citealt{kellen2012, benjamin2009, cabrera2015}), but the application of these methodologies to GRT will not be considered further here. 
 
-In practice, any criterial noise will be included in the $\sigma$ estimates, since, as already discussed, these represent to sum total of all variation. With regard to GRT the problem is if the criterial noise between the dimensions is correlated: this will be included in the $\rho$ estimates. Another possibility is that criterial changes--e.g. between sessions or during a long session--would also affect the $\kappa$ estimates. To my knowledge, no systematic exploration of this possibility exists; in my own non-systematic simulations I have noticed that indeed in some cases such criterial shifts can affect the the parameter estimates and lead to erroneous inferences. 
+In practice, any criterial noise will be included in the $\sigma$ estimates, since, as already discussed, these represent to sum total of all variation. With regard to GRT the problem is if the criterial noise between the dimensions is correlated: this will be included in the $\rho$ estimates. Another possibility is that criterial changes--e.g. between sessions or during a long session--would also affect the $\kappa$ estimates. To my knowledge, no systematic exploration of this possibility exists; in my own non-systematic simulations I have noticed that indeed in some cases such criterial shifts can affect the the parameter estimates and lead to erroneous inferences, however, this will not be explored any further in this thesis. 
 
 \paragraph{Non-orthogonality of decisional boundaries}
 
@@ -129,3 +130,10 @@ In the present paper the focus is on orthogonal decisional boundaries. Non-ortho
 Another problem is the identifiability of non-orthogonal decisional boundaries: \cite{soto2015} claim that their model makes decisional separability identifiable--contrary to the classic model \citep{silbert2013}--but their result has been refuted on mathematical grounds by \cite{silbert2016}: any non-orthogonal boundaries can be thought of as a transformation of the space to one in which the boundaries are orthogonal and correlation is non-zero. 
 
 It follows that, in the models with orthogonal decisional boundaries, any non-orthogonality would be seen as non-zero values of the $\rho$ parameter, which should be taken into account when interpreting this parameter.
+
+
+
+ 
+
+
+

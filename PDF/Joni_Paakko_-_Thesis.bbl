@@ -1084,6 +1084,34 @@ Lesmes, L.%
 \PrintBackRefs{\CurrentBib}
 
 \bibitem [\protect \citeauthoryear {%
+Newell%
+}{%
+Newell%
+}{%
+{\protect \APACyear {1973}}%
+}]{%
+newell1973}
+\APACinsertmetastar {%
+newell1973}%
+\begin{APACrefauthors}%
+Newell, A.%
+\end{APACrefauthors}%
+\unskip\
+\newblock
+\APACrefYearMonthDay{1973}{}{}.
+\newblock
+{\BBOQ}\APACrefatitle {You can't play 20 questions with nature and win:
+  projective comments on the papers of this symposium} {You can't play 20
+  questions with nature and win: projective comments on the papers of this
+  symposium}.{\BBCQ}
+\newblock
+\BIn{} W\BPBI G.~Chase\ (\BED), \APACrefbtitle {Visual Information Processing.}
+  {Visual information processing.}
+\newblock
+\APACaddressPublisher{}{Aacademic Press, New York}.
+\PrintBackRefs{\CurrentBib}
+
+\bibitem [\protect \citeauthoryear {%
 Oron%
 }{%
 Oron%

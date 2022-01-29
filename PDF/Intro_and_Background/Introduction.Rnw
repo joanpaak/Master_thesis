@@ -2,28 +2,78 @@
 
 \section{Introduction}
 
+\paragraph{Multidimensionality of perception}
+
 Perception can be thought of as being multidimensional. For example, a single tone played with a guitar could be said to consist of pitch, length and timbre, which are some of the dimensions of an auditory signal, in this case, a musical tone. Another way in which perception is multidimensional is when it is \textit{multimodal}: in many situations we combine information from different sensory modalities, for example haptic and auditory information when pressing a key on the keyboard, or visual and auditory information when watching someone's lips as they speak.
 
-How we perceive such multidimensional signals is a fundamental psychological question: during perception, are the dimensions processed independently, or do they interfere with each other? Is the perception of auditory signals influenced by visual or other signals, and if so, in what situations? Do the physical dimensions, such as amplitude, correspond to the psychological (in this case loudness) or do we perceive them as combinations (do e.g. high pitches sound louder)?
+How we perceive such multidimensional signals is a fundamental psychological question: during perception, are the dimensions processed independently, or do they interfere with each other? Is the perception of auditory signals influenced by visual or other signals, and if so, in what situations? Do the physical dimensions, such as amplitude, correspond to the psychological (in the case of amplitude loudness) or do we perceive them as combinations (do e.g. higher pitches sound louder)?
 
-A popular approach for modelling multidimensional perception is the General Recognition Theory (GRT), which is a multidimensional generalization of Signal Detection Theory (SDT) (\citealp{wickens2002,ashby1986, ashby2015}). SDT is a much-studied mathematical framework describing--among other things--the detection of signals in the presence of noise and for dissociating perceptual and decisional processes. 
+In the context of the empirical part of this work (see Section \ref{sec:pp_exp} \textit{\nameref{sec:pp_exp}}) the coupling of pitch and timbre is the most relevant. These present a special case in which the features belong to the same modality: both are features of  audition. 
 
-Most experiments employing GRT use preselected stimuli, i.e. use a paradigm called \textit{method of constant stimuli} (MOCS).  However, it is known that using methods that can adapt the stimulus values to the behaviour of the subject can make the testing more efficient (\citealp{kontsevichtyler1999}). These kinds of methods are usually simply referred to as \textit{adaptive} methods.
+What does coupling or interaction mean? This is an important question, especially since pitch and timbre below to the same modality. 
 
-The main focus of this thesis is in applying Bayesian adaptive estimation to General Recognition Theory (GRT). However, this is a multifaceted problem, and it's useful to break it down into a few separate topics. I will present the reader with a brief roadmap into these topics, and where they are discussed in more detail. However, one should also be aware that all of these issues are closely interrelated.
+Concretely, for example in an experiment in which the participants have to detect changes in pitch and timbre, there could be a loud noise that occurs on random trials. This loud noise, of course, affects the detection of the auditory stimulus as a whole: detection thresholds for both pitch and timbre would be affected by the noise. This would make it seem like those dimensions are connected, and of course they are, since they are both features of an auditory stimulus, but usually the focus is on perceptual or cognitive interactions.
 
-First, the "classic" GRT models could be described as non-parametric in the sense that they don't parameterize the relationship between the signal strength and the probability of a response; response probabilities are calculated only for stimulus categories. However, in order to meaningfully implement the adaptive method, one should be able to calculate response probabilities for arbitrary stimuli. In order to achieve just this, I will be integrating psychophysical functions--functions that relate continuous stimulus levels to response probabilities \citep[Chapter 4]{kingdomprins2010}-- into the theory of GRT. This constitutes the main part of Section \ref{sec:GRT} \textit{\nameref{sec:GRT}}.  
+As a visual example consider the optical illusion presented in Figure \ref{fig:opt_illusion}. The sides of the box should appear ever-so-slightly concave. The circles affect how the straight lines that constitute the box are \textit{experience} on a perceptual/cognitive level.
+
+\begin{figure}[!htb]
+	\centering
+	<<echo=F,fig=T,fig.height=4, fig.width=4>>=
+	
+	par(family = font_family_global)
+	
+	#x11(width = 5, height = 5)
+	plot(NULL, xlim = c(-5, 5), ylim = c(-5, 5), axes = F, 
+	ylab = "", xlab=  "")
+	
+	for(i in seq(0.1, 4, 0.15)){
+	drawBivarDistr(c(0,0), i)
+	}
+	
+	lwd_ = 2
+	lines(c(-3,  -3), c(-3, 3), lwd =  lwd_)
+	lines(c(3,  3), c(-3, 3), lwd =  lwd_)
+	lines(c(-3,  3), c(-3, -3), lwd =  lwd_)
+	lines(c(-3,  3), c(3, 3), lwd =  lwd_)
+	
+	
+	@
+	\caption{The sides of the box should appear slightly concave. Note that there is individual variability in whether this illusion works or not.}
+	\label{fig:opt_illusion}
+\end{figure} 
+
+It is this kind of interaction that is of interest; an interaction which affects the \textit{appearance} of the stimuli, or their constituent dimensions.
+
+On possible approach for modelling multidimensional perception is the General Recognition Theory (GRT), which is a multidimensional generalization of Signal Detection Theory (SDT) (\citealp{wickens2002,ashby1986, ashby2015}). SDT is a much-studied mathematical framework on one hand describing the detection of signals in the presence of noise and on the other hand for dissociating perceptual and decisional processes. In Signal Detection Theory--as will be discussed in more detail later--participant's tendency to report that they detected a signal is modelled separately from their sensory processes.
+
+\paragraph{Adaptive estimation and Bayesian statistics}
+
+Most experiments employing GRT use preselected stimuli, i.e. use a paradigm called \textit{method of constant stimuli} (MOCS). However, it is known that using methods that adapt the stimulus values to the observed behaviour of the subject can make the testing more efficient (\citealp{kontsevichtyler1999}). These kinds of methods are usually simply referred to as \textit{adaptive} methods.
+
+There are many adaptive methods that employ either \textit{ad hoc} or common sense principles such as "\textit{If the subject correctly identifies the signal twice in a row, reduce its level, otherwise increase its level}", which could be a useful heuristic for finding e.g. the hearing threshold. In Bayesian Adaptive estimation the heuristic for choosing the stimuli is based on, as the name implies, Bayesian statistics. 
+
+In Bayesian statistics uncertainty about the parameters of a statistical model is represented as a joint probability distribution over them. For example when modelling hearing threshold in broadband noise, one could use a normal distribution for quantifying their prior uncertainty by saying that they expect the hearing threshold to be around 40 decibels with a standard deviation of 20 decibels. 
+
+When data is collected, it informs the experimenter through the statistical model which parameter values are more likely; or conversely what parameter values are \textit{less} likely: if the subject is not able to detect 40 decibel signals correctly, this makes it less likely that values below are their hearing threshold, those values can be ruled out. This "ruling out" of parts of the parameter space can be said to reduce our uncertainty about plausible values for hearing threshold. 
+
+It should also be clear that other data points reduce information more than others: if the subject is always presented with signals over 60 decibels and they always detect them, this does not inform the experimenter if 30 decibels is more likely than 40 decibels as the hearing threshold. In Bayesian adaptive estimation one simply tries to pick the test signals in such a way that the uncertainty about the parameters is minimized on each trial, or in other words, as many possibilities as possible can be ruled out. 
+
+\paragraph{Structure of this thesis}
+
+The main focus of this thesis is in applying Bayesian adaptive estimation to General Recognition Theory (GRT). However, this is a multifaceted problem, and it's useful to break it down into a few separate topics--which on the other hand are interrelated.
+
+First, the "classic" GRT models could be described as non-parametric in the sense that they don't parameterize the relationship between the signal strength and the probability of a response; response probabilities are estimated only for stimulus categories. However, in order to meaningfully implement the adaptive method, one should be able to calculate response probabilities for arbitrary stimuli. In order to achieve just this, I will be integrating psychophysical functions--functions that relate continuous stimulus levels to response probabilities \citep[Chapter 4]{kingdomprins2010}-- into the theory of GRT. This constitutes the main part of Section \ref{sec:GRT} \textit{\nameref{sec:GRT}}.  
 
 Second, when such functional relationships are implemented, the question of \textit{how} or what kind of functional relationships between stimuli and responses should be modelled becomes an issue. There are many different kinds of functions one can choose from, and many kinds of interactions that one could incorporate into the model. This issue will be touched upon in Section \ref{sec:GRT} when different kinds of interactions are discussed. Practical ramifications of this are discussed when analysing the data from the psychophysical experiments. 
 
-Related to this, I will be criticizing the implementation of the classic 2X2 identification experiment in the context of auditory psychophysics and, instead arguing for a model based on auditory discrimination. The main gist is that in a psychophysical experiment, in which the stimulus levels are extremely low, it is likely that participants base their decisions based on differences between the stimuli.
+Related to this, I will be criticizing the implementation of the widely used 2X2 identification experiment in the context of auditory psychophysics and will instead argue for modelling discrimination. The core of the criticism is that in a psychophysical experiment, in which the stimulus levels are extremely low, it is likely that participants base their decisions on perceived differences between the stimuli rather than their absolute levels (Section \ref{sec:grt_classic} \textit{\nameref{sec:grt_classic}}).
 
-Third, Bayesian statistical inference is different from the usual frequentist methods used when analysing GRT models. This is most apparent in how the concept of \textit{interaction} is not dependent on statistical significance, but rather the posterior probability densities for the coefficients that model interactions. This is, of course, closely related to the earlier point, since the choice of the model determines how those coefficients are to be interpreted. 
+Third, Bayesian statistical inference is different from the usual frequentist methods used when analysing GRT models. This is most apparent in how the concept of \textit{interaction} is not dependent on statistical significance, but rather the posterior probability densities for the coefficients that model interactions. This is, of course, closely related to the second point, since the choice of the model determines how those coefficients are to be interpreted. (Section \ref{sec:bayes_in_grt} \textit{\nameref{sec:bayes_in_grt}})
 
-Fourth, Bayesian adaptive estimation requires, as its name already implies, the calculation of prior and posterior probability densities. This is mainly a computational problem: since the aim of adaptive estimation is to select optimal stimuli in "real time", the algorithms used have to be relatively lightweight. The posterior probability densities are not analytically calculable, so approximations based on Monte Carlo methods (random sampling) are used. This issue is discussed in Section \ref{sec:posterior_approx} \textit{\nameref{sec:posterior_approx}}.
+Fourth, Bayesian adaptive estimation requires, as its name already implies, the calculation of prior and posterior probability distributions. These distributions lack analytical solutions,  so approximations based on Monte Carlo methods (random sampling) are used. This issue is discussed in Section \ref{sec:posterior_approx} \textit{\nameref{sec:posterior_approx}}. This is mainly a computational problem: since the aim of adaptive estimation is to select optimal stimuli in "real time", the algorithms used have to be relatively lightweight.
 
-Related to all of the above angles are multiple practical problems, such as how to maximize the function that describes the optimality of stimuli, how many random samples one should use when approximating the posterior probability densities, what kind of parameterization of the likelihood function to use, what is the most comfortable way of inputting responses for participants and so on. 
+Related to all of the above angles are multiple practical problems, such as how to maximize the function that describes the optimality of stimuli, how many random samples one should use when approximating the posterior probability densities, what kind of parameterization of the likelihood function (the statistical model) to use, what is the most comfortable way of inputting responses for participants and so on. These questions will be addressed as they rise.
 
-The reader should be aware that what is being evaluated here is the intersection of all the factors just mentioned, and changing any of these would change the results. This limits the generalizability of the results, which is a common problem with studies like this. The main contribution of this thesis, then, is to explore the application of Bayesian (adaptive) methods to GRT and map some of the problems associated with this.
+The reader should be aware that what is being evaluated here is the intersection of all the factors just mentioned, and changing any of these would change the results. This limits the generalizability of the results, which is a common problem with simulation studies. The main contribution of this thesis, then, is to explore the application of Bayesian (adaptive) methods to GRT and map some of the problems associated with this.
 
 This thesis is divided into three main parts: The first part describes GRT, beginning from Signal Detection Theory and gradually exposing the reader to the models used in this thesis (Section \ref{sec:GRT} \textit{\nameref{sec:GRT}}); Second part describes Bayesian statistics and the adaptive algorithm (Sections \ref{sec:bayes} \textit{\nameref{sec:bayes}} and \ref{sec:adaptive} \textit{\nameref{sec:adaptive}}); the final part consists of simulations and psychophysical experiments which are used to evaluate the models (Sections \ref{sec:simulations} \textit{\nameref{sec:simulations}} and \ref{sec:pp_exp} \textit{\nameref{sec:pp_exp}}).

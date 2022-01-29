@@ -1,0 +1,37 @@
+%!Rnw root = ../Joni_Paakko_-_Thesis.Rnw
+
+\subsection{What are "interactions"?}
+\label{sec:int_discussion}
+
+In the context of the empirical part of this work (see Section \ref{sec:pp_exp} \textit{\nameref{sec:pp_exp}}) the coupling of pitch and timbre is the most relevant. These present a special case in which the features belong to the same modality: both are features of  audition. As such, it is to be expected that there are mechanisms which could affect the perception of both of these features--make it seem like they covary--but what shouldn't be still classified as  interaction. 
+
+Concretely, for example in an experiment in which the participants have to detect changes in pitch and timbre, there could be a loud noise that occurs on random trials. This loud noise, of course, affects the detection of the auditory stimulus as a whole: detection thresholds for both pitch and timbre would be affected on those trials. This would make it seem like those dimensions are connected, and of course they are, since they are both features of an auditory stimulus, but usually the focus is on perceptual or cognitive interactions.
+
+As a visual example consider the optical illusion presented in Figure \ref{fig:opt_illusion}. The sides of the box should appear ever-so-slightly concave. The circles affect how the straight lines that constitute the box are \textit{experience} on a perceptual/cognitive level.
+
+\begin{figure}[!htb]
+\centering
+<<echo=F,fig=T,fig.height=4, fig.width=4>>=
+
+par(family = font_family_global)
+
+#x11(width = 5, height = 5)
+plot(NULL, xlim = c(-5, 5), ylim = c(-5, 5), axes = F, 
+     ylab = "", xlab=  "")
+
+for(i in seq(0.1, 4, 0.15)){
+  drawBivarDistr(c(0,0), i)
+}
+
+lwd_ = 2
+lines(c(-3,  -3), c(-3, 3), lwd =  lwd_)
+lines(c(3,  3), c(-3, 3), lwd =  lwd_)
+lines(c(-3,  3), c(-3, -3), lwd =  lwd_)
+lines(c(-3,  3), c(3, 3), lwd =  lwd_)
+
+
+@
+\caption{An optical illusion. If this works, the sides of the box should appear slightly concave.}
+\label{fig:opt_illusion}
+\end{figure} 
+

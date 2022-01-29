@@ -1,0 +1,43 @@
+%!Rnw root = ../Joni_Paakko_-_Thesis.Rnw
+
+\appendix
+\cftaddtitleline{toc}{section}{Appendices}{}
+
+\section{Algorithm for calculating \texorpdfstring{$\phi_2$}{bivariate CDF}}
+
+The algorithm is based on \citet{boys1989} and \citet{pan2017}.
+
+\lstinputlisting{../Stan/bivariate_cdf.stan}
+
+\newpage
+\section{Code for models for the Yes/No task}
+
+\subsection{Model 1}
+\lstinputlisting{../Stan/mdlYN.stan}
+
+\subsection{Model 2}
+\lstinputlisting{../Stan/mdlYN_FL.stan}
+
+\subsection{Model 3}
+\lstinputlisting{../Stan/mdlYN_varshift_FL.stan}
+
+\subsection{Both}
+\lstinputlisting{../Stan/mdlYN_both.stan}
+
+\subsection{Both (Truncated)}
+\lstinputlisting{../Stan/mdlYN_both_truncated.stan}
+
+\newpage
+\section{Code for models for the 2I-4AFC task}
+
+\subsection{Model 1}
+\lstinputlisting{../Stan/mdlAFC.stan}
+
+\subsection{Model 2}
+\lstinputlisting{../Stan/mdlAFC_FL.stan}
+
+\subsection{Model 3}
+\lstinputlisting{../Stan/mdlAFC_varshift_FL.stan}
+
+\subsection{Both}
+\lstinputlisting{../Stan/mdlAFC_both.stan}
